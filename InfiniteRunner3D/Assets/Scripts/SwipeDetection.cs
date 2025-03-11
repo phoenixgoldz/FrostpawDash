@@ -36,20 +36,21 @@ public class SwipeDetection : MonoBehaviour
 
     private void DetectSwipe()
     {
-        Vector2 delta = currentTouchPos - initialTouchPos;
-        Vector2 swipeDirection = Vector2.zero;
+        Debug.Log($"Initial Touch: {initialTouchPos}, Current Touch: {currentTouchPos}");
+    Vector2 delta = currentTouchPos - initialTouchPos;
+    Vector2 swipeDirection = Vector2.zero;
 
-        if (Mathf.Abs(delta.x) > swipeResistance)
-            swipeDirection.x = Mathf.Clamp(delta.x, -1, 1);
+    if (Mathf.Abs(delta.x) > swipeResistance)
+        swipeDirection.x = Mathf.Clamp(delta.x, -1, 1);
 
-        if (Mathf.Abs(delta.y) > swipeResistance)
-            swipeDirection.y = Mathf.Clamp(delta.y, -1, 1);
+    if (Mathf.Abs(delta.y) > swipeResistance)
+        swipeDirection.y = Mathf.Clamp(delta.y, -1, 1);
 
-        if (swipeDirection != Vector2.zero && swipePerformed != null)
-        {
-            Debug.Log("Swipe detected: " + swipeDirection); // Debug Log
-            swipePerformed(swipeDirection);
-        }
+    if (swipeDirection != Vector2.zero)
+    {
+        Debug.Log("Swipe detected: " + swipeDirection);
+        swipePerformed?.Invoke(swipeDirection);
+    }
     }
 
 }
