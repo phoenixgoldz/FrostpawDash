@@ -435,6 +435,14 @@ PrefabInstance:
       propertyPath: playerControls.m_Bindings.Array.data[2].m_Processors
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8812324953059909500, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: m_Size.y
+      value: 1.0448973
+      objectReference: {fileID: 0}
+    - target: {fileID: 8812324953059909500, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: m_Center.y
+      value: 0.85255134
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
