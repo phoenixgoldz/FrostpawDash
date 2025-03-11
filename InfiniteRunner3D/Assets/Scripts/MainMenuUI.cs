@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
@@ -27,6 +27,17 @@ public class MainMenuUI : MonoBehaviour
     {
         SetupGraphicsDropdown(); // Restored function for setting up graphics options
         LoadSettings(); // Load saved settings on start
+        Debug.Log("🛠️ MainMenu Loaded - Checking AudioManager...");
+
+        if (AudioManager.instance != null)
+        {
+            Debug.Log("✅ AudioManager exists, playing Main Menu Music...");
+            AudioManager.instance.PlayMusicForScene("MainMenu");
+        }
+        else
+        {
+            Debug.LogError("❌ AudioManager NOT FOUND! Ensure it's in the MainMenu scene.");
+        }
     }
 
     public void PlayGame()

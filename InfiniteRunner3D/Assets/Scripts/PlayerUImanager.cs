@@ -108,10 +108,17 @@ public class PlayerUIManager : MonoBehaviour
             backgroundMusic.mute = isPaused;
         }
     }
-
     public void QuitGame()
     {
         Time.timeScale = 1;
         SceneManager.LoadScene("MainMenu");
+
+        // Ensure the music is unmuted
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.musicSource.mute = false; // Unmute in case it was muted by Pause Menu
+            AudioManager.instance.PlayMusicForScene("MainMenu"); // Restart Main Menu music
+        }
     }
+
 }
