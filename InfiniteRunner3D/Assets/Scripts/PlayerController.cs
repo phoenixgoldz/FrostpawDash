@@ -159,6 +159,7 @@ public class PlayerController : MonoBehaviour
     {
         ShiftHorizontally(currentTilt);
     }
+    else ResetTurnAnimations();
     }
 
     void MovePlayer()
@@ -210,7 +211,7 @@ public class PlayerController : MonoBehaviour
         if (!isSliding)
         {
             isSliding = true;
-            animator.SetTrigger("IsSliding");
+            animator.SetTrigger("isSliding");
             Invoke(nameof(StopSliding), 1f);
         }
     }
@@ -227,13 +228,17 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("IsTurningLeft", false);
             animator.SetBool("IsTurningRight", true);
         }
-        if (direction < 0)
+        else if (direction < 0)
         {
             animator.SetBool("IsTurningLeft", true);
             animator.SetBool("IsTurningRight", false);
         }
+        else
+        {
+            ResetTurnAnimations();
+        }
 
-        Invoke(nameof(ResetTurnAnimations), 0.3f);
+        //Invoke(nameof(ResetTurnAnimations), 0.3f);
     }
 
     void ResetTurnAnimations()
