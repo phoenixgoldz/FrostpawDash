@@ -25,7 +25,7 @@ public class SwipeDetection : MonoBehaviour
         touchPress.performed += _ => { initialTouchPos = currentTouchPos; };
         touchPress.canceled += _ => DetectSwipe();
 
-        swipeResistance = Screen.width / 4;
+        swipeResistance = Screen.width / 6;
     }
 
     private void OnDestroy()

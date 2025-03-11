@@ -154,8 +154,8 @@ public class PlayerController : MonoBehaviour
     {
         // print("Screen Swiped");
 
-        if (swipeDirection.y == 1) Jump();
-        else if (swipeDirection.y == -1) Slide();
+        if (swipeDirection.y == 0.5f) Jump();
+        else if (swipeDirection.y == -0.5f) Slide();
     }
 
     void DetectTilt()
