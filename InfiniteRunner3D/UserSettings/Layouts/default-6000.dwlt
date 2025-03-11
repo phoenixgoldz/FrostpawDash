@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 989
   m_ShowMode: 4
-  m_Title: Scene
+  m_Title: Simulator
   m_RootView: {fileID: 3}
   m_MinSize: {x: 875, y: 382}
   m_MaxSize: {x: 10000, y: 10000}
@@ -39,12 +39,12 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 946
+    x: 992
     y: 0
-    width: 476
-    height: 677
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+    width: 404
+    height: 684
+  m_MinSize: {x: 202, y: 226}
+  m_MaxSize: {x: 4002, y: 4026}
   m_ActualView: {fileID: 22}
   m_Panes:
   - {fileID: 22}
@@ -145,7 +145,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 100}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 96
+  controlID: 93
   draggingID: 0
 --- !u!114 &7
 MonoBehaviour:
@@ -166,12 +166,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1422
+    width: 1396
     height: 933
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 1
-  controlID: 54
+  controlID: 51
   draggingID: 0
 --- !u!114 &8
 MonoBehaviour:
@@ -193,12 +193,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1422
-    height: 677
+    width: 1396
+    height: 684
   m_MinSize: {x: 300, y: 50}
   m_MaxSize: {x: 24288, y: 8096}
   vertical: 0
-  controlID: 55
+  controlID: 52
   draggingID: 0
 --- !u!114 &9
 MonoBehaviour:
@@ -217,8 +217,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 187
-    height: 677
+    width: 178
+    height: 684
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 14}
@@ -241,10 +241,10 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 187
+    x: 178
     y: 0
-    width: 759
-    height: 677
+    width: 814
+    height: 684
   m_MinSize: {x: 202, y: 226}
   m_MaxSize: {x: 4002, y: 4026}
   m_ActualView: {fileID: 15}
@@ -263,25 +263,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ConsoleWindow
+  m_Name: ProjectBrowser
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 677
-    width: 1422
-    height: 256
-  m_MinSize: {x: 101, y: 126}
-  m_MaxSize: {x: 4001, y: 4026}
-  m_ActualView: {fileID: 18}
+    y: 684
+    width: 1396
+    height: 249
+  m_MinSize: {x: 231, y: 276}
+  m_MaxSize: {x: 10001, y: 10026}
+  m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
   - {fileID: 18}
   - {fileID: 19}
   - {fileID: 16}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -297,9 +297,9 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 1422
+    x: 1396
     y: 0
-    width: 498
+    width: 524
     height: 933
   m_MinSize: {x: 276, y: 76}
   m_MaxSize: {x: 4001, y: 4026}
@@ -368,8 +368,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 79
-    width: 186
-    height: 651
+    width: 177
+    height: 658
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -384,23 +384,23 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 2c6ffbff
-      m_LastClickedID: -299220
-      m_ExpandedIDs: e67ffbff8eacfbff1efbffff
+      m_SelectedIDs: 
+      m_LastClickedID: 0
+      m_ExpandedIDs: a6ccffff6ad9ffff86dbffff04fbffff428100007081000078810000828100008a810000968100002a8c00004c8c0000c28c0000a8900000b8900000d6900000de900000e8900000f0900000fc900000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: PathManger
-        m_OriginalName: PathManger
+        m_Name: 
+        m_OriginalName: 
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 32870
+        m_UserData: 0
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 0
+        m_OriginalEventType: 11
         m_IsRenamingFilename: 0
         m_TrimLeadingAndTrailingWhitespace: 0
         m_ClientGUIView: {fileID: 9}
@@ -432,10 +432,10 @@ MonoBehaviour:
     m_TextWithWhitespace: "Scene\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 187
+    x: 178
     y: 79
-    width: 757
-    height: 651
+    width: 812
+    height: 658
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1032,9 +1032,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: -0.9826369, y: 0.0032360256, z: 14.122978}
+    m_Target: {x: 487.03476, y: 1253.5189, z: -0.24975586}
     speed: 2
-    m_Value: {x: -0.9826369, y: 0.0032360256, z: 14.122978}
+    m_Value: {x: 487.03476, y: 1253.5189, z: -0.24975586}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1080,13 +1080,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.025340337, y: -0.11073613, z: 0.0028243721, w: 0.9935231}
+    m_Target: {x: -0.01199949, y: -0.005999429, z: -0.00007200762, w: 0.9999105}
     speed: 2
-    m_Value: {x: 0.025340328, y: -0.110736094, z: 0.0028243712, w: 0.99352276}
+    m_Value: {x: -0.011999484, y: -0.0059994264, z: -0.000072007584, w: 0.99991}
   m_Size:
-    m_Target: 1.5715022
+    m_Target: 1261.4277
     speed: 2
-    m_Value: 1.5715022
+    m_Value: 1261.4277
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1178,9 +1178,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 756
-    width: 1421
-    height: 230
+    y: 763
+    width: 1395
+    height: 223
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1203,7 +1203,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Prefabs/CrystalCavernsPrefabs
+    - Assets/Models/PlayerModelNew
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1213,16 +1213,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Prefabs/CrystalCavernsPrefabs
+  - Assets/Models/PlayerModelNew
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Trevor\Desktop\FrostpawDash\InfiniteRunner3D
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 600}
-    m_SelectedIDs: 78850000
-    m_LastClickedID: 34168
-    m_ExpandedIDs: 00000000a0840000a2840000a4840000a6840000a8840000aa840000ac840000ae840000b0840000b2840000b4840000b6840000b8840000ba840000bc840000be840000c0840000c284000000ca9a3b
+    scrollPos: {x: 0, y: 467}
+    m_SelectedIDs: a6860000
+    m_LastClickedID: 34470
+    m_ExpandedIDs: 00000000e8850000ea850000ec850000ee850000f0850000f2850000f4850000f6850000f8850000fa850000fc850000fe85000000860000028600000486000006860000088600000a860000a886000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1251,7 +1251,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 180}
     m_SelectedIDs: 6ab40000
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000a0840000a2840000a4840000a6840000a8840000aa840000ac840000ae840000b0840000b2840000b4840000b6840000b8840000ba840000bc840000be840000c0840000c2840000
+    m_ExpandedIDs: 00000000e8850000ea850000ec850000ee850000f0850000f2850000f4850000f6850000f8850000fa850000fc850000fe85000000860000028600000486000006860000088600000a860000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1277,8 +1277,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: a2800000
-    m_LastClickedInstanceID: 32930
+    m_SelectedInstanceIDs: 
+    m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000326c000058590000d85800001ab800001eb80000e6d70000a8710000ded50000e8b3000092bf0000c8c0000092c1000016c1000096c20000a6c200004ec6000048e1000046bd000040bd000054bd00000000000050cc00008ce200005eb7000070b700006ab70000aab700005cb70000b6ad0000c0ad0000b4af00007ab40000b8ad0000507f0000867b0000309800008096000078960000789d0000a68e0000ae8e0000b28e0000ba8e0000c08e0000b68e000098830000088700000c87000002870000188700007c890000da8b0000b2820000e6880000a4820000f8880000f4880000f0880000e2880000f4990000289e0000e6a80000128a0000cc940000
     m_RenameOverlay:
@@ -1331,9 +1331,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 756
+    y: 755
     width: 1421
-    height: 230
+    height: 231
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1553,8 +1553,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 187
     y: 79
-    width: 757
-    height: 651
+    width: 802
+    height: 688
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1623,9 +1623,9 @@ MonoBehaviour:
     m_TextWithWhitespace: "Inspector\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1422
+    x: 1396
     y: 79
-    width: 497
+    width: 523
     height: 907
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -1641,7 +1641,7 @@ MonoBehaviour:
   m_ObjectsLockedBeforeSerialization: []
   m_InstanceIDsLockedBeforeSerialization: 
   m_PreviewResizer:
-    m_CachedPref: 151
+    m_CachedPref: 372
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
   m_LastInspectedObjectInstanceID: -1
@@ -1672,10 +1672,10 @@ MonoBehaviour:
     m_TextWithWhitespace: "Simulator\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 946
+    x: 992
     y: 79
-    width: 474
-    height: 651
+    width: 402
+    height: 658
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1703,7 +1703,7 @@ MonoBehaviour:
   m_UseMipMap: 0
   m_SimulatorState:
     controlPanelVisible: 0
-    controlPanelWidth: NaN
+    controlPanelWidth: 0
     controlPanelFoldoutKeys:
     - UnityEditor.DeviceSimulation.ApplicationSettingsPlugin
     controlPanelFoldoutValues: 00
@@ -1714,7 +1714,7 @@ MonoBehaviour:
     - '{}'
     - '{}'
     scale: 26
-    fitToScreenEnabled: 0
+    fitToScreenEnabled: 1
     rotationDegree: 0
     highlightSafeAreaEnabled: 0
     friendlyName: Samsung Galaxy S10e
