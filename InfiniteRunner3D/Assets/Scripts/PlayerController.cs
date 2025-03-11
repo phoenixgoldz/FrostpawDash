@@ -154,10 +154,11 @@ public class PlayerController : MonoBehaviour
 
     void DetectTilt()
     {
-        if (Mathf.Abs(currentTilt) > 0.3f)
-        {
-            ShiftHorizontally(currentTilt);
-        }
+        Debug.Log("Tilt Value: " + currentTilt); // Add this for debugging
+    if (Mathf.Abs(currentTilt) > 0.2f) // Try reducing threshold
+    {
+        ShiftHorizontally(currentTilt);
+    }
     }
 
     void MovePlayer()
