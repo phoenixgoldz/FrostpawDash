@@ -21,10 +21,14 @@ public class MainMenuUI : MonoBehaviour
     public GameObject savingText;
     public GameObject savingIcon;
 
+    [Header("UI Elements")]
+    public TMP_Text versionText; 
+
     private bool isSaving = false;
 
     void Start()
     {
+        DisplayGameVersion();
         SetupGraphicsDropdown(); // Restored function for setting up graphics options
         LoadSettings(); // Load saved settings on start
         Debug.Log("🛠️ MainMenu Loaded - Checking AudioManager...");
@@ -39,7 +43,17 @@ public class MainMenuUI : MonoBehaviour
             Debug.LogError("❌ AudioManager NOT FOUND! Ensure it's in the MainMenu scene.");
         }
     }
-
+    void DisplayGameVersion()
+    {
+        if (versionText != null)
+        {
+            versionText.text = $"Beta Pre-Release Version {Application.version}";
+        }
+        else
+        {
+            Debug.LogError("❌ VersionText is not assigned in MainMenuUI!");
+        }
+    }
     public void PlayGame()
     {
         SceneManager.LoadScene("Level 1");
