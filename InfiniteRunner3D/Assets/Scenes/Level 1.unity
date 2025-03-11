@@ -291,6 +291,150 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: speed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: moveSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Actions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Bindings.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Actions.Array.data[0].m_Id
+      value: 5d0ab987-1a1a-4d63-95e0-644671ca9246
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Actions.Array.data[1].m_Id
+      value: 482227c8-7dc3-4f59-a291-bafdfc7bbfe9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Actions.Array.data[2].m_Id
+      value: 482227c8-7dc3-4f59-a291-bafdfc7bbfe9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Bindings.Array.data[0].m_Id
+      value: 50cb6657-6fe1-4246-a9e8-91738dcaedba
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Bindings.Array.data[1].m_Id
+      value: d41efeed-51f1-40a2-8a9b-bafc2b2be78e
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Bindings.Array.data[2].m_Id
+      value: 6ade5111-df0c-4e81-9748-c9621f33ae20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Bindings.Array.data[3].m_Id
+      value: 2d15d853-8236-494e-b61f-76f63bac32ec
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Bindings.Array.data[4].m_Id
+      value: d41efeed-51f1-40a2-8a9b-bafc2b2be78e
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Actions.Array.data[0].m_Name
+      value: Swipe
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Actions.Array.data[1].m_Name
+      value: Jump
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Actions.Array.data[2].m_Name
+      value: Jump
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Bindings.Array.data[0].m_Name
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Bindings.Array.data[0].m_Path
+      value: '<Touchscreen>/delta '
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Bindings.Array.data[1].m_Name
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Bindings.Array.data[1].m_Path
+      value: <Keyboard>/space
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Bindings.Array.data[2].m_Name
+      value: negative
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Bindings.Array.data[2].m_Path
+      value: <Keyboard>/leftArrow
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Bindings.Array.data[3].m_Name
+      value: positive
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Bindings.Array.data[3].m_Path
+      value: <Keyboard>/rightArrow
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Bindings.Array.data[4].m_Path
+      value: <Keyboard>/space
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Bindings.Array.data[0].m_Flags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Bindings.Array.data[1].m_Flags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Bindings.Array.data[2].m_Flags
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Bindings.Array.data[3].m_Flags
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Bindings.Array.data[0].m_Action
+      value: Swipe
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Bindings.Array.data[1].m_Action
+      value: Jump
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Bindings.Array.data[2].m_Action
+      value: Move
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Bindings.Array.data[3].m_Action
+      value: Move
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Bindings.Array.data[4].m_Action
+      value: Jump
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Bindings.Array.data[0].m_Processors
+      value: Normalize
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Bindings.Array.data[1].m_Processors
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: playerControls.m_Bindings.Array.data[2].m_Processors
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
