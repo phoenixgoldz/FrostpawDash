@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     private bool isMoving = false;
     private bool isFalling = false;
 
+    private bool stuck = false;
+
     public float speed = 10f;
     public float turnSpeed = 5f;
     public float jumpForce = 10f;
@@ -112,6 +114,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter(Collider other) { if (!other.gameObject.CompareTag("Obstacle")) stuck = true; }
+
+    void OnTriggerExit(Collider other) { if (!other.gameObject.CompareTag("Obstacle")) stuck = false; }
+
     private void CreateKeyboardControls()
     {
         if (playerControls.FindAction("Jump") == null) jumpAction = playerControls.AddAction("Jump", binding: "<Keyboard>/Space", interactions: "press");
@@ -172,7 +178,12 @@ public class PlayerController : MonoBehaviour
         if (currentKeyboardShift != 0) ShiftHorizontally(currentKeyboardShift);
 
         // Move Player
-        rb.linearVelocity = new Vector3(shiftVelocity, rb.linearVelocity.y, speed);
+        if (!stuck) rb.linearVelocity = new Vector3(shiftVelocity, rb.linearVelocity.y, speed);
+        else
+        {
+            rb.linearVelocity = new Vector3(shiftVelocity, rb.linearVelocity.y, -1f);
+            print("stuck");
+        }
     }
 
     void Jump()

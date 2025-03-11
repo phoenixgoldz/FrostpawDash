@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6753211814940613444}
   - component: {fileID: 1523434879630525766}
   - component: {fileID: 5774830828021770632}
+  - component: {fileID: 8812324953059909500}
   - component: {fileID: 3116078460435565867}
   m_Layer: 0
   m_Name: LeopardModel
@@ -107,9 +108,30 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 2.3
+  m_Height: 1.5
   m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 0.75, z: 0}
+--- !u!65 &8812324953059909500
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5565889009949572}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1.25, z: 0.25}
+  m_Center: {x: 0, y: 0.75, z: 0.6}
 --- !u!114 &3116078460435565867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,11 +144,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9be3ccb26cbbb0d41bafaec4537a2822, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 15
+  speed: 4
+  turnSpeed: 5
   jumpForce: 10
-  moveSpeed: 5
-  minX: -6.5
-  maxX: 7.5
+  moveSpeed: 4
+  pathWidth: 4
   playerControls:
     m_Name: Player Controls
     m_Id: 7a076f02-26cd-4648-b540-812092acdd0a
@@ -135,7 +157,7 @@ MonoBehaviour:
     - m_Name: Move
       m_Type: 1
       m_ExpectedControlType: Button
-      m_Id: cc239554-bcbd-43cc-a26d-6c2ec4373a1c
+      m_Id: 5a5b1924-fcfb-4238-b7f6-361067cde962
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -143,30 +165,14 @@ MonoBehaviour:
     - m_Name: Jump
       m_Type: 1
       m_ExpectedControlType: Button
-      m_Id: 3e5ac8f2-fff8-428a-9358-9ddc698411c6
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    - m_Name: Slide
-      m_Type: 1
-      m_ExpectedControlType: Button
-      m_Id: 557341a0-7298-4954-b7ba-4f13a31abe09
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    - m_Name: Swipe
-      m_Type: 1
-      m_ExpectedControlType: Button
-      m_Id: 5d0ab987-1a1a-4d63-95e0-644671ca9246
+      m_Id: 482227c8-7dc3-4f59-a291-bafdfc7bbfe9
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Bindings:
     - m_Name: 1D Axis
-      m_Id: 5fa1a0d6-495f-4407-b39e-f72da2dbc11f
+      m_Id: a8ac8dbb-d03f-47e0-8eb9-ce837612a869
       m_Path: 1DAxis
       m_Interactions: 
       m_Processors: 
@@ -174,7 +180,7 @@ MonoBehaviour:
       m_Action: Move
       m_Flags: 4
     - m_Name: negative
-      m_Id: e4307f56-f2f9-420a-8900-a07258e88a33
+      m_Id: 6ade5111-df0c-4e81-9748-c9621f33ae20
       m_Path: <Keyboard>/leftArrow
       m_Interactions: 
       m_Processors: 
@@ -182,7 +188,7 @@ MonoBehaviour:
       m_Action: Move
       m_Flags: 8
     - m_Name: positive
-      m_Id: 1bd9f18d-d567-4ea1-8658-064136029d2a
+      m_Id: 2d15d853-8236-494e-b61f-76f63bac32ec
       m_Path: <Keyboard>/rightArrow
       m_Interactions: 
       m_Processors: 
@@ -190,28 +196,12 @@ MonoBehaviour:
       m_Action: Move
       m_Flags: 8
     - m_Name: 
-      m_Id: c900c787-e8db-4a7d-98a4-41fc4413cf23
+      m_Id: d41efeed-51f1-40a2-8a9b-bafc2b2be78e
       m_Path: <Keyboard>/space
       m_Interactions: 
       m_Processors: 
       m_Groups: 
       m_Action: Jump
-      m_Flags: 0
-    - m_Name: 
-      m_Id: d60c8806-dca8-4f4a-8854-8b3f53e17bc6
-      m_Path: <Keyboard>/downArrow
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Slide
-      m_Flags: 0
-    - m_Name: 
-      m_Id: 50cb6657-6fe1-4246-a9e8-91738dcaedba
-      m_Path: '<Touchscreen>/delta '
-      m_Interactions: 
-      m_Processors: Normalize
-      m_Groups: 
-      m_Action: Swipe
       m_Flags: 0
 --- !u!1 &25526494602306381
 GameObject:
