@@ -76,19 +76,19 @@ public class PathManager : MonoBehaviour
             int floorIndex = Random.Range(0, pathPrefabs.Length);
             newPath = Instantiate(pathPrefabs[floorIndex], new Vector3(0, 0, lastPathEndZ), Quaternion.identity);
         }
-        if (pathsSpawned >= 15 && obstaclePrefabs.Length > 0 && Random.Range(0, 100) < 40)
-        {
-            int obstacleIndex = Random.Range(0, obstaclePrefabs.Length);
-            Vector3 obstaclePosition = new Vector3(
-                Random.Range(-1f, 1f), // Random X position
-                1.0f, // Fixed Y-axis spawn at 1.0f
-                lastPathEndZ + Random.Range(1f, pathLength - 1f) // Random Z position ahead
-            );
+        //if (pathsSpawned >= 15 && obstaclePrefabs.Length > 0 && Random.Range(0, 100) < 40)
+        //{
+        //    int obstacleIndex = Random.Range(0, obstaclePrefabs.Length);
+        //    Vector3 obstaclePosition = new Vector3(
+        //        Random.Range(-1f, 1f), // Random X position
+        //        1.0f, // Fixed Y-axis spawn at 1.0f
+        //        lastPathEndZ + Random.Range(1f, pathLength - 1f) // Random Z position ahead
+        //    );
 
-            GameObject obstacle = Instantiate(obstaclePrefabs[obstacleIndex], obstaclePosition, Quaternion.identity);
+        //    GameObject obstacle = Instantiate(obstaclePrefabs[obstacleIndex], obstaclePosition, Quaternion.identity);
 
-            activePaths.Add(obstacle);
-        }
+        //    activePaths.Add(obstacle);
+        //}
 
         newPath.tag = "PathTrigger";
         activePaths.Add(newPath);
@@ -98,6 +98,7 @@ public class PathManager : MonoBehaviour
         if (newPath.name.Contains("Crystal Caverns Floor"))
         {
             newPath.transform.position = new Vector3(0, 0.83f, lastPathEndZ);
+            newPath.transform.rotation = Quaternion.LookRotation(Vector3.right);
         }
 
         //  Spawn left wall
@@ -130,12 +131,13 @@ public class PathManager : MonoBehaviour
         if (obstaclePrefabs.Length > 0 && Random.Range(0, 100) < 40)
         {
             int obstacleIndex = Random.Range(0, obstaclePrefabs.Length);
-            GameObject obstacle = Instantiate(obstaclePrefabs[obstacleIndex], new Vector3(Random.Range(-1f, 1f), 1, lastPathEndZ + Random.Range(1f, pathLength - 1f)), Quaternion.identity);
+            GameObject obstacle = Instantiate(obstaclePrefabs[obstacleIndex], new Vector3(Random.Range(-5f, 5f), 1, lastPathEndZ + Random.Range(1f, pathLength - 1f)), Quaternion.identity);
 
             // ✅ Ensure Ice Archway is placed correctly at Y = 4.4
             if (obstacle.name.Contains("Ice Archway"))
             {
-                obstacle.transform.position = new Vector3(obstacle.transform.position.x, 4.4f, obstacle.transform.position.z);
+                //obstacle.transform.position = new Vector3(obstacle.transform.position.x, 4.4f, obstacle.transform.position.z);
+                obstacle.transform.position = new Vector3(0, 4.4f, obstacle.transform.position.z);
             }
 
             activePaths.Add(obstacle);
@@ -144,7 +146,7 @@ public class PathManager : MonoBehaviour
         {
             // Ensure the BlueCrystals spawn with a fixed Y-axis at 3.0f
             Vector3 crystalPosition = new Vector3(
-                Random.Range(-1f, 3f), // Random X position
+                Random.Range(-5f, 5f), // Random X position
                 3.0f, // Fixed Y-axis spawn
                 lastPathEndZ + Random.Range(1f, pathLength - 1f) // Random Z position ahead
             );

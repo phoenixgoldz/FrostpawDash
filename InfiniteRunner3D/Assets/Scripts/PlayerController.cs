@@ -154,7 +154,7 @@ public class PlayerController : MonoBehaviour
 
     void DetectTilt()
     {
-        Debug.Log("Tilt Value: " + currentTilt); // Add this for debugging
+        //Debug.Log("Tilt Value: " + currentTilt); // Add this for debugging
     if (Mathf.Abs(currentTilt) > 0.2f) // Try reducing threshold
     {
         ShiftHorizontally(currentTilt);
