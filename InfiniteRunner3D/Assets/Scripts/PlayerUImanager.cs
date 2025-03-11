@@ -59,13 +59,13 @@ public class PlayerUIManager : MonoBehaviour
         {
             // Calculate distance from start position
             float currentZ = player.transform.position.z;
-            distanceTraveled = currentZ - playerStartZ;
+            distanceTraveled = (currentZ - playerStartZ) / 5;
 
             // ✅ Ensure distanceText updates correctly
             UpdateDistance(distanceTraveled);
 
             // ✅ Increase score every 5 meters
-            if (Mathf.FloorToInt(distanceTraveled) % 5 == 0 && Mathf.FloorToInt(distanceTraveled) != lastCheckedDistance)
+            if (Mathf.FloorToInt(distanceTraveled) % 3 == 0 && Mathf.FloorToInt(distanceTraveled) != lastCheckedDistance)
             {
                 lastCheckedDistance = Mathf.FloorToInt(distanceTraveled);
                 UpdateScore(10); // Reward 10 points every 5 meters

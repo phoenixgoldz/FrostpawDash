@@ -301,11 +301,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
       propertyPath: playerControls.m_Actions.Array.size
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
       propertyPath: playerControls.m_Bindings.Array.size
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
       propertyPath: playerControls.m_Actions.Array.data[0].m_Id
@@ -313,7 +313,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
       propertyPath: playerControls.m_Actions.Array.data[1].m_Id
-      value: 5a5b1924-fcfb-4238-b7f6-361067cde962
+      value: 482227c8-7dc3-4f59-a291-bafdfc7bbfe9
       objectReference: {fileID: 0}
     - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
       propertyPath: playerControls.m_Actions.Array.data[2].m_Id
@@ -325,7 +325,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
       propertyPath: playerControls.m_Bindings.Array.data[1].m_Id
-      value: a8ac8dbb-d03f-47e0-8eb9-ce837612a869
+      value: d41efeed-51f1-40a2-8a9b-bafc2b2be78e
       objectReference: {fileID: 0}
     - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
       propertyPath: playerControls.m_Bindings.Array.data[2].m_Id
@@ -345,7 +345,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
       propertyPath: playerControls.m_Actions.Array.data[1].m_Name
-      value: Move
+      value: Jump
       objectReference: {fileID: 0}
     - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
       propertyPath: playerControls.m_Actions.Array.data[2].m_Name
@@ -361,11 +361,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
       propertyPath: playerControls.m_Bindings.Array.data[1].m_Name
-      value: 1D Axis
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
       propertyPath: playerControls.m_Bindings.Array.data[1].m_Path
-      value: 1DAxis
+      value: <Keyboard>/space
       objectReference: {fileID: 0}
     - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
       propertyPath: playerControls.m_Bindings.Array.data[2].m_Name
@@ -393,7 +393,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
       propertyPath: playerControls.m_Bindings.Array.data[1].m_Flags
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
       propertyPath: playerControls.m_Bindings.Array.data[2].m_Flags
@@ -409,7 +409,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
       propertyPath: playerControls.m_Bindings.Array.data[1].m_Action
-      value: Move
+      value: Jump
       objectReference: {fileID: 0}
     - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
       propertyPath: playerControls.m_Bindings.Array.data[2].m_Action
