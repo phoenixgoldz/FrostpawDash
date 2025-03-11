@@ -70,6 +70,7 @@ public class AudioManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        Debug.Log($"🎵 Scene Loaded: {scene.name}");
         PlayMusicForScene(scene.name);
         ApplyButtonClickSound();
 
@@ -78,9 +79,13 @@ public class AudioManager : MonoBehaviour
             masterVolumeSlider.onValueChanged.AddListener(SetVolume);
             masterVolumeSlider.value = GetVolume();
         }
+        if (musicSource.clip == null)
+        {
+            Debug.LogError("⚠️ AudioManager: Music Source has no clip assigned!");
+        }
     }
 
-    void PlayMusicForScene(string sceneName)
+    public void PlayMusicForScene(string sceneName)
     {
         if (sceneName == "MainMenu")
         {
@@ -89,6 +94,23 @@ public class AudioManager : MonoBehaviour
         else if (sceneName == "Level 1")
         {
             PlayRandomLevel1Music();
+        }
+        Debug.Log($"🎵 Playing Music for Scene: {sceneName}");
+
+        if (sceneName == "MainMenu")
+        {
+            PlayMusic(mainMenuMusic);
+        }
+        else if (sceneName == "Level 1")
+        {
+            PlayRandomLevel1Music();
+        }
+
+        // Ensure music is playing
+        if (!musicSource.isPlaying)
+        {
+            Debug.LogWarning("⚠️ Music source is not playing, forcing play.");
+            musicSource.Play();
         }
     }
 
@@ -164,4 +186,6 @@ public class AudioManager : MonoBehaviour
     {
         PlaySFX(buttonClickSFX);
     }
+   
+
 }

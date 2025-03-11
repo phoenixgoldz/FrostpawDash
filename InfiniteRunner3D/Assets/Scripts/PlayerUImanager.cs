@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
@@ -55,22 +55,23 @@ public class PlayerUIManager : MonoBehaviour
 
     void Update()
     {
-        if (!isPaused/* && characterController != null && characterController.velocity.magnitude > 0.1f*/)
+        if (!isPaused && player != null)
         {
-            // Track distance using velocity
-            //distanceTraveled += Time.deltaTime * characterController.velocity.magnitude;
-            distanceTraveled = (player.transform.position.z - playerStartZ) / 5;
+            // Calculate distance from start position
+            float currentZ = player.transform.position.z;
+            distanceTraveled = currentZ - playerStartZ;
+
+            // ✅ Ensure distanceText updates correctly
             UpdateDistance(distanceTraveled);
 
-            // Increase score every 2 distance
-            if (Mathf.FloorToInt(distanceTraveled) % 2 == 0 && Mathf.FloorToInt(distanceTraveled) != lastCheckedDistance)
+            // ✅ Increase score every 5 meters
+            if (Mathf.FloorToInt(distanceTraveled) % 5 == 0 && Mathf.FloorToInt(distanceTraveled) != lastCheckedDistance)
             {
                 lastCheckedDistance = Mathf.FloorToInt(distanceTraveled);
-                UpdateScore(10); // Increase score by 10
+                UpdateScore(10); // Reward 10 points every 5 meters
             }
         }
     }
-
 
     public int GetScore()
     {
@@ -90,12 +91,10 @@ public class PlayerUIManager : MonoBehaviour
 
 
 
-    public void UpdateDistance(float playerZ)
+    public void UpdateDistance(float distance)
     {
-        float distance = playerZ - playerStartZ;
-        distanceText.text = Mathf.FloorToInt(distance) + "m";
+        distanceText.text = Mathf.FloorToInt(distance) + "m"; // Ensure it displays whole numbers
     }
-
 
 
     public void TogglePauseMenu()
@@ -109,10 +108,17 @@ public class PlayerUIManager : MonoBehaviour
             backgroundMusic.mute = isPaused;
         }
     }
-
     public void QuitGame()
     {
         Time.timeScale = 1;
         SceneManager.LoadScene("MainMenu");
+
+        // Ensure the music is unmuted
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.musicSource.mute = false; // Unmute in case it was muted by Pause Menu
+            AudioManager.instance.PlayMusicForScene("MainMenu"); // Restart Main Menu music
+        }
     }
+
 }
