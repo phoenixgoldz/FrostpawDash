@@ -3,12 +3,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-	<!-- Declare permissions outside of <application> -->
+	<!-- 🚀 Required Permissions for Motion and Tilt -->
 	<uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
+	<uses-permission android:name="android.permission.BODY_SENSORS"/>
+	<!-- Some devices may require this for tilt -->
+
+	<!-- 🚀 Declare Accelerometer as an optional feature -->
 	<uses-feature android:name="android.hardware.sensor.accelerometer" android:required="false"/>
+	<uses-feature android:name="android.hardware.sensor.gyroscope" android:required="false"/>
+	<!-- Some devices rely on gyroscopes -->
 
 	<application>
-		<!-- Used when Application Entry is set to Activity -->
+		<!-- 🚀 Unity Game Activity -->
 		<activity android:name="com.unity3d.player.UnityPlayerActivity"
                   android:theme="@style/UnityThemeSelector">
 			<intent-filter>
@@ -18,7 +24,7 @@
 			<meta-data android:name="unityplayer.UnityActivity" android:value="true" />
 		</activity>
 
-		<!-- Used when Application Entry is set to GameActivity -->
+		<!-- 🚀 Alternative Unity Game Entry -->
 		<activity android:name="com.unity3d.player.UnityPlayerGameActivity"
                   android:theme="@style/BaseUnityGameActivityTheme">
 			<intent-filter>

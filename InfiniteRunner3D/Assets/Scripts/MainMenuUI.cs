@@ -22,7 +22,7 @@ public class MainMenuUI : MonoBehaviour
     public GameObject savingIcon;
 
     [Header("UI Elements")]
-    public TMP_Text versionText; 
+    public TMP_Text versionText;
 
     private bool isSaving = false;
 
@@ -63,12 +63,22 @@ public class MainMenuUI : MonoBehaviour
     {
         menuPanel.SetActive(false);
         optionsPanel.SetActive(true);
+
+        if (versionText != null)
+        {
+            versionText.gameObject.SetActive(false); // Hide version text
+        }
     }
 
     public void CloseOptions()
     {
         optionsPanel.SetActive(false);
         menuPanel.SetActive(true);
+
+        if (versionText != null)
+        {
+            versionText.gameObject.SetActive(true); // Unhide version text
+        }
     }
 
     public void ApplySettings()

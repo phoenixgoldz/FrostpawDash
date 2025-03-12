@@ -6,7 +6,7 @@ public class GemCollect : MonoBehaviour
     {
         if (other.CompareTag("Player")) // If player touches gem
         {
-            PlayerUIManager.Instance.UpdateScore(5); //  Add 5 points per gem
+            PlayerUIManager.Instance.UpdateScore(15); //  Add 15 points per gem
             Destroy(gameObject); //  Remove gem
         }
     }

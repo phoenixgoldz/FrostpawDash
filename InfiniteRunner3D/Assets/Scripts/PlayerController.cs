@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
-
+using System.Collections;
 public class PlayerController : MonoBehaviour
 {
     private Animator animator;
     private Rigidbody rb;
+    [SerializeField] private LayerMask groundLayer;
 
     private bool isMoving = false;
     private bool isFalling = false;
@@ -53,7 +54,28 @@ public class PlayerController : MonoBehaviour
         AddMobileControls();
 
         playerControls.Enable();
+        StartCoroutine(EnsureGrounded());
     }
+
+    IEnumerator EnsureGrounded()
+    {
+        yield return new WaitForSeconds(0.5f);
+        if (IsGrounded())
+        {
+            animator.SetBool("IsFalling", false);
+            animator.SetBool("IsRunning", true);
+        }
+    }
+    void UpdateAnimatorParameters()
+    {
+        float fallingSpeed = rb.linearVelocity.y;
+        Debug.Log($"🎭 FallingSpeed: {fallingSpeed}"); // Log value
+
+        animator.SetFloat("FallingSpeed", fallingSpeed);
+        animator.SetFloat("TurnSpeed", Mathf.Abs(shiftVelocity));
+        animator.SetFloat("JumpHeight", transform.position.y);
+    }
+
 
     void OnDestroy()
     {
@@ -64,6 +86,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate() // Use FixedUpdate for physics-based movement
     {
+        UpdateAnimatorParameters();
         if (isMoving)
         {
             // Move Player forward
@@ -87,6 +110,15 @@ public class PlayerController : MonoBehaviour
 
         // Check if Player falls off
         if (transform.position.y < -5f) Die();
+
+        if (!IsGrounded())
+        {
+            Debug.Log("❌ Character is NOT grounded!");
+        }
+        else
+        {
+            Debug.Log("✅ Character is grounded!");
+        }
     }
 
     void OnCollisionEnter(Collision collision)
@@ -101,15 +133,14 @@ public class PlayerController : MonoBehaviour
             Debug.Log("❌ Hit an Obstacle!");
             Die();
         }
-
-        // ✅ Detect landing from a jump
-        if (collision.gameObject.CompareTag("PathTrigger"))
+        if (((1 << collision.gameObject.layer) & groundLayer) != 0)
         {
             Debug.Log("🏁 Landed! Resetting Falling & Running.");
+
             isJumping = false;
-            isFalling = false; // Immediately reset falling state
-            animator.SetBool("IsJumping", false);
+            isFalling = false;
             animator.SetBool("IsFalling", false);
+            animator.SetBool("IsJumping", false);
             animator.SetBool("IsRunning", true);
         }
     }
@@ -149,23 +180,54 @@ public class PlayerController : MonoBehaviour
 
         if (playerControls.FindAction("Tilt") == null) tiltAction = playerControls.AddAction("Tilt", binding: "<Accelerometer>/acceleration/x");
     }
-
-    void HandleSwipe(Vector2 swipeDirection)
+    public void HandleSwipe(Vector2 swipeDirection)
     {
-        // print("Screen Swiped");
+        Debug.Log($"🎮 Swipe input received: {swipeDirection}");
 
-        if (swipeDirection.y == 0.5f) Jump();
-        else if (swipeDirection.y == -0.5f) Slide();
+        if (Mathf.Abs(swipeDirection.y) > Mathf.Abs(swipeDirection.x)) // Prioritize vertical swipes
+        {
+            if (swipeDirection.y > 0)
+            {
+                Debug.Log("⬆️ Jumping...");
+                Jump();
+            }
+            else
+            {
+                Debug.Log("⬇️ Sliding...");
+                Slide();
+            }
+        }
+        else
+        {
+            if (swipeDirection.x > 0)
+            {
+                Debug.Log("➡️ Moving Right...");
+                ShiftHorizontally(1);
+            }
+            else
+            {
+                Debug.Log("⬅️ Moving Left...");
+                ShiftHorizontally(-1);
+            }
+        }
     }
 
     void DetectTilt()
     {
-        //Debug.Log("Tilt Value: " + currentTilt); // Add this for debugging
-    if (Mathf.Abs(currentTilt) > 0.2f) // Try reducing threshold
-    {
-        ShiftHorizontally(currentTilt);
-    }
-    else ResetTurnAnimations();
+        float tiltValue = currentTilt; // Get raw accelerometer X-axis value
+        Debug.Log("Tilt Value: " + tiltValue);
+
+        float tiltSensitivity = PlayerPrefs.GetFloat("ControlSensitivity", 1.0f); // Load saved sensitivity
+
+        if (Mathf.Abs(tiltValue) > 0.05f)
+        {
+            float tiltShift = Mathf.Lerp(0, tiltValue * moveSpeed, Time.deltaTime * 2f);
+            ShiftHorizontally(tiltShift);
+        }
+        else
+        {
+            ResetTurnAnimations();
+        }
     }
 
     void MovePlayer()
@@ -179,18 +241,15 @@ public class PlayerController : MonoBehaviour
         if (currentKeyboardShift != 0) ShiftHorizontally(currentKeyboardShift);
 
         // Move Player
-        if (!stuck) rb.linearVelocity = new Vector3(shiftVelocity, rb.linearVelocity.y, speed);
-        else
-        {
-            rb.linearVelocity = new Vector3(shiftVelocity, rb.linearVelocity.y, -1f);
-            print("stuck");
-        }
+        rb.linearVelocity = new Vector3(shiftVelocity, rb.linearVelocity.y, stuck ? speed * 0.5f : speed);
     }
 
     void Jump()
     {
         if (IsGrounded() && !isJumping)
         {
+            Debug.Log("✅ Jump Triggered!");
+
             isJumping = true;
             isFalling = false;
 
@@ -200,40 +259,63 @@ public class PlayerController : MonoBehaviour
 
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
 
-            // ✅ Invoke ResetJump faster
+            // Ensure jumping resets
             Invoke(nameof(ResetJump), 0.3f);
+        }
+        else
+        {
+            Debug.Log("❌ Jump ignored (Not grounded or already jumping).");
         }
     }
 
     void ResetJump()
     {
-        isJumping = false;
-        animator.SetBool("IsJumping", false);
-
-        // ✅ Check if player is still in air to transition to falling
-        if (!IsGrounded())
+        if (IsGrounded())
         {
-            animator.SetBool("IsFalling", true);
+            Debug.Log("🏁 Resetting Jump");
+            isJumping = false;
+            animator.SetBool("IsJumping", false);
+            animator.SetBool("IsRunning", true);
         }
     }
 
     void Slide()
     {
-        if (!isSliding)
+        if (IsGrounded() && !isSliding)
         {
+            Debug.Log("✅ Slide Triggered!");
+
             isSliding = true;
             animator.SetTrigger("isSliding");
+
+            // Reset sliding after 1 second
             Invoke(nameof(StopSliding), 1f);
+        }
+        else
+        {
+            Debug.Log("❌ Slide ignored (Not grounded or already sliding).");
         }
     }
 
-    void StopSliding() { isSliding = false; }
-
+    void StopSliding()
+    {
+        Debug.Log("🏁 Resetting Slide");
+        isSliding = false;
+        animator.SetBool("isSliding", false);
+    }
     void ShiftHorizontally(float direction)
     {
-        if ((transform.position.x > -pathWidth || direction > 0) && (transform.position.x < pathWidth || direction < 0)) shiftVelocity = direction * moveSpeed;
+        float laneWidth = 3f; // Adjust lane width if necessary
+        float minX = -6f; // Minimum allowed X position
+        float maxX = 6f;  // Maximum allowed X position
 
-        // ✅ Adjust animations for left/right movement
+        // Target lane positions: Clamp between minX and maxX
+        float targetX = Mathf.Clamp(transform.position.x + (direction * laneWidth), minX, maxX);
+
+        // Smooth transition to new position
+        transform.position = Vector3.Lerp(transform.position, new Vector3(targetX, transform.position.y, transform.position.z), Time.deltaTime * 10f);
+
+        // Update animation for turning
         if (direction > 0)
         {
             animator.SetBool("IsTurningLeft", false);
@@ -248,8 +330,6 @@ public class PlayerController : MonoBehaviour
         {
             ResetTurnAnimations();
         }
-
-        //Invoke(nameof(ResetTurnAnimations), 0.3f);
     }
 
     void ResetTurnAnimations()
@@ -265,7 +345,20 @@ public class PlayerController : MonoBehaviour
 
         SceneManager.LoadScene("MainMenu");  // Redirects to the Main Menu, for now
     }
+    private bool IsGrounded()
+    {
+        float rayLength = 2.1f; // Adjust based on character height
+        RaycastHit hit;
 
-    // Thank you https://discussions.unity.com/t/how-can-i-check-if-my-rigidbody-player-is-grounded/256346, this is very nice
-    bool IsGrounded() { return Physics.Raycast(transform.position, Vector3.down, 0.6f); }
+        bool grounded = Physics.Raycast(transform.position, Vector3.down, out hit, rayLength, LayerMask.GetMask("Ground"));
+
+        Debug.DrawRay(transform.position, Vector3.down * rayLength, grounded ? Color.green : Color.red);
+
+        if (!grounded)
+        {
+            Debug.LogWarning("⚠️ Character is NOT grounded!");
+        }
+
+        return grounded;
+    }
 }
