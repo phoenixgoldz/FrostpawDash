@@ -7,18 +7,18 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance;
 
     [Header("Audio Sources")]
-    public AudioSource musicSource;  // Main music player
-    public AudioSource sfxSource;    // Sound Effects (SFX) player
+    public AudioSource musicSource;
+    public AudioSource sfxSource;
 
     [Header("Audio Clips")]
     public AudioClip mainMenuMusic;
-    public AudioClip[] level1MusicTracks; // Array for Level 1 music
-    public AudioClip buttonClickSFX; // Button click sound effect
+    public AudioClip[] level1MusicTracks;
+    public AudioClip buttonClickSFX;
 
     [Header("UI Elements")]
-    public Slider masterVolumeSlider; // Reference to the volume slider
-    public Toggle musicToggle; // Toggle for enabling/disabling music
-    public Toggle vibrationToggle; // Toggle for enabling/disabling vibration
+    public Slider masterVolumeSlider;
+    public Toggle musicToggle;
+    public Toggle vibrationToggle;
 
     void Awake()
     {
@@ -36,20 +36,20 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
-        float savedVolume = PlayerPrefs.GetFloat("MusicVolume", 0.5f); // Default to 50% if not set
+        float savedVolume = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
         SetVolume(savedVolume);
 
         bool isMusicEnabled = PlayerPrefs.GetInt("MusicEnabled", 1) == 1;
-        musicToggle.isOn = isMusicEnabled;
+        if (musicToggle != null) musicToggle.isOn = isMusicEnabled;
         ToggleMusic(isMusicEnabled);
 
         bool isVibrationEnabled = PlayerPrefs.GetInt("VibrationEnabled", 1) == 1;
-        vibrationToggle.isOn = isVibrationEnabled;
+        if (vibrationToggle != null) vibrationToggle.isOn = isVibrationEnabled;
 
         PlayMusicForScene(SceneManager.GetActiveScene().name);
         SceneManager.sceneLoaded += OnSceneLoaded;
 
-        ApplyButtonClickSound();
+        ApplyButtonClickSoundToAll();
 
         if (masterVolumeSlider != null)
         {
@@ -72,17 +72,7 @@ public class AudioManager : MonoBehaviour
     {
         Debug.Log($"🎵 Scene Loaded: {scene.name}");
         PlayMusicForScene(scene.name);
-        ApplyButtonClickSound();
-
-        if (masterVolumeSlider != null)
-        {
-            masterVolumeSlider.onValueChanged.AddListener(SetVolume);
-            masterVolumeSlider.value = GetVolume();
-        }
-        if (musicSource.clip == null)
-        {
-            Debug.LogError("⚠️ AudioManager: Music Source has no clip assigned!");
-        }
+        ApplyButtonClickSoundToAll();
     }
 
     public void PlayMusicForScene(string sceneName)
@@ -95,18 +85,7 @@ public class AudioManager : MonoBehaviour
         {
             PlayRandomLevel1Music();
         }
-        Debug.Log($"🎵 Playing Music for Scene: {sceneName}");
 
-        if (sceneName == "MainMenu")
-        {
-            PlayMusic(mainMenuMusic);
-        }
-        else if (sceneName == "Level 1")
-        {
-            PlayRandomLevel1Music();
-        }
-
-        // Ensure music is playing
         if (!musicSource.isPlaying)
         {
             Debug.LogWarning("⚠️ Music source is not playing, forcing play.");
@@ -129,7 +108,6 @@ public class AudioManager : MonoBehaviour
     public void PlayMusic(AudioClip clip)
     {
         if (musicSource.clip == clip) return;
-
         musicSource.clip = clip;
         musicSource.Play();
     }
@@ -146,14 +124,8 @@ public class AudioManager : MonoBehaviour
     {
         musicSource.volume = volume;
         sfxSource.volume = volume;
-
         PlayerPrefs.SetFloat("MusicVolume", volume);
         PlayerPrefs.Save();
-    }
-
-    public float GetVolume()
-    {
-        return PlayerPrefs.GetFloat("MusicVolume", 0.5f);
     }
 
     public void ToggleMusic(bool isEnabled)
@@ -169,16 +141,14 @@ public class AudioManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    void ApplyButtonClickSound()
+    void ApplyButtonClickSoundToAll()
     {
         Button[] buttons = FindObjectsByType<Button>(FindObjectsSortMode.None);
-
         foreach (Button button in buttons)
         {
-            button.onClick.RemoveListener(PlayButtonClickSFX);
-            button.onClick.AddListener(PlayButtonClickSFX);
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(() => PlayButtonClickSFX());
         }
-
         Debug.Log($"Applied button click sound to {buttons.Length} buttons in {SceneManager.GetActiveScene().name}");
     }
 
@@ -186,6 +156,4 @@ public class AudioManager : MonoBehaviour
     {
         PlaySFX(buttonClickSFX);
     }
-   
-
 }

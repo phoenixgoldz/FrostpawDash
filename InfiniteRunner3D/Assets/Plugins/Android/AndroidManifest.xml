@@ -5,11 +5,11 @@
 
 	<!-- 🚀 Request the correct sensor permissions -->
 	<uses-permission android:name="android.permission.BODY_SENSORS" />
+	<uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
 	<uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true" />
-	<uses-feature android:name="android.hardware.sensor.gyroscope" android:required="false" />
+	<uses-feature android:name="android.hardware.sensor.gyroscope" android:required="true" />
 
 	<application>
-		<!-- 🚀 Unity Game Activity -->
 		<activity android:name="com.unity3d.player.UnityPlayerActivity"
                   android:theme="@style/UnityThemeSelector">
 			<intent-filter>
@@ -19,7 +19,6 @@
 			<meta-data android:name="unityplayer.UnityActivity" android:value="true" />
 		</activity>
 
-		<!-- 🚀 Alternative Unity Game Entry -->
 		<activity android:name="com.unity3d.player.UnityPlayerGameActivity"
                   android:theme="@style/BaseUnityGameActivityTheme">
 			<intent-filter>
