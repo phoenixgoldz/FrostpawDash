@@ -55,6 +55,29 @@ public class PlayerController : MonoBehaviour
 
         playerControls.Enable();
         StartCoroutine(EnsureGrounded());
+        if (SystemInfo.supportsAccelerometer)
+        {
+            Debug.Log("✅ Accelerometer detected! Using for motion controls.");
+        }
+        else
+        {
+            Debug.LogWarning("⚠️ No Accelerometer detected. Tilt movement may not work.");
+        }
+
+        if (SystemInfo.supportsGyroscope)
+        {
+            Input.gyro.enabled = true;
+            Debug.Log("✅ Gyroscope detected and enabled.");
+        }
+    }
+    public float GetSpeed()
+    {
+        return speed;
+    }
+
+    public void SetSpeed(float newSpeed)
+    {
+        speed = newSpeed;
     }
 
     IEnumerator EnsureGrounded()
@@ -85,7 +108,9 @@ public class PlayerController : MonoBehaviour
     }
 
     void FixedUpdate() // Use FixedUpdate for physics-based movement
-    {
+    {    // Always maintain constant forward movement speed
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, rb.linearVelocity.y, moveSpeed); // Ensure consistent forward speed
+
         UpdateAnimatorParameters();
         if (isMoving)
         {
@@ -214,15 +239,14 @@ public class PlayerController : MonoBehaviour
 
     void DetectTilt()
     {
-        float tiltValue = currentTilt; // Get raw accelerometer X-axis value
-        Debug.Log("Tilt Value: " + tiltValue);
+        float tiltValue = Input.acceleration.x; // Read from the accelerometer
+        float tiltSensitivity = PlayerPrefs.GetFloat("ControlSensitivity", 1.0f); // Allow customization
 
-        float tiltSensitivity = PlayerPrefs.GetFloat("ControlSensitivity", 1.0f); // Load saved sensitivity
+        Debug.Log($"Tilt Value: {tiltValue}");
 
-        if (Mathf.Abs(tiltValue) > 0.05f)
+        if (Mathf.Abs(tiltValue) > 0.05f) // Small threshold to prevent jitter
         {
-            float tiltShift = Mathf.Lerp(0, tiltValue * moveSpeed, Time.deltaTime * 2f);
-            ShiftHorizontally(tiltShift);
+            ShiftHorizontally(tiltValue * tiltSensitivity * 2f); // Increase movement speed
         }
         else
         {
@@ -230,18 +254,22 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
     void MovePlayer()
     {
         shiftVelocity = 0;
+        Debug.Log($"🏃 Player Speed: {rb.linearVelocity.z}");
+        Vector3 currentVelocity = rb.linearVelocity;
+
+        // Ensure the speed is always maintained at 5
+        rb.linearVelocity = new Vector3(currentVelocity.x, currentVelocity.y, 5f);
 
         // Detect Phone Tilt
         DetectTilt();
 
         // Detect Keyboard Horizontal Input (Band-aid solution, bear with me please)
         if (currentKeyboardShift != 0) ShiftHorizontally(currentKeyboardShift);
-
-        // Move Player
-        rb.linearVelocity = new Vector3(shiftVelocity, rb.linearVelocity.y, stuck ? speed * 0.5f : speed);
+        
     }
 
     void Jump()

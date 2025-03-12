@@ -3,15 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-	<!-- 🚀 Required Permissions for Motion and Tilt -->
-	<uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
-	<uses-permission android:name="android.permission.BODY_SENSORS"/>
-	<!-- Some devices may require this for tilt -->
-
-	<!-- 🚀 Declare Accelerometer as an optional feature -->
-	<uses-feature android:name="android.hardware.sensor.accelerometer" android:required="false"/>
-	<uses-feature android:name="android.hardware.sensor.gyroscope" android:required="false"/>
-	<!-- Some devices rely on gyroscopes -->
+	<!-- 🚀 Request the correct sensor permissions -->
+	<uses-permission android:name="android.permission.BODY_SENSORS" />
+	<uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true" />
+	<uses-feature android:name="android.hardware.sensor.gyroscope" android:required="false" />
 
 	<application>
 		<!-- 🚀 Unity Game Activity -->
