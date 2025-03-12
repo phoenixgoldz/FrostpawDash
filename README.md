@@ -14,13 +14,14 @@
 - 🎨 **Stylized Fantasy Aesthetic** – Beautifully crafted environments with an anime-inspired look.  
 - 🐆 **Chibi White Leopard Character** – Fully animated and rigged for fluid movement.  
 
-## **🚀 Latest Updates (v0.9.4) – March 11, 2025**  
-✅ **Swipe Detection Fully Optimized** – Fast, responsive swiping just like *Temple Run 2*.  
-✅ **Continuous Jumping Works** – Swiping up multiple times allows rapid jumps.  
+## **🚀 Latest Updates (v0.9.5) – March 12, 2025**  
+✅ **Swipe & Tilt Controls Optimized** – Now works **just like Temple Run 2**, featuring **instant responsiveness**.  
+✅ **Fixed Tilt Sensitivity for Smoother Steering** – Improved accelerometer accuracy.  
+✅ **Jumping & Sliding Implemented** – Swipe up multiple times for consecutive jumps & swipe down for instant slides.  
 ✅ **Fixed "Not Grounded" Issue** – Character now **properly detects ground contact** at all times.  
-✅ **Gems Lowered for Easy Collection** – Adjusted spawn height for proper pickup.  
-✅ **Wall Collision Fix** – Improved **PathManager** logic for smoother path generation.  
-✅ **Version Updated to 0.9.4** – Applied all recent fixes & improvements.  
+✅ **Wall Collision Fix & PathManager Tweaks** – Improved procedural path generation & obstacle placement.  
+✅ **Audio Enhancements** – Music & SFX properly balanced and looping issues fixed.  
+✅ **Version Updated to 0.9.5** – All recent fixes & improvements applied.  
 
 ## **Environments & Difficulty Progression**  
 Each environment introduces unique **obstacles and mechanics** while maintaining balanced gameplay:  
@@ -50,10 +51,10 @@ Each environment introduces unique **obstacles and mechanics** while maintaining
 ### ✅ **Current Progress**  
 - **Pre-release for Android available**  
 - **Crystal Caverns level refined**  
-- **Character skeleton implemented (animations in progress)**  
-- **Swipe mechanics fully polished for fast input**  
-- **Procedural level design prefabs added**  
-- **Basic movement mechanics and Unity Engine 6 setup completed**  
+- **Character animations in progress**  
+- **Swipe & tilt mechanics fully polished for fast input**  
+- **Procedural level design prefabs optimized**  
+- **UI & Main Menu fully functional**  
 - **Stylized assets integrated**  
 
 ## **Assets Used**  
@@ -68,7 +69,7 @@ Each environment introduces unique **obstacles and mechanics** while maintaining
 1. Clone the repository:  
    ```sh
    git clone https://github.com/phoenixgoldz/FrostpawDash.git
-   ```
+   ```  
 2. Open the project in Unity Engine 6.  
 3. Click **Play** to test the game.  
 
@@ -77,3 +78,4 @@ The **test build for Android** is available in the [Releases](https://github.com
 
 ## **License**  
 MIT License  
+
