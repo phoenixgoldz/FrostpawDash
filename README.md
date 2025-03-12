@@ -8,26 +8,28 @@
 ## **Game Features (Planned)**  
 - 🎮 **Infinite Runner Mechanics** – Procedurally generated levels for endless replayability.  
 - 🏃 **Smooth & Responsive Controls** – Swipe or tilt-based movement for intuitive gameplay.  
-- ⚡ **Power-ups & Collectibles** – Speed boosts, shields, and double jumps to enhance the run.  (Coming Soon)
+- ⚡ **Power-ups & Collectibles** – Speed boosts, shields, and double jumps to enhance the run. *(Coming Soon)*  
 - ⚠️ **Obstacles & Challenges** – Each level features unique, dynamic hazards that increase in difficulty.  
-- 🏆 **High Score & Leaderboards** – Compete with personal bests and friends.  (Coming Soon)
+- 🏆 **High Score & Leaderboards** – Compete with personal bests and friends. *(Coming Soon)*  
 - 🎨 **Stylized Fantasy Aesthetic** – Beautifully crafted environments with an anime-inspired look.  
 - 🐆 **Chibi White Leopard Character** – Fully animated and rigged for fluid movement.  
 
-## **🚀 Latest Updates**  
-✅ **Test Build Released:** Available as a **pre-release for Android** under [Releases](https://github.com/phoenixgoldz/FrostpawDash/releases).  
-✅ **Crystal Caverns Level Touch-Up:** Improved obstacles, visuals, and environmental effects.  
-✅ **Character Skeleton Implementation:** Setting up animations for the chibi leopard.  
-✅ **Procedural Level Design:** Added prefabs for **walls, floors, and pathways** to generate random levels dynamically.  
+## **🚀 Latest Updates (v0.9.4) – March 11, 2025**  
+✅ **Swipe Detection Fully Optimized** – Fast, responsive swiping just like *Temple Run 2*.  
+✅ **Continuous Jumping Works** – Swiping up multiple times allows rapid jumps.  
+✅ **Fixed "Not Grounded" Issue** – Character now **properly detects ground contact** at all times.  
+✅ **Gems Lowered for Easy Collection** – Adjusted spawn height for proper pickup.  
+✅ **Wall Collision Fix** – Improved **PathManager** logic for smoother path generation.  
+✅ **Version Updated to 0.9.4** – Applied all recent fixes & improvements.  
 
 ## **Environments & Difficulty Progression**  
 Each environment introduces unique **obstacles and mechanics** while maintaining balanced gameplay:  
 
 ### **🌟 Level 1: Crystal Caverns (Beginner-Friendly)**  
 - 🌌 **Obstacles:** Falling stalactites, crystal bridges, and icy platforms.  
-- 🔹 **Mechanics:** Slow-moving hazards, simple jumps, and minimal speed increase.
+- 🔹 **Mechanics:** Slow-moving hazards, simple jumps, and minimal speed increase.  
 
-## **(Coming Soon) Possible Levels:**
+## **(Coming Soon) Possible Levels:**  
 ### **🌀 Level 2: Celestial Ruins (Moderate Challenge)**  
 - 🏛 **Obstacles:** Vanishing platforms, teleporting orbs, and floating guardian statues.  
 - ⚡ **Mechanics:** More complex movement with faster pace and strategic dodging.  
@@ -49,6 +51,7 @@ Each environment introduces unique **obstacles and mechanics** while maintaining
 - **Pre-release for Android available**  
 - **Crystal Caverns level refined**  
 - **Character skeleton implemented (animations in progress)**  
+- **Swipe mechanics fully polished for fast input**  
 - **Procedural level design prefabs added**  
 - **Basic movement mechanics and Unity Engine 6 setup completed**  
 - **Stylized assets integrated**  
