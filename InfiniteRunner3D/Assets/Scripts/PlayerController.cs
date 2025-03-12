@@ -133,7 +133,17 @@ public class PlayerController : MonoBehaviour
             Debug.Log("❌ Hit an Obstacle!");
             Die();
         }
-        if (((1 << collision.gameObject.layer) & groundLayer) != 0)
+        //if (((1 << collision.gameObject.layer) & groundLayer) != 0)
+        //{
+        //    Debug.Log("🏁 Landed! Resetting Falling & Running.");
+
+        //    isJumping = false;
+        //    isFalling = false;
+        //    animator.SetBool("IsFalling", false);
+        //    animator.SetBool("IsJumping", false);
+        //    animator.SetBool("IsRunning", true);
+        //}
+        if (collision.gameObject.CompareTag("PathTrigger"))
         {
             Debug.Log("🏁 Landed! Resetting Falling & Running.");
 
@@ -145,9 +155,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider other) { if (!other.gameObject.CompareTag("Obstacle")) stuck = true; }
+    void OnTriggerEnter(Collider other) { if (other.gameObject.CompareTag("PathTrigger")) stuck = true; }
+    //void OnTriggerStay(Collider other)
+    //{
+    //    if (other.gameObject.CompareTag("PathTrigger")) stuck = true;
+    //    else stuck = false;
+    //}
 
-    void OnTriggerExit(Collider other) { if (!other.gameObject.CompareTag("Obstacle")) stuck = false; }
+    void OnTriggerExit(Collider other) { if (other.gameObject.CompareTag("PathTrigger")) stuck = false; }
 
     private void CreateKeyboardControls()
     {
@@ -241,7 +256,7 @@ public class PlayerController : MonoBehaviour
         if (currentKeyboardShift != 0) ShiftHorizontally(currentKeyboardShift);
 
         // Move Player
-        rb.linearVelocity = new Vector3(shiftVelocity, rb.linearVelocity.y, stuck ? speed * 0.5f : speed);
+        rb.linearVelocity = new Vector3(shiftVelocity, rb.linearVelocity.y, stuck ? 0 : speed);
     }
 
     void Jump()
