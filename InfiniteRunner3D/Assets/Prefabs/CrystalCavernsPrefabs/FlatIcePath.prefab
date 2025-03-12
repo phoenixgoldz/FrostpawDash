@@ -69,6 +69,10 @@ PrefabInstance:
       value: FlatIcePath
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 0fda1c36f42f6c648b3e03c20589fe7f, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0fda1c36f42f6c648b3e03c20589fe7f, type: 3}
       propertyPath: m_TagString
       value: PathTrigger
       objectReference: {fileID: 0}

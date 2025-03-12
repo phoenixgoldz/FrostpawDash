@@ -133,7 +133,7 @@ public class PathManager : MonoBehaviour
             int obstacleIndex = Random.Range(0, obstaclePrefabs.Length);
             GameObject obstacle = Instantiate(obstaclePrefabs[obstacleIndex], new Vector3(Random.Range(-5f, 5f), 1, lastPathEndZ + Random.Range(1f, pathLength - 1f)), Quaternion.identity);
 
-            // ✅ Ensure Ice Archway is placed correctly at Y = 4.4
+            // Ensure Ice Archway is placed correctly at Y = 4.4
             if (obstacle.name.Contains("Ice Archway"))
             {
                 //obstacle.transform.position = new Vector3(obstacle.transform.position.x, 4.4f, obstacle.transform.position.z);
@@ -151,11 +151,11 @@ public class PathManager : MonoBehaviour
                 lastPathEndZ + Random.Range(1f, pathLength - 1f) // Random Z position ahead
             );
 
-            // ✅ Instantiate and add to activePaths
+            // Instantiate and add to activePaths
             GameObject crystal = Instantiate(blueCrystalsPrefab, crystalPosition, Quaternion.identity);
             activePaths.Add(crystal);
 
-            Debug.Log($"💎 Blue Crystal spawned at {crystalPosition}");
+           // Debug.Log($"💎 Blue Crystal spawned at {crystalPosition}");
         }
 
         //  Ensure Gems spawn at Y = 2.5, with random X positions between -18 and +8
@@ -165,7 +165,7 @@ public class PathManager : MonoBehaviour
             {
                 float gemX = Random.Range(-5f, 5f); // Random X position
                 float gemZ = lastPathEndZ + Random.Range(1f, pathLength - 1f); // Slightly ahead
-                Vector3 gemPosition = new Vector3(gemX, 2.5f, gemZ);
+                Vector3 gemPosition = new Vector3(gemX, 1.5f, gemZ);
 
                 GameObject gem = Instantiate(gemPrefab, gemPosition, Quaternion.identity);
                 activePaths.Add(gem);
@@ -189,7 +189,7 @@ public class PathManager : MonoBehaviour
             {
                 if (col.gameObject != wall && col.CompareTag("Wall"))
                 {
-                    Debug.Log("⚠️ Wall Collision Detected! Repositioning...");
+                    //Debug.Log("⚠️ Wall Collision Detected! Repositioning...");
 
                     wall.transform.position += new Vector3(Random.Range(-5f, 5f), 0, Random.Range(-5f, 5f));
                     repositioned = true;
@@ -203,7 +203,7 @@ public class PathManager : MonoBehaviour
 
         if (attempts == maxAttempts)
         {
-            Debug.LogWarning("🚨 Failed to reposition wall, destroying & respawning!");
+           // Debug.LogWarning("🚨 Failed to reposition wall, destroying & respawning!");
             Destroy(wall);
         }
     }

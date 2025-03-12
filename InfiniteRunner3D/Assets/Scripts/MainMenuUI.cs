@@ -22,14 +22,14 @@ public class MainMenuUI : MonoBehaviour
     public GameObject savingIcon;
 
     [Header("UI Elements")]
-    public TMP_Text versionText; 
+    public TMP_Text versionText;
 
     private bool isSaving = false;
 
     void Start()
     {
         DisplayGameVersion();
-        SetupGraphicsDropdown(); // Restored function for setting up graphics options
+        SetupGraphicsDropdown(); // Set up graphics options
         LoadSettings(); // Load saved settings on start
         Debug.Log("🛠️ MainMenu Loaded - Checking AudioManager...");
 
@@ -43,6 +43,7 @@ public class MainMenuUI : MonoBehaviour
             Debug.LogError("❌ AudioManager NOT FOUND! Ensure it's in the MainMenu scene.");
         }
     }
+
     void DisplayGameVersion()
     {
         if (versionText != null)
@@ -54,6 +55,7 @@ public class MainMenuUI : MonoBehaviour
             Debug.LogError("❌ VersionText is not assigned in MainMenuUI!");
         }
     }
+
     public void PlayGame()
     {
         SceneManager.LoadScene("Level 1");
@@ -63,12 +65,22 @@ public class MainMenuUI : MonoBehaviour
     {
         menuPanel.SetActive(false);
         optionsPanel.SetActive(true);
+
+        if (versionText != null)
+        {
+            versionText.gameObject.SetActive(false); // Hide version text
+        }
     }
 
     public void CloseOptions()
     {
         optionsPanel.SetActive(false);
         menuPanel.SetActive(true);
+
+        if (versionText != null)
+        {
+            versionText.gameObject.SetActive(true); // Unhide version text
+        }
     }
 
     public void ApplySettings()
@@ -89,7 +101,7 @@ public class MainMenuUI : MonoBehaviour
         PlayerPrefs.SetInt("VibrationEnabled", vibrationToggle.isOn ? 1 : 0);
 
         PlayerPrefs.Save();
-        Debug.Log("Settings Saved!");
+        Debug.Log("✅ Settings Saved!");
 
         ApplyLoadedSettings();
         StartCoroutine(HideSavingUI());
@@ -97,7 +109,7 @@ public class MainMenuUI : MonoBehaviour
 
     void LoadSettings()
     {
-        Debug.Log("Loading Settings...");
+        Debug.Log("📥 Loading Settings...");
 
         volumeSlider.value = PlayerPrefs.GetFloat("Volume", 1.0f);
         graphicsDropdown.value = PlayerPrefs.GetInt("GraphicsQuality", DetectBestQualityLevel());
@@ -111,8 +123,8 @@ public class MainMenuUI : MonoBehaviour
     void ApplyLoadedSettings()
     {
         AudioListener.volume = volumeSlider.value;
-        QualitySettings.SetQualityLevel(graphicsDropdown.value);
-        Debug.Log("Graphics Quality Set: " + graphicsDropdown.value);
+        QualitySettings.SetQualityLevel(graphicsDropdown.value, true);
+        Debug.Log($"✅ Graphics Quality Set: {graphicsDropdown.value}");
     }
 
     void SetupGraphicsDropdown()
@@ -129,6 +141,8 @@ public class MainMenuUI : MonoBehaviour
         graphicsDropdown.value = bestQualityLevel;
         graphicsDropdown.RefreshShownValue();
         graphicsDropdown.onValueChanged.AddListener(ChangeGraphicsQuality);
+
+        Debug.Log($"📌 Graphics dropdown initialized. Best quality detected: {bestQualityLevel}");
     }
 
     void ChangeGraphicsQuality(int index)
@@ -136,7 +150,7 @@ public class MainMenuUI : MonoBehaviour
         QualitySettings.SetQualityLevel(index, true);
         PlayerPrefs.SetInt("GraphicsQuality", index);
         PlayerPrefs.Save();
-        Debug.Log("Graphics Quality Changed to: " + index);
+        Debug.Log($"📢 Graphics Quality Changed to: {index}");
     }
 
     int DetectBestQualityLevel()
@@ -145,9 +159,16 @@ public class MainMenuUI : MonoBehaviour
         int processorCores = SystemInfo.processorCount;
         int gpuPerformance = (SystemInfo.graphicsShaderLevel >= 45) ? 2 : (SystemInfo.graphicsShaderLevel >= 30) ? 1 : 0;
 
-        if (memory > 6000 && processorCores >= 6) return 2;
-        if (memory > 3000 && processorCores >= 4) return 1;
-        return 0;
+        int detectedLevel = 0;
+
+        if (memory > 6000 && processorCores >= 6) detectedLevel = 2;
+        else if (memory > 3000 && processorCores >= 4) detectedLevel = 1;
+        else detectedLevel = 0;
+
+        Debug.Log($"🖥️ System Specs - RAM: {memory}MB, Cores: {processorCores}, GPU Level: {gpuPerformance}");
+        Debug.Log($"🔍 Auto-detected best quality: {detectedLevel}");
+        
+        return detectedLevel;
     }
 
     IEnumerator RotateSavingIcon()
@@ -170,7 +191,7 @@ public class MainMenuUI : MonoBehaviour
 
     public void QuitGame()
     {
-        Debug.Log("Quitting Game...");
+        Debug.Log("🚪 Quitting Game...");
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else

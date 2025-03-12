@@ -293,11 +293,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
       propertyPath: speed
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
       propertyPath: moveSpeed
-      value: 4
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: pathWidth
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3116078460435565867, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
       propertyPath: playerControls.m_Actions.Array.size
@@ -435,13 +439,21 @@ PrefabInstance:
       propertyPath: playerControls.m_Bindings.Array.data[2].m_Processors
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5774830828021770632, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: m_Height
+      value: 2.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5774830828021770632, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
+      propertyPath: m_Center.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8812324953059909500, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
       propertyPath: m_Size.y
-      value: 1.0448973
+      value: 0.97721124
       objectReference: {fileID: 0}
     - target: {fileID: 8812324953059909500, guid: f423bae82fb1dc148ba19d85714b0555, type: 3}
       propertyPath: m_Center.y
-      value: 0.85255134
+      value: 1.1555423
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2105,8 +2117,6 @@ MonoBehaviour:
       m_Action: Touch Press
       m_Flags: 0
     m_Flags: 0
-  swipeResistance: 100
-  initialTouchPos: {x: 0, y: 0}
 --- !u!4 &1653155102
 Transform:
   m_ObjectHideFlags: 0

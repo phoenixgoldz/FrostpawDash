@@ -69,6 +69,10 @@ PrefabInstance:
       value: Floating Ice Block
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 8e92af3036871764383f2d4cff92117a, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8e92af3036871764383f2d4cff92117a, type: 3}
       propertyPath: m_TagString
       value: PathTrigger
       objectReference: {fileID: 0}
@@ -104,5 +108,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.01911385, y: 0.00545088, z: 0.01997327}
-  m_Center: {x: 0.000015734695, y: -0.000016359962, z: -0.0000018547289}
+  m_Size: {x: 0.016, y: 0.01, z: 0.014}
+  m_Center: {x: -0.000027254106, y: -0.000016360045, z: -0.0008329039}
