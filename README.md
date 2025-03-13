@@ -14,6 +14,8 @@ One fateful night, the **Northern Lights pulse with an unknown energy**, awakeni
 
 With no time to waste, **Frostpaw dashes into the unknown**, dodging enchanted obstacles, navigating through mystical realms, and racing against time to uncover the truth behind the Celestial Nexus. The journey will test speed, agility, and courage—but Frostpaw must keep running… because something **dark and unseen** stirs in the shadows, ready to chase.  
 
+---
+
 ## **Game Features**  
 - 🎮 **Infinite Runner Mechanics** – Procedurally generated levels for endless replayability.  
 - 🏃 **Smooth & Responsive Controls** – Swipe or tilt-based movement for intuitive gameplay.  
@@ -23,28 +25,33 @@ With no time to waste, **Frostpaw dashes into the unknown**, dodging enchanted o
 - 🎨 **Stylized Fantasy Aesthetic** – Beautifully crafted environments with an anime-inspired look.  
 - 🐆 **Chibi Rainbow Snow Leopard Character** – Fully animated and rigged for fluid movement.  
 
-## **🚀 Latest Updates (v1.0.1) – March 13, 2025**  
-🎉 **Official Release with Leaderboard Upgrades & UI Enhancements!**  
+---
+
+## **🚀 Latest Updates (v1.1.0) – March 13, 2025**  
+🎉 **Leaderboard UI, Gameplay Fixes, and Performance Upgrades!**  
 
 ### **🆕 New Features & Improvements**
-✅ **Leaderboard System Improvements!** 🏆  
-- **Submit Scores Only If You Beat a High Score** ✏️  
-- **Tracks the Top 15 Players** – Saves and auto-updates best runs.  
-- **Cleaner UI** – Player UI **hides when leaderboard appears** for a more polished experience.  
-- **Dynamic Sorting & Storage** – Automatically organizes scores.  
-- **Leaderboard Input Field Appears Only If Player Qualifies** – No unnecessary input prompts!  
+✅ **New "Show Leaderboard" Button in Main Menu!** 🏆  
+- **View the full leaderboard anytime** from the Main Menu.  
+- **Displays the top 15 players with names, scores, and distances.**  
+- **Syncs across all leaderboards** (Main Menu & in-game).  
 
 ✅ **Gameplay & UI Enhancements**  
-- **Retry & Main Menu Fixes** – Restarting or returning properly resets UI.  
-- **Swipe & Tilt Controls Further Optimized** 📱 – More responsive and smoother handling.  
-- **Fixed Android Keyboard Input for Leaderboard Initials** ⌨️ – Ensures proper text entry.  
-- **Refined Pause Menu & Button Responsiveness** 🎮 – Improved touch detection.  
+- **Adjusted Player Tilt Movement** – More responsive and smoother transitions.  
+- **Updated Floor Path Alignment** – No more tripping on floor edges!  
+- **New Wall Prefab Added** – Improves immersion and environmental aesthetics.  
+- **Gem Color & Position Adjustments** – Easier to spot and collect.  
+
+✅ **Leaderboard System Improvements!** 🏆  
+- **Tracks the Top 15 Players** – Saves and auto-updates the best runs.  
+- **Dynamic Sorting & Storage** – Automatically organizes scores for consistency.  
+- **Matches LeaderboardUI Across All Scenes** – No data inconsistencies!  
 
 ✅ **Technical Fixes & Performance Improvements**  
-- **Fixed "Leaderboard UI Not Found" Bug** 🛠 – Prevents crashes on submission.  
-- **Music & Audio Transition Fixes** 🎵 – Ensures smooth playback between scenes.  
-- **Optimized UI Scaling for Android** 📏 – Supports all screen sizes properly.  
+- **Fixed Tripping Issue on Floor Paths** – Seamless transitions between platforms.  
 - **Better Difficulty Scaling & Path Generation** ⚡ – Ensures fair but challenging progression.  
+- **Fixed Android Keyboard Input for Leaderboard Initials** ⌨️ – Ensures proper text entry.  
+- **Optimized UI Scaling for Android** 📏 – Supports all screen sizes properly.  
 
 ---
 
@@ -55,10 +62,10 @@ Each environment introduces unique **obstacles and mechanics** while maintaining
 - 🌌 **Obstacles:** Falling stalactites, crystal bridges, and icy platforms.  
 - 🔹 **Mechanics:** Slow-moving hazards, simple jumps, and minimal speed increase.  
 
+## **Comming Soon## 
 ### **🌀 Level 2: Celestial Ruins (Moderate Challenge)**  
 - 🏛 **Obstacles:** Vanishing platforms, teleporting orbs, and floating guardian statues.  
 - ⚡ **Mechanics:** More complex movement with faster pace and strategic dodging.  
-
 ### **❄️ Level 3: Frozen Twilight Tundra (Challenging, but Fair)**  
 - 🌨 **Obstacles:** Slippery ice patches, crumbling bridges, and frozen wolves dashing across the path.  
 - 🏂 **Mechanics:** Ice physics affects movement, forcing precise reactions.  
@@ -70,6 +77,8 @@ Each environment introduces unique **obstacles and mechanics** while maintaining
 ### **🏙️ Level 5: Arcane Cityscape (Fast-Paced, High Skill)**  
 - ✨ **Obstacles:** Gravity shifts, rotating magic gears, and energy surges blocking paths.  
 - ⚙️ **Mechanics:** Running on walls temporarily, requiring fast adaptation.  
+
+---
 
 ## **Development Roadmap**  
 ### ✅ **Current Progress**  
@@ -92,6 +101,8 @@ Each environment introduces unique **obstacles and mechanics** while maintaining
 - 🛠 **Engine**: Unity Engine 6  
 - 💻 **Language**: C#  
 - 📱 **Platform**: **Android (Pre-release available)**  
+
+---
 
 ## **How to Run the Game**  
 1. Clone the repository:  
