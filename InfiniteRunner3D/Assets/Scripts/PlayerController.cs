@@ -39,14 +39,20 @@ public class PlayerController : MonoBehaviour
     private InputAction tiltAction;
     private float currentTilt => tiltAction.ReadValue<float>();
 
-
     void Start()
     {
+        // Ensure the player starts at Y = 0
+        Vector3 playerStartPosition = transform.position;
+        playerStartPosition.y = 0.5f; // Slightly above the floor to prevent clipping
+        transform.position = playerStartPosition;
+
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
 
-        // Prevents Constraint Issues (hopefully)
-        // Thank you https://discussions.unity.com/t/rigibody-constraints-do-not-work-still-moves-a-little/205580, you are amazing
+        // Ensure the Rigidbody doesn't sink into the floor
+        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
+
         rb.centerOfMass = Vector3.zero;
         rb.inertiaTensorRotation = Quaternion.identity;
 
@@ -55,20 +61,7 @@ public class PlayerController : MonoBehaviour
 
         playerControls.Enable();
         StartCoroutine(EnsureGrounded());
-       /* if (SystemInfo.supportsAccelerometer)
-        {
-            Debug.Log("✅ Accelerometer detected! Using for motion controls.");
-        }
-        else
-        {
-            Debug.LogWarning("⚠️ No Accelerometer detected. Tilt movement may not work.");
-        }
 
-        if (SystemInfo.supportsGyroscope)
-        {
-            Input.gyro.enabled = true;
-            Debug.Log("✅ Gyroscope detected and enabled.");
-        }*/
     }
     public float GetSpeed()
     {
@@ -118,14 +111,14 @@ public class PlayerController : MonoBehaviour
             MovePlayer();
         }
 
-        // ✅ Detect when player is in the air (falling)
+        //  Detect when player is in the air (falling)
         if (rb.linearVelocity.y < -0.1f && !IsGrounded()) // Falling downwards
         {
             isFalling = true;
             animator.SetBool("IsFalling", true);
         }
 
-        // ✅ Detect when player lands
+        //  Detect when player lands
         if (isFalling && IsGrounded())
         {
             isFalling = false;
@@ -350,14 +343,12 @@ public class PlayerController : MonoBehaviour
     }
     void ShiftHorizontally(float direction)
     {
+        float minX = -3.5f; // Adjusted min X position
+        float maxX = 3.33f; // Adjusted max X position
         float laneWidth = 3f; // Adjust lane width if necessary
-        float minX = -6f; // Minimum allowed X position
-        float maxX = 6f;  // Maximum allowed X position
 
-        // Target lane positions: Clamp between minX and maxX
         float targetX = Mathf.Clamp(transform.position.x + (direction * laneWidth), minX, maxX);
 
-        // Smooth transition to new position
         transform.position = Vector3.Lerp(transform.position, new Vector3(targetX, transform.position.y, transform.position.z), Time.deltaTime * 10f);
 
         // Update animation for turning

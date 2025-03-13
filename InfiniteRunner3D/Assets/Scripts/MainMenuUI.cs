@@ -9,8 +9,13 @@ public class MainMenuUI : MonoBehaviour
     [Header("Panels")]
     public GameObject menuPanel;
     public GameObject optionsPanel;
+    public GameObject leaderboardPanel; // ✅ Leaderboard Panel
 
     [Header("UI Elements")]
+    public Button leaderboardButton; // ✅ Reference to Leaderboard Button
+    public Button optionsButton; // ✅ Reference to Options Button
+    public Button quitButton; // ✅ Reference to Quit Button
+
     public Slider volumeSlider;
     public TMP_Dropdown graphicsDropdown;
     public Slider sensitivitySlider;
@@ -23,14 +28,16 @@ public class MainMenuUI : MonoBehaviour
 
     [Header("UI Elements")]
     public TMP_Text versionText;
+    public TMP_Text leaderboardScoreText;
+    public TMP_Text leaderboardDistanceText;
 
     private bool isSaving = false;
 
     void Start()
     {
         DisplayGameVersion();
-        SetupGraphicsDropdown(); // Set up graphics options
-        LoadSettings(); // Load saved settings on start
+        SetupGraphicsDropdown();
+        LoadSettings();
         Debug.Log("🛠️ MainMenu Loaded - Checking AudioManager...");
 
         if (AudioManager.instance != null)
@@ -41,6 +48,28 @@ public class MainMenuUI : MonoBehaviour
         else
         {
             Debug.LogError("❌ AudioManager NOT FOUND! Ensure it's in the MainMenu scene.");
+        }
+
+        // ✅ Assign button listeners
+        if (leaderboardButton != null)
+        {
+            leaderboardButton.onClick.AddListener(ToggleLeaderboard);
+        }
+
+        if (optionsButton != null)
+        {
+            optionsButton.onClick.AddListener(OpenOptions);
+        }
+
+        if (quitButton != null)
+        {
+            quitButton.onClick.AddListener(QuitGame);
+        }
+
+        // ✅ Ensure leaderboard panel is hidden at start
+        if (leaderboardPanel != null)
+        {
+            leaderboardPanel.SetActive(false);
         }
     }
 
@@ -59,6 +88,31 @@ public class MainMenuUI : MonoBehaviour
     public void PlayGame()
     {
         SceneManager.LoadScene("Level 1");
+    }
+
+    public void ToggleLeaderboard()
+    {
+        if (leaderboardPanel == null) return;
+
+        bool isActive = leaderboardPanel.activeSelf;
+        leaderboardPanel.SetActive(!isActive);
+
+        if (!isActive)
+        {
+            LoadLeaderboard();
+        }
+    }
+
+    void LoadLeaderboard()
+    {
+        int lastScore = PlayerPrefs.GetInt("LastScore", 0);
+        float lastDistance = PlayerPrefs.GetFloat("LastDistance", 0);
+
+        if (leaderboardScoreText != null)
+            leaderboardScoreText.text = "Score: " + lastScore;
+
+        if (leaderboardDistanceText != null)
+            leaderboardDistanceText.text = "Distance: " + Mathf.FloorToInt(lastDistance) + "m";
     }
 
     public void OpenOptions()

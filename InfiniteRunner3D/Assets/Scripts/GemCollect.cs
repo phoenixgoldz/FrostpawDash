@@ -2,11 +2,26 @@
 
 public class GemCollect : MonoBehaviour
 {
+    public AudioClip gemCollectSFX;
+
+    void Start()
+    {
+        // Ensure Gems spawn within adjusted range (-3.5f to 3.33f)
+        Vector3 gemPosition = transform.position;
+        gemPosition.x = Random.Range(-3.5f, 3.33f);
+        transform.position = gemPosition;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             PlayerUIManager.Instance.UpdateScore(5);
+
+            if (AudioManager.instance != null && gemCollectSFX != null)
+            {
+                AudioManager.instance.PlaySFX(gemCollectSFX);
+            }
 
             // Preserve and restore speed
             Rigidbody playerRb = other.GetComponent<Rigidbody>();

@@ -6,7 +6,7 @@ public class PathManager : MonoBehaviour
 {
     [Header("Path Settings")]
     public GameObject[] pathPrefabs;
-    public GameObject flatIcePathPrefab; // FlatIcePath prefab for safe start
+    public GameObject flatIcePathPrefab;
     public GameObject[] leftWallPrefabs;
     public GameObject[] rightWallPrefabs;
     public GameObject[] obstaclePrefabs;
@@ -16,16 +16,17 @@ public class PathManager : MonoBehaviour
     public float wallXOffset = 12f;
 
     public GameObject blueCrystalsPrefab;
-    private bool canSpawnBlueCrystals = false; // Prevent early spawning so player can move around
+    public GameObject crystalWallCavernPrefab;
 
+    private bool canSpawnBlueCrystals = false;
     private Transform player;
     private List<GameObject> activePaths = new List<GameObject>();
     private float lastPathEndZ = 0f;
-    private int pathsSpawned = 10; // Track how many paths are spawned
+    private int pathsSpawned = 10;
 
     [Header("Collectibles")]
-    public GameObject gemPrefab; //  Reference to the Gem Prefab
-    public int gemsPerRow = 10; // Number of gems per spawn row
+    public GameObject gemPrefab;
+    public int gemsPerRow = 10;
 
     void Start()
     {
@@ -41,19 +42,20 @@ public class PathManager : MonoBehaviour
             SpawnPath();
         }
 
-        // Start the delay timer for BlueCrystals spawning
         StartCoroutine(EnableBlueCrystalsSpawn());
     }
+
     IEnumerator EnableBlueCrystalsSpawn()
     {
-        yield return new WaitForSeconds(15f); // Wait for 15 seconds
-        canSpawnBlueCrystals = true; // Allow spawning after delay
+        yield return new WaitForSeconds(15f);
+        canSpawnBlueCrystals = true;
     }
-
 
     void Update()
     {
         if (player == null) return;
+
+        float speedFactor = Mathf.Clamp(player.GetComponent<PlayerController>().GetSpeed() / 10f, 1f, 3f); // Adjust spawn rate dynamically
 
         if (player.position.z + pathLength > lastPathEndZ)
         {
@@ -66,68 +68,54 @@ public class PathManager : MonoBehaviour
     {
         GameObject newPath;
 
-        // Ensure first 15 paths are always FlatIcePath for safe testing
         if (pathsSpawned < 15)
         {
-            newPath = Instantiate(flatIcePathPrefab, new Vector3(0, 0, lastPathEndZ), Quaternion.identity);
+            newPath = Instantiate(flatIcePathPrefab, new Vector3(0, 0.05f, lastPathEndZ), Quaternion.identity);
         }
         else
         {
             int floorIndex = Random.Range(0, pathPrefabs.Length);
-            newPath = Instantiate(pathPrefabs[floorIndex], new Vector3(0, 0, lastPathEndZ), Quaternion.identity);
+            newPath = Instantiate(pathPrefabs[floorIndex], new Vector3(0, 0.05f, lastPathEndZ), Quaternion.identity);
         }
-        //if (pathsSpawned >= 15 && obstaclePrefabs.Length > 0 && Random.Range(0, 100) < 40)
-        //{
-        //    int obstacleIndex = Random.Range(0, obstaclePrefabs.Length);
-        //    Vector3 obstaclePosition = new Vector3(
-        //        Random.Range(-1f, 1f), // Random X position
-        //        1.0f, // Fixed Y-axis spawn at 1.0f
-        //        lastPathEndZ + Random.Range(1f, pathLength - 1f) // Random Z position ahead
-        //    );
 
-        //    GameObject obstacle = Instantiate(obstaclePrefabs[obstacleIndex], obstaclePosition, Quaternion.identity);
-
-        //    activePaths.Add(obstacle);
-        //}
+        newPath.transform.position = new Vector3(0, 0.05f, lastPathEndZ); // Ensure it's above 0
+        newPath.transform.rotation = Quaternion.identity;
 
         newPath.tag = "PathTrigger";
         activePaths.Add(newPath);
-        pathsSpawned++; // Increment path count
+        pathsSpawned++;
 
-        //  Ensure Crystal Caverns Floor is at Y = 0.83
         if (newPath.name.Contains("Crystal Caverns Floor"))
         {
             newPath.transform.position = new Vector3(0, 0.83f, lastPathEndZ);
             newPath.transform.rotation = Quaternion.LookRotation(Vector3.right);
         }
 
-        //  Spawn left wall
-        if (leftWallPrefabs.Length > 0)
+        // Ensure left wall always spawns
+        GameObject leftWall = (leftWallPrefabs.Length > 0)
+            ? Instantiate(leftWallPrefabs[Random.Range(0, leftWallPrefabs.Length)], new Vector3(-wallXOffset, 7.64f, lastPathEndZ), Quaternion.Euler(0, 90, 0))
+            : Instantiate(crystalWallCavernPrefab, new Vector3(-17f, 7.64f, lastPathEndZ), Quaternion.Euler(0, 90, 0));
+
+        if (leftWall.name.Contains("CavernWall"))
         {
-            int leftIndex = Random.Range(0, leftWallPrefabs.Length);
-            GameObject leftWall = Instantiate(leftWallPrefabs[leftIndex], new Vector3(-wallXOffset, 7.64f, lastPathEndZ), Quaternion.Euler(0, 90, 0));
-            if (leftWall.name.Contains("CavernWall"))
-            {
-                leftWall.transform.position = new Vector3(leftWall.transform.position.x, leftWall.transform.position.y - 3.25f, leftWall.transform.position.z);
-            }
-            activePaths.Add(leftWall);
-            RepositionIfColliding(leftWall);
+            leftWall.transform.position = new Vector3(leftWall.transform.position.x, 5f, leftWall.transform.position.z);
         }
 
-        //  Spawn right wall
-        if (rightWallPrefabs.Length > 0)
+        activePaths.Add(leftWall);
+
+        // Ensure right wall always spawns
+        GameObject rightWall = (rightWallPrefabs.Length > 0)
+            ? Instantiate(rightWallPrefabs[Random.Range(0, rightWallPrefabs.Length)], new Vector3(wallXOffset, 7.64f, lastPathEndZ), Quaternion.Euler(0, 90, 0))
+            : Instantiate(crystalWallCavernPrefab, new Vector3(18.7f, 7.64f, lastPathEndZ), Quaternion.Euler(0, -90, 0));
+
+        if (rightWall.name.Contains("CavernWall"))
         {
-            int rightIndex = Random.Range(0, rightWallPrefabs.Length);
-            GameObject rightWall = Instantiate(rightWallPrefabs[rightIndex], new Vector3(wallXOffset, 7.64f, lastPathEndZ), Quaternion.Euler(0, 90, 0));
-            if (rightWall.name.Contains("CavernWall"))
-            {
-                rightWall.transform.position = new Vector3(rightWall.transform.position.x, rightWall.transform.position.y - 3.25f, rightWall.transform.position.z);
-            }
-            activePaths.Add(rightWall);
-            RepositionIfColliding(rightWall);
+            rightWall.transform.position = new Vector3(rightWall.transform.position.x, 5f, rightWall.transform.position.z);
         }
 
-        //  Spawn obstacles randomly (40% chance)
+        activePaths.Add(rightWall);
+
+        // Random obstacle spawning (40% chance)
         if (obstaclePrefabs.Length > 0 && Random.Range(0, 100) < 40)
         {
             int obstacleIndex = Random.Range(0, obstaclePrefabs.Length);
@@ -136,75 +124,39 @@ public class PathManager : MonoBehaviour
             // Ensure Ice Archway is placed correctly at Y = 4.4
             if (obstacle.name.Contains("Ice Archway"))
             {
-                //obstacle.transform.position = new Vector3(obstacle.transform.position.x, 4.4f, obstacle.transform.position.z);
                 obstacle.transform.position = new Vector3(0, 4.4f, obstacle.transform.position.z);
             }
 
             activePaths.Add(obstacle);
         }
+
         if (canSpawnBlueCrystals && blueCrystalsPrefab != null)
         {
-            // Ensure the BlueCrystals spawn with a fixed Y-axis at 3.0f
-            Vector3 crystalPosition = new Vector3(
-                Random.Range(-5f, 5f), // Random X position
-                3.0f, // Fixed Y-axis spawn
-                lastPathEndZ + Random.Range(1f, pathLength - 1f) // Random Z position ahead
-            );
-
-            // Instantiate and add to activePaths
+            Vector3 crystalPosition = new Vector3(Random.Range(-5f, 5f), 3.0f, lastPathEndZ + Random.Range(1f, pathLength - 1f));
             GameObject crystal = Instantiate(blueCrystalsPrefab, crystalPosition, Quaternion.identity);
             activePaths.Add(crystal);
-
-           // Debug.Log($"💎 Blue Crystal spawned at {crystalPosition}");
         }
 
-        //  Ensure Gems spawn at Y = 2.5, with random X positions between -18 and +8
         if (gemPrefab != null)
         {
             for (int i = 0; i < gemsPerRow; i++)
             {
-                float gemX = Random.Range(-5f, 5f); // Random X position
-                float gemZ = lastPathEndZ + Random.Range(1f, pathLength - 1f); // Slightly ahead
-                Vector3 gemPosition = new Vector3(gemX, 1.5f, gemZ);
+                float gemX = Random.Range(-3f, 3f);
+                float gemZ = lastPathEndZ + Random.Range(1f, pathLength - 1f);
+                Vector3 gemPosition = new Vector3(gemX, 2f, gemZ);
 
                 GameObject gem = Instantiate(gemPrefab, gemPosition, Quaternion.identity);
                 activePaths.Add(gem);
             }
         }
-
-        lastPathEndZ += pathLength;
-    }
-    void RepositionIfColliding(GameObject wall)
-    {
-        int maxAttempts = 2; // Prevent infinite loop
-        int attempts = 0;
-        bool repositioned = false;
-
-        while (attempts < maxAttempts)
+        // ✅ Ensure IcyFloorPath maintains exactly 18.59f Z-spacing
+        if (newPath.name.Contains("FlatIcePath"))
         {
-            Collider[] colliders = Physics.OverlapSphere(wall.transform.position, 2f);
-            repositioned = false;
-
-            foreach (Collider col in colliders)
-            {
-                if (col.gameObject != wall && col.CompareTag("Wall"))
-                {
-                    //Debug.Log("⚠️ Wall Collision Detected! Repositioning...");
-
-                    wall.transform.position += new Vector3(Random.Range(-5f, 5f), 0, Random.Range(-5f, 5f));
-                    repositioned = true;
-                    break;
-                }
-            }
-
-            if (!repositioned) break;
-            attempts++;
+            lastPathEndZ += 20f; // Set fixed spacing for ice paths
         }
-
-        if (attempts == maxAttempts)
+        else
         {
-           // Debug.LogWarning("🚨 Failed to reposition wall, destroying & respawning!");
-            Destroy(wall);
+            lastPathEndZ += pathLength; // Use default spacing for other paths
         }
     }
 

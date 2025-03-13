@@ -18,6 +18,12 @@ public class SplashScreenManager : MonoBehaviour
         videoPlayer = GetComponent<VideoPlayer>();
         audioSource = GetComponent<AudioSource>(); // Get Audio Source
 
+
+        if (AudioManager.instance != null)
+        {
+            audioSource.volume = AudioManager.instance.musicSource.volume; // Sync with slider
+        }
+
         if (renderTexture != null)
         {
             renderTexture.Release();
