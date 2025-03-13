@@ -110,15 +110,13 @@ public class PlayerUIManager : MonoBehaviour
     }
     public void QuitGame()
     {
-        Time.timeScale = 1;
+        Time.timeScale = 1; // Resume game before loading menu
         SceneManager.LoadScene("MainMenu");
 
-        // Ensure the music is unmuted
+        // Restart Main Menu music
         if (AudioManager.instance != null)
         {
-            AudioManager.instance.musicSource.mute = false; // Unmute in case it was muted by Pause Menu
-            AudioManager.instance.PlayMusicForScene("MainMenu"); // Restart Main Menu music
+            AudioManager.instance.PlayMusicForScene("MainMenu");
         }
     }
-
 }

@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
 
         playerControls.Enable();
         StartCoroutine(EnsureGrounded());
-        if (SystemInfo.supportsAccelerometer)
+       /* if (SystemInfo.supportsAccelerometer)
         {
             Debug.Log("✅ Accelerometer detected! Using for motion controls.");
         }
@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
         {
             Input.gyro.enabled = true;
             Debug.Log("✅ Gyroscope detected and enabled.");
-        }
+        }*/
     }
     public float GetSpeed()
     {
@@ -385,11 +385,27 @@ public class PlayerController : MonoBehaviour
 
     void Die()
     {
-        Debug.Log("❌ Player died! Saving score & transitioning to leaderboard...");
-        // SceneManager.LoadScene("Leaderboard");
+        Debug.Log("❌ Player died! Saving score & displaying leaderboard...");
 
-        SceneManager.LoadScene("MainMenu");  // Redirects to the Main Menu, for now
+        // Save last score and distance
+        PlayerPrefs.SetInt("LastScore", PlayerUIManager.Instance.GetScore());
+        PlayerPrefs.SetFloat("LastDistance", PlayerUIManager.Instance.GetDistance());
+        PlayerPrefs.Save();
+
+        // Find Leaderboard UI and enable it
+        LeaderboardUI leaderboard = Object.FindFirstObjectByType<LeaderboardUI>();
+
+        if (leaderboard != null)
+        {
+            leaderboard.gameObject.SetActive(true); // Ensure it's enabled
+            leaderboard.ShowLeaderboard();
+        }
+        else
+        {
+            Debug.LogError("❌ LeaderboardUI not found! Ensure it's in the scene.");
+        }
     }
+
     private bool IsGrounded()
     {
         float rayLength = 2.1f; // Adjust based on character height

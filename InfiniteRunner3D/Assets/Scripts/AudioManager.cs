@@ -88,10 +88,10 @@ public class AudioManager : MonoBehaviour
 
         if (!musicSource.isPlaying)
         {
-            Debug.LogWarning("⚠️ Music source is not playing, forcing play.");
             musicSource.Play();
         }
     }
+
 
     void PlayRandomLevel1Music()
     {
