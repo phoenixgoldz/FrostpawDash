@@ -19,19 +19,34 @@ With no time to waste, **Frostpaw dashes into the unknown**, dodging enchanted o
 - 🏃 **Smooth & Responsive Controls** – Swipe or tilt-based movement for intuitive gameplay.  
 - ⚠️ **Dynamic Environmental Interactions** – Moving platforms, falling obstacles, and shifting pathways.  
 - 🌌 **Seasonal & Themed Content Updates** – Environments change based on real-world seasons.  
-- 🏆 **High Score & Leaderboards with Ghost Mode** – Compete with past runs in real-time.  
+- 🏆 **High Score & Leaderboards** – Compete with past runs and submit scores!  
 - 🎨 **Stylized Fantasy Aesthetic** – Beautifully crafted environments with an anime-inspired look.  
 - 🐆 **Chibi Rainbow Snow Leopard Character** – Fully animated and rigged for fluid movement.  
 
-## **🚀 Latest Updates (v0.9.5) – March 12, 2025**  
-✅ **Swipe & Tilt Controls Optimized** – Now works **just like Temple Run 2**, featuring **instant responsiveness**.  
-✅ **Fixed Tilt Sensitivity for Smoother Steering** – Improved accelerometer accuracy.  
-✅ **Jumping & Sliding Implemented** – Swipe up multiple times for consecutive jumps & swipe down for instant slides.  
-✅ **Leaderboard Ghost Mode** – See a ghost of your best past run while playing.  
-✅ **Wall Collision Fix & PathManager Tweaks** – Improved procedural path generation & obstacle placement.  
-✅ **Environmental Interactions Added** – Falling obstacles, moving bridges, and alternate pathways.  
-✅ **Dynamic Weather & Time Shifts** – Sky and weather change as the player progresses.  
-✅ **Version Updated to 0.9.5** – All recent fixes & improvements applied.  
+## **🚀 Latest Updates (v1.0.1) – March 13, 2025**  
+🎉 **Official Release with Leaderboard Upgrades & UI Enhancements!**  
+
+### **🆕 New Features & Improvements**
+✅ **Leaderboard System Improvements!** 🏆  
+- **Submit Scores Only If You Beat a High Score** ✏️  
+- **Tracks the Top 15 Players** – Saves and auto-updates best runs.  
+- **Cleaner UI** – Player UI **hides when leaderboard appears** for a more polished experience.  
+- **Dynamic Sorting & Storage** – Automatically organizes scores.  
+- **Leaderboard Input Field Appears Only If Player Qualifies** – No unnecessary input prompts!  
+
+✅ **Gameplay & UI Enhancements**  
+- **Retry & Main Menu Fixes** – Restarting or returning properly resets UI.  
+- **Swipe & Tilt Controls Further Optimized** 📱 – More responsive and smoother handling.  
+- **Fixed Android Keyboard Input for Leaderboard Initials** ⌨️ – Ensures proper text entry.  
+- **Refined Pause Menu & Button Responsiveness** 🎮 – Improved touch detection.  
+
+✅ **Technical Fixes & Performance Improvements**  
+- **Fixed "Leaderboard UI Not Found" Bug** 🛠 – Prevents crashes on submission.  
+- **Music & Audio Transition Fixes** 🎵 – Ensures smooth playback between scenes.  
+- **Optimized UI Scaling for Android** 📏 – Supports all screen sizes properly.  
+- **Better Difficulty Scaling & Path Generation** ⚡ – Ensures fair but challenging progression.  
+
+---
 
 ## **Environments & Difficulty Progression**  
 Each environment introduces unique **obstacles and mechanics** while maintaining balanced gameplay:  
@@ -58,16 +73,17 @@ Each environment introduces unique **obstacles and mechanics** while maintaining
 
 ## **Development Roadmap**  
 ### ✅ **Current Progress**  
-- **Pre-release for Android available**  
+- **Android Pre-release available**  
 - **Crystal Caverns level refined**  
-- **Character animations in progress**  
+- **Character animations fully implemented**  
 - **Swipe & tilt mechanics fully polished for fast input**  
 - **Procedural level design prefabs optimized**  
 - **UI & Main Menu fully functional**  
-- **Stylized assets integrated**  
-- **Leaderboard Ghost Mode implemented**  
+- **Leaderboard system fully stable**  
 - **Environmental interaction features added**  
 - **Seasonal & Themed Content Framework integrated**  
+
+---
 
 ## **Assets Used**  
 - ☁️ [Free Stylized Skybox](https://assetstore.unity.com/packages/2d/textures-materials/sky/free-stylized-skybox-212257) – Skybox for backgrounds  
@@ -81,7 +97,6 @@ Each environment introduces unique **obstacles and mechanics** while maintaining
 1. Clone the repository:  
    ```sh
    git clone https://github.com/phoenixgoldz/FrostpawDash.git
-   ```  
 2. Open the project in Unity Engine 6.  
 3. Click **Play** to test the game.  
 
