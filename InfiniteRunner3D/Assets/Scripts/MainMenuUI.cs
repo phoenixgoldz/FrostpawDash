@@ -48,7 +48,7 @@ public class MainMenuUI : MonoBehaviour
     {
         if (versionText != null)
         {
-            versionText.text = $"Beta Pre-Release Version {Application.version}";
+            versionText.text = $"Version {Application.version}";
         }
         else
         {
