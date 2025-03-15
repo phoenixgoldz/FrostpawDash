@@ -192,7 +192,7 @@ public class LeaderboardUI : MonoBehaviour
         //  Always allow a new score if there are fewer than 15 entries
         if (leaderboardEntries.Count < 15) return true;
 
-        //  Otherwise, check if newScore is higher than at least one existing score
+        // Otherwise, check if newScore is higher than at least one existing score
         foreach (LeaderboardEntry entry in leaderboardEntries)
         {
             if (newScore > entry.score)

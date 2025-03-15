@@ -10,9 +10,10 @@ public class PlayerController : MonoBehaviour
 
     private bool isMoving = false;
     private bool isFalling = false;
+    private bool isSliding = false;
+    private bool isJumping = false;
 
     private bool stuck = false;
-
     public float speed = 10f;
     public float turnSpeed = 5f;
     public float jumpForce = 10f;
@@ -23,9 +24,6 @@ public class PlayerController : MonoBehaviour
     private float currentKeyboardShift = 0;
     private float shiftVelocity = 0;
 
-    private bool isJumping = false;
-    private bool isSliding = false;
-
     private Vector2 startTouchPosition, swipeDelta;
 
     public InputActionMap playerControls;
@@ -34,6 +32,11 @@ public class PlayerController : MonoBehaviour
     private InputAction jumpAction;
     private InputAction slideAction;
     private InputAction shiftAction;
+
+    // Audio
+    private AudioSource audioSource;
+    public AudioClip jumpSFX;
+    public AudioClip hitObstacleSFX;
 
     // Touch Controls
     private InputAction tiltAction;
@@ -45,6 +48,7 @@ public class PlayerController : MonoBehaviour
         Vector3 playerStartPosition = transform.position;
         playerStartPosition.y = 0.5f; // Slightly above the floor to prevent clipping
         transform.position = playerStartPosition;
+        audioSource = GetComponent<AudioSource>(); // Get AudioSource component
 
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
@@ -149,18 +153,10 @@ public class PlayerController : MonoBehaviour
         else if (collision.gameObject.CompareTag("Obstacle"))
         {
             Debug.Log("❌ Hit an Obstacle!");
+            PlaySound(hitObstacleSFX); //  Play obstacle hit sound
             Die();
         }
-        //if (((1 << collision.gameObject.layer) & groundLayer) != 0)
-        //{
-        //    Debug.Log("🏁 Landed! Resetting Falling & Running.");
 
-        //    isJumping = false;
-        //    isFalling = false;
-        //    animator.SetBool("IsFalling", false);
-        //    animator.SetBool("IsJumping", false);
-        //    animator.SetBool("IsRunning", true);
-        //}
         if (collision.gameObject.CompareTag("PathTrigger"))
         {
             Debug.Log("🏁 Landed! Resetting Falling & Running.");
@@ -172,13 +168,16 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("IsRunning", true);
         }
     }
+    void PlaySound(AudioClip clip)
+    {
+        if (audioSource != null && clip != null)
+        {
+            audioSource.PlayOneShot(clip); //  Plays the provided sound effect
+        }
+    }
 
     void OnTriggerEnter(Collider other) { if (other.gameObject.CompareTag("PathTrigger")) stuck = true; }
-    //void OnTriggerStay(Collider other)
-    //{
-    //    if (other.gameObject.CompareTag("PathTrigger")) stuck = true;
-    //    else stuck = false;
-    //}
+
 
     void OnTriggerExit(Collider other) { if (other.gameObject.CompareTag("PathTrigger")) stuck = false; }
 
@@ -396,17 +395,18 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("❌ LeaderboardUI not found! Ensure it's in the scene.");
         }
     }
-
-    private bool IsGrounded()
+    bool IsGrounded()
     {
-        float rayLength = 2.1f; // Adjust based on character height
         RaycastHit hit;
+        Vector3 origin = transform.position + Vector3.up * 0.1f; // Slightly above the feet
 
-        bool grounded = Physics.Raycast(transform.position, Vector3.down, out hit, rayLength, LayerMask.GetMask("Ground"));
+        bool grounded = Physics.Raycast(origin, Vector3.down, out hit, 0.2f);
 
-        Debug.DrawRay(transform.position, Vector3.down * rayLength, grounded ? Color.green : Color.red);
-
-        if (!grounded)
+        if (grounded)
+        {
+            Debug.Log($"✅ Grounded on: {hit.collider.gameObject.name}");
+        }
+        else
         {
             Debug.LogWarning("⚠️ Character is NOT grounded!");
         }

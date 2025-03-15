@@ -68,6 +68,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EasterRabbit
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c1d7fd7e24dea2546ba82326d7f4f0b4, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: c1d7fd7e24dea2546ba82326d7f4f0b4, type: 3}
       propertyPath: m_Controller
       value: 
@@ -179,31 +183,65 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 0
   speed: 5
   turnSpeed: 5
   jumpForce: 10
   moveSpeed: 5
-  pathWidth: 5
+  pathWidth: 4
   playerControls:
     m_Name: Player Controls
     m_Id: 7a076f02-26cd-4648-b540-812092acdd0a
     m_Asset: {fileID: 0}
     m_Actions:
-    - m_Name: Swipe
+    - m_Name: Move
       m_Type: 1
       m_ExpectedControlType: Button
-      m_Id: 5d0ab987-1a1a-4d63-95e0-644671ca9246
+      m_Id: 5a5b1924-fcfb-4238-b7f6-361067cde962
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    - m_Name: Jump
+      m_Type: 1
+      m_ExpectedControlType: Button
+      m_Id: 482227c8-7dc3-4f59-a291-bafdfc7bbfe9
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Bindings:
-    - m_Name: 
-      m_Id: 50cb6657-6fe1-4246-a9e8-91738dcaedba
-      m_Path: '<Touchscreen>/delta '
+    - m_Name: 1D Axis
+      m_Id: a8ac8dbb-d03f-47e0-8eb9-ce837612a869
+      m_Path: 1DAxis
       m_Interactions: 
-      m_Processors: Normalize
+      m_Processors: 
       m_Groups: 
-      m_Action: Swipe
+      m_Action: Move
+      m_Flags: 4
+    - m_Name: negative
+      m_Id: 6ade5111-df0c-4e81-9748-c9621f33ae20
+      m_Path: <Keyboard>/leftArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Move
+      m_Flags: 8
+    - m_Name: positive
+      m_Id: 2d15d853-8236-494e-b61f-76f63bac32ec
+      m_Path: <Keyboard>/rightArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Move
+      m_Flags: 8
+    - m_Name: 
+      m_Id: d41efeed-51f1-40a2-8a9b-bafc2b2be78e
+      m_Path: <Keyboard>/space
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Jump
       m_Flags: 0
+  jumpSFX: {fileID: 8300000, guid: 38cbac7ee726c6a4cab9312c1f4b37d0, type: 3}
+  hitObstacleSFX: {fileID: 8300000, guid: edcb22bcfe6287c4aba4671dcc6b660d, type: 3}

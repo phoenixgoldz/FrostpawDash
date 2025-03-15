@@ -1926,6 +1926,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1378003223}
+  - component: {fileID: 1378003224}
   m_Layer: 0
   m_Name: PathManger
   m_TagString: Untagged
@@ -1948,6 +1949,31 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1378003224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378003221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46192d38c3703d243960c2518c98d509, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pathPrefabs:
+  - {fileID: 9040768361254387859, guid: bb699fc94d16cdf4b86a25e9a34123f8, type: 3}
+  flatIcePathPrefab: {fileID: 0}
+  leftWallPrefabs: []
+  rightWallPrefabs: []
+  obstaclePrefabs: []
+  initialSegments: 5
+  pathLength: 18
+  wallXOffset: 12
+  blueCrystalsPrefab: {fileID: 0}
+  crystalWallCavernPrefab: {fileID: 0}
+  gemPrefab: {fileID: 0}
+  gemsPerRow: 10
 --- !u!1 &1385297609
 GameObject:
   m_ObjectHideFlags: 0
@@ -2450,7 +2476,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1555208009
 MonoBehaviour:
   m_ObjectHideFlags: 0

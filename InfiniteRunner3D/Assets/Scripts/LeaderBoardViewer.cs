@@ -5,11 +5,11 @@ using System.Collections.Generic;
 public class LeaderboardViewer : MonoBehaviour
 {
     [Header("UI Elements")]
-    public GameObject leaderboardPanel; // ✅ The leaderboard panel to show/hide
-    public GameObject mainMenuPanel; // ✅ The main menu panel to return to
-    public TMP_Text leaderboardText; // ✅ Single text box for leaderboard data
+    public GameObject leaderboardPanel; //  The leaderboard panel to show/hide
+    public GameObject mainMenuPanel; //  The main menu panel to return to
+    public TMP_Text leaderboardText; //  Single text box for leaderboard data
 
-    private const int MaxLeaderboardEntries = 15; // ✅ Show top 15 players
+    private const int MaxLeaderboardEntries = 15; //  Show top 15 players
     private List<LeaderboardEntry> leaderboardEntries = new List<LeaderboardEntry>();
 
     public class LeaderboardEntry
@@ -28,11 +28,11 @@ public class LeaderboardViewer : MonoBehaviour
 
     void Start()
     {
-        // Ensure the leaderboard panel is hidden at the start
         if (leaderboardPanel != null)
         {
             leaderboardPanel.SetActive(false);
         }
+        EnsureLeaderboardDefaults(); // ✅ Ensure default leaderboard data is set
         LoadLeaderboardData();
     }
 
@@ -41,7 +41,7 @@ public class LeaderboardViewer : MonoBehaviour
         if (leaderboardPanel == null || mainMenuPanel == null) return;
 
         leaderboardPanel.SetActive(true);
-        mainMenuPanel.SetActive(false); // Hide main menu panel when viewing leaderboard
+        mainMenuPanel.SetActive(false);
         DisplayLeaderboard();
     }
 
@@ -50,7 +50,25 @@ public class LeaderboardViewer : MonoBehaviour
         if (leaderboardPanel == null || mainMenuPanel == null) return;
 
         leaderboardPanel.SetActive(false);
-        mainMenuPanel.SetActive(true); // Show main menu panel when exiting leaderboard
+        mainMenuPanel.SetActive(true);
+    }
+
+    void EnsureLeaderboardDefaults()
+    {
+        if (!PlayerPrefs.HasKey("Leaderboard_Initialized"))
+        {
+            Debug.Log("🏆 First-time setup: Creating default leaderboard.");
+
+            PlayerPrefs.SetInt("Leaderboard_Initialized", 1); // Prevents re-initialization
+
+            for (int i = 0; i < MaxLeaderboardEntries; i++)
+            {
+                PlayerPrefs.SetString($"Leaderboard_Name_{i}", i == 0 ? "TJH" : "AAA"); // Default name
+                PlayerPrefs.SetInt($"Leaderboard_Score_{i}", i == 0 ? 500 : Random.Range(200, 480)); // Default score
+                PlayerPrefs.SetFloat($"Leaderboard_Distance_{i}", i == 0 ? 150f : Random.Range(50f, 140f)); // Default distance
+            }
+            PlayerPrefs.Save();
+        }
     }
 
     void LoadLeaderboardData()
@@ -66,7 +84,6 @@ public class LeaderboardViewer : MonoBehaviour
             leaderboardEntries.Add(new LeaderboardEntry(playerInitials, playerScore, playerDistance));
         }
 
-        // Sort by score (highest first)
         leaderboardEntries.Sort((a, b) => b.score.CompareTo(a.score));
     }
 
@@ -74,7 +91,7 @@ public class LeaderboardViewer : MonoBehaviour
     {
         if (leaderboardText == null) return;
 
-        leaderboardText.text = "🏆 Leaderboard 🏆\n\n";
+        leaderboardText.text = " Top 15 Players \n\n";
 
         int maxEntries = Mathf.Min(leaderboardEntries.Count, MaxLeaderboardEntries);
         for (int i = 0; i < maxEntries; i++)

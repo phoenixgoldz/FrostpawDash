@@ -144,10 +144,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9be3ccb26cbbb0d41bafaec4537a2822, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  speed: 5
   turnSpeed: 5
   jumpForce: 10
-  moveSpeed: 4
+  moveSpeed: 5
   pathWidth: 4
   playerControls:
     m_Name: Player Controls
@@ -203,6 +206,8 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Jump
       m_Flags: 0
+  jumpSFX: {fileID: 8300000, guid: 38cbac7ee726c6a4cab9312c1f4b37d0, type: 3}
+  hitObstacleSFX: {fileID: 8300000, guid: edcb22bcfe6287c4aba4671dcc6b660d, type: 3}
 --- !u!1 &25526494602306381
 GameObject:
   m_ObjectHideFlags: 0
