@@ -27,32 +27,33 @@ With no time to waste, **Frostpaw dashes into the unknown**, dodging enchanted o
 
 ---
 
-## **🚀 Latest Updates (v1.2.1) – March 15, 2025**  
-🎉 **Credits Menu, UI Enhancements, Audio Updates, and Easter Event Preparations!**  
+## **🚀 Latest Updates (v1.3.01) – March 16, 2025**  
+🎉 **New Character, Easter Event Preparations, UI & Leaderboard Updates, and More!**  
 
-### **🆕 New Features & Improvements**
-✅ **Credits Menu Added! 🎭**  
-- A **new Credits Menu** can be accessed from the **Main Menu**.  
-- Displays **developer names, artists, and music credits**.  
-- Features **scrolling text with a dedicated background track**.  
+### **🆕 New Features & Improvements**  
 
-✅ **Main Menu UI Updates** 🎨  
-- **Button placement and text colors updated** for better readability.  
-- Improved **visual clarity** and **consistent UI scaling** across devices.  
+✅ **New Playable Character! 🐆🎮**  
+- **Replaced the main character** with a new, fully rigged and animated runner.  
+- Improved **movement physics and smoother animations** for a better experience.  
 
 ✅ **Easter 2025 Event Preparations 🐰❄️**  
-- Introduced **Easter-themed assets and decorations** for the upcoming event.  
-- Expect **special Easter levels, challenges, and surprises** in April 2025!  
+- **Updated title image** for the **Easter Event**.  
+- **New app icon** with a festive **Easter theme**.  
+- **Easter-themed assets added** in preparation for upcoming seasonal content.  
 
-✅ **Audio & Sound Enhancements 🎧**  
-- **New background music tracks added** to enhance immersion.  
-- **Player jump sound effect** added for better feedback.  
-- **Collision sound effect** added when hitting obstacles.  
+✅ **UI & Menu Enhancements 🎨**  
+- **Credits screen ‘Submit’ button repositioned** for better placement.  
+- **Leaderboard resized** for improved readability and user experience.  
+- **New loading screen implemented** for smoother transitions between levels.  
 
-✅ **Gameplay & Physics Fixes 🏃‍♂️**  
-- **Fixed player movement getting blocked** in certain areas.  
-- **Adjusted box colliders on paths** for smoother navigation.  
-- **Player can now move seamlessly without unintended barriers.**  
+✅ **Level Design Progress 🌍**  
+- **"EasterLevel" scene** in progress with adjusted object placements.  
+- **Prepping environment tweaks** for enhanced player experience.  
+
+✅ **General Fixes & Optimization 🔧**  
+- **Fixed player movement issues** and **locked Y-axis rotation** properly.  
+- **Improved jump physics** and adjusted collider interactions.  
+- **Optimized UI scaling for different device resolutions**.  
 
 ---
 
@@ -67,41 +68,22 @@ Each environment introduces unique **obstacles and mechanics** while maintaining
 - 🏛 **Obstacles:** Vanishing platforms, teleporting orbs, and floating guardian statues.  
 - ⚡ **Mechanics:** More complex movement with faster pace and strategic dodging.  
 
-### **❄️ Level 3: Frozen Twilight Tundra (Challenging, but Fair)** *(Coming Soon)*  
-- 🌨 **Obstacles:** Slippery ice patches, crumbling bridges, and frozen wolves dashing across the path.  
-- 🏂 **Mechanics:** Ice physics affects movement, forcing precise reactions.  
-
-### **🌙 Level 4: Enchanted Moonlit Forest (Advanced Difficulty)** *(Coming Soon)*  
-- 🌲 **Obstacles:** Moving tree roots, glowing lantern spirits, and swinging vines blocking paths.  
-- 🍄 **Mechanics:** Bouncing mushrooms add verticality, requiring better control.  
-
-### **🏙️ Level 5: Arcane Cityscape (Fast-Paced, High Skill)** *(Coming Soon)*  
-- ✨ **Obstacles:** Gravity shifts, rotating magic gears, and energy surges blocking paths.  
-- ⚙️ **Mechanics:** Running on walls temporarily, requiring fast adaptation.  
-
 ---
 
 ## **Development Roadmap**  
+
 ### ✅ **Current Progress**  
 - **Android Pre-release available**  
 - **Crystal Caverns level refined**  
-- **Character animations fully implemented**  
-- **Swipe & tilt mechanics fully polished for fast input**  
+- **New Easter content integrated**  
 - **Procedural level design prefabs optimized**  
-- **UI & Main Menu fully functional**  
-- **Leaderboard system fully stable**  
-- **Environmental interaction features added**  
-- **Seasonal & Themed Content Framework integrated**  
+- **Leaderboard & UI layout adjusted**  
+- **EasterLevel in development**  
 
----
-
-## **Assets Used**  
-- ☁️ [Free Stylized Skybox](https://assetstore.unity.com/packages/2d/textures-materials/sky/free-stylized-skybox-212257) – Skybox for backgrounds  
-
-## **Tech Stack**  
-- 🛠 **Engine**: Unity Engine 6  
-- 💻 **Language**: C#  
-- 📱 **Platform**: **Android (Pre-release available)**  
+### 📉 **Next Steps**  
+- [ ] **Create `PathManager` script for EasterLevel**  
+- [ ] **Test and optimize Easter-themed UI elements**  
+- [ ] **Finalize level placements and gameplay mechanics**  
 
 ---
 
@@ -109,6 +91,7 @@ Each environment introduces unique **obstacles and mechanics** while maintaining
 1. Clone the repository:  
    ```sh
    git clone https://github.com/phoenixgoldz/FrostpawDash.git
+   ```  
 2. Open the project in Unity Engine 6.  
 3. Click **Play** to test the game.  
 
@@ -117,4 +100,3 @@ The **test build for Android** is available in the [Releases](https://github.com
 
 ## **License**  
 MIT License  
-
