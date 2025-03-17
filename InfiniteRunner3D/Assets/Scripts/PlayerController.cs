@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
         // Ensure the Rigidbody doesn't sink into the floor
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
-        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY;
 
         rb.centerOfMass = Vector3.zero;
         rb.inertiaTensorRotation = Quaternion.identity;
@@ -131,15 +131,6 @@ public class PlayerController : MonoBehaviour
 
         // Check if Player falls off
         if (transform.position.y < -5f) Die();
-/*
-        if (!IsGrounded())
-        {
-            Debug.Log("❌ Character is NOT grounded!");
-        }
-        else
-        {
-            Debug.Log("✅ Character is grounded!");
-        }*/
     }
 
     void OnCollisionEnter(Collision collision)
@@ -394,13 +385,19 @@ public class PlayerController : MonoBehaviour
     bool IsGrounded()
     {
         RaycastHit hit;
-        Vector3 origin = transform.position + Vector3.up * 0.1f; 
 
-        bool grounded = Physics.Raycast(origin, Vector3.down, out hit, 0.5f);
+        Vector3 origin = transform.position + Vector3.up * 0.2f;
+        float rayLength = 0.3f; // Slightly extended for reliability
+        float sphereRadius = 0.25f; // Adjust based on character's feet size
+
+        bool raycastHit = Physics.Raycast(origin, Vector3.down, out hit, rayLength);
+        bool sphereCastHit = Physics.SphereCast(origin, sphereRadius, Vector3.down, out hit, rayLength);
+
+        bool grounded = raycastHit || sphereCastHit; // Grounded if either check is true
 
         if (grounded)
         {
-            Debug.Log($"✅ Grounded on: {hit.collider.gameObject.name}");
+            Debug.Log($"✅ Grounded ");
         }
         else
         {
@@ -408,5 +405,27 @@ public class PlayerController : MonoBehaviour
         }
 
         return grounded;
+    }
+    void OnDrawGizmos()
+    {
+        // Define the raycast origin
+        Vector3 origin = transform.position + Vector3.up * 0.1f;
+        float rayLength = 0.3f;
+
+        // Check if grounded
+        RaycastHit hit;
+        bool grounded = Physics.Raycast(origin, Vector3.down, out hit, rayLength);
+
+        // Set Gizmo color based on ground detection
+        Gizmos.color = grounded ? Color.green : Color.red;
+
+        // Draw the ray
+        Gizmos.DrawLine(origin, origin + Vector3.down * rayLength);
+
+        // Draw a small sphere at the raycast hit point if grounded
+        if (grounded)
+        {
+            Gizmos.DrawSphere(hit.point, 0.05f);
+        }
     }
 }

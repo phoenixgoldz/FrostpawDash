@@ -22,7 +22,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 496d0300710a5a94f8b5b54ed7fe7426, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.9202298
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 496d0300710a5a94f8b5b54ed7fe7426, type: 3}
       propertyPath: m_LocalPosition.y
@@ -30,7 +30,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 496d0300710a5a94f8b5b54ed7fe7426, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.419074
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 496d0300710a5a94f8b5b54ed7fe7426, type: 3}
       propertyPath: m_LocalRotation.w
@@ -67,6 +67,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 496d0300710a5a94f8b5b54ed7fe7426, type: 3}
       propertyPath: m_Name
       value: CarrotCake
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 496d0300710a5a94f8b5b54ed7fe7426, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 496d0300710a5a94f8b5b54ed7fe7426, type: 3}
+      propertyPath: m_TagString
+      value: PathTrigger
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

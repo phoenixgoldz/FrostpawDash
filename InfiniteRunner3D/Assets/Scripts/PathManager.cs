@@ -70,15 +70,15 @@ public class PathManager : MonoBehaviour
 
         if (pathsSpawned < 15)
         {
-            newPath = Instantiate(flatIcePathPrefab, new Vector3(0, 0.05f, lastPathEndZ), Quaternion.identity);
+            newPath = Instantiate(flatIcePathPrefab, new Vector3(0, 0, lastPathEndZ), Quaternion.identity);
         }
         else
         {
             int floorIndex = Random.Range(0, pathPrefabs.Length);
-            newPath = Instantiate(pathPrefabs[floorIndex], new Vector3(0, 0.05f, lastPathEndZ), Quaternion.identity);
+            newPath = Instantiate(pathPrefabs[floorIndex], new Vector3(0, 0, lastPathEndZ), Quaternion.identity);
         }
 
-        newPath.transform.position = new Vector3(0, 0.05f, lastPathEndZ); // Ensure it's above 0
+        newPath.transform.position = new Vector3(0, -1.03f, lastPathEndZ); // Ensure it's above 0
         newPath.transform.rotation = Quaternion.identity;
 
         newPath.tag = "PathTrigger";
@@ -143,7 +143,7 @@ public class PathManager : MonoBehaviour
             {
                 float gemX = Random.Range(-3f, 3f);
                 float gemZ = lastPathEndZ + Random.Range(1f, pathLength - 1f);
-                Vector3 gemPosition = new Vector3(gemX, 2f, gemZ);
+                Vector3 gemPosition = new Vector3(gemX, 1.5f, gemZ);
 
                 GameObject gem = Instantiate(gemPrefab, gemPosition, Quaternion.identity);
                 activePaths.Add(gem);

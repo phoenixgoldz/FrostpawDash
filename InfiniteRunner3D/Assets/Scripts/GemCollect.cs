@@ -9,6 +9,7 @@ public class GemCollect : MonoBehaviour
         // Ensure Gems spawn within adjusted range (-3.5f to 3.33f)
         Vector3 gemPosition = transform.position;
         gemPosition.x = Random.Range(-3.5f, 3.33f);
+        gemPosition.y = Random.Range(1, 1.5f);
         transform.position = gemPosition;
     }
 
