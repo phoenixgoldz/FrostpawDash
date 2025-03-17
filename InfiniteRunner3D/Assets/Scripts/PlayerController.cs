@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour
         // Ensure the Rigidbody doesn't sink into the floor
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
+        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 
         rb.centerOfMass = Vector3.zero;
         rb.inertiaTensorRotation = Quaternion.identity;
@@ -95,8 +96,6 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("TurnSpeed", Mathf.Abs(shiftVelocity));
         animator.SetFloat("JumpHeight", transform.position.y);
     }
-
-
     void OnDestroy()
     {
         SwipeDetection.instance.swipePerformed -= context => HandleSwipe(context);
@@ -132,7 +131,7 @@ public class PlayerController : MonoBehaviour
 
         // Check if Player falls off
         if (transform.position.y < -5f) Die();
-
+/*
         if (!IsGrounded())
         {
             Debug.Log("❌ Character is NOT grounded!");
@@ -140,7 +139,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             Debug.Log("✅ Character is grounded!");
-        }
+        }*/
     }
 
     void OnCollisionEnter(Collision collision)
@@ -153,9 +152,12 @@ public class PlayerController : MonoBehaviour
         else if (collision.gameObject.CompareTag("Obstacle"))
         {
             Debug.Log("❌ Hit an Obstacle!");
-            PlaySound(hitObstacleSFX); //  Play obstacle hit sound
+
+            LevelAudioManager.instance.PlaySound(hitObstacleSFX);
+
             Die();
         }
+
 
         if (collision.gameObject.CompareTag("PathTrigger"))
         {
@@ -168,16 +170,8 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("IsRunning", true);
         }
     }
-    void PlaySound(AudioClip clip)
-    {
-        if (audioSource != null && clip != null)
-        {
-            audioSource.PlayOneShot(clip); //  Plays the provided sound effect
-        }
-    }
 
     void OnTriggerEnter(Collider other) { if (other.gameObject.CompareTag("PathTrigger")) stuck = true; }
-
 
     void OnTriggerExit(Collider other) { if (other.gameObject.CompareTag("PathTrigger")) stuck = false; }
 
@@ -294,6 +288,8 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("IsFalling", false);
             animator.SetBool("IsRunning", false);
 
+            LevelAudioManager.instance.PlaySound(jumpSFX); // Play jump sound
+
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
 
             // Ensure jumping resets
@@ -398,9 +394,9 @@ public class PlayerController : MonoBehaviour
     bool IsGrounded()
     {
         RaycastHit hit;
-        Vector3 origin = transform.position + Vector3.up * 0.1f; // Slightly above the feet
+        Vector3 origin = transform.position + Vector3.up * 0.1f; 
 
-        bool grounded = Physics.Raycast(origin, Vector3.down, out hit, 0.2f);
+        bool grounded = Physics.Raycast(origin, Vector3.down, out hit, 0.5f);
 
         if (grounded)
         {

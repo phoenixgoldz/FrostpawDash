@@ -10,13 +10,15 @@ public class MainMenuUI : MonoBehaviour
     public GameObject menuPanel;
     public GameObject optionsPanel;
     public GameObject leaderboardPanel;
-    public GameObject creditsPanel; // ✅ Added Credits Panel reference
+    private LeaderboardUI leaderboardUI;
+
+    public GameObject creditsPanel;
 
     [Header("UI Elements")]
     public Button leaderboardButton;
     public Button optionsButton;
     public Button quitButton;
-    public Button creditsButton; // ✅ Added Credits Button reference
+    public Button creditsButton;
 
     public Slider volumeSlider;
     public TMP_Dropdown graphicsDropdown;
@@ -32,7 +34,10 @@ public class MainMenuUI : MonoBehaviour
     public TMP_Text versionText;
 
     private bool isSaving = false;
-    private LeaderboardUI leaderboardUI;
+
+    [Header("Fading Animation")]
+    public CanvasGroup menuCanvasGroup;
+    public float fadeDuration = 1.5f; // Adjust fade speed
 
     void Start()
     {
@@ -43,19 +48,34 @@ public class MainMenuUI : MonoBehaviour
             SetupGraphicsDropdown();
         }
 
+        // Ensure LeaderboardUI is found safely
+        leaderboardUI = Object.FindFirstObjectByType<LeaderboardUI>();
         LoadSettings();
 
-        // ✅ Assign button listeners
+        // Assign button listeners
         leaderboardButton?.onClick.AddListener(ToggleLeaderboard);
         optionsButton?.onClick.AddListener(OpenOptions);
         quitButton?.onClick.AddListener(QuitGame);
-        creditsButton?.onClick.AddListener(ShowCredits); // ✅ Assign Credits Button function
+        creditsButton?.onClick.AddListener(ShowCredits);
 
-        // ✅ Ensure panels are hidden at start
         if (leaderboardPanel != null) leaderboardPanel.SetActive(false);
         if (creditsPanel != null) creditsPanel.SetActive(false);
 
-        leaderboardUI = FindFirstObjectByType<LeaderboardUI>();
+        // Start the fade-in effect when the scene loads
+        StartCoroutine(FadeInMenu());
+    }
+    IEnumerator FadeInMenu()
+    {
+        menuCanvasGroup.alpha = 0;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < fadeDuration)
+        {
+            menuCanvasGroup.alpha = Mathf.Lerp(0, 1, elapsedTime / fadeDuration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        menuCanvasGroup.alpha = 1;
     }
 
     void DisplayGameVersion()
@@ -77,14 +97,18 @@ public class MainMenuUI : MonoBehaviour
 
     public void ToggleLeaderboard()
     {
-        if (leaderboardUI == null) return;
+        if (leaderboardUI == null)
+        {
+            Debug.LogError("❌ Cannot open leaderboard: LeaderboardUI reference is missing.");
+            return;
+        }
 
         bool isActive = leaderboardPanel.activeSelf;
         leaderboardPanel.SetActive(!isActive);
 
         if (!isActive)
         {
-            leaderboardUI.ShowLeaderboard(); // Calls LeaderboardUI's method to update UI
+            leaderboardUI.ShowLeaderboard(); // SAFE: Calls LeaderboardUI if it exists
         }
     }
 
@@ -200,7 +224,7 @@ public class MainMenuUI : MonoBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
-            Application.Quit();
+        Application.Quit();
 #endif
     }
 }

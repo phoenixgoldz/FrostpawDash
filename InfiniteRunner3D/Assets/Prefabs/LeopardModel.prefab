@@ -147,10 +147,10 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
-  speed: 5
+  speed: 6
   turnSpeed: 5
-  jumpForce: 10
-  moveSpeed: 5
+  jumpForce: 8
+  moveSpeed: 6
   pathWidth: 4
   playerControls:
     m_Name: Player Controls

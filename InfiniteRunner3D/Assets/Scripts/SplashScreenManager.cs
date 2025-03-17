@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 using UnityEngine.SceneManagement;
@@ -7,7 +7,7 @@ using System.Collections;
 public class SplashScreenManager : MonoBehaviour
 {
     private VideoPlayer videoPlayer;
-    private AudioSource audioSource; // Reference to the Audio Source
+    private AudioSource audioSource;
     public RawImage videoDisplay;
     public RenderTexture renderTexture;
     public CanvasGroup fadeCanvasGroup;
@@ -16,12 +16,11 @@ public class SplashScreenManager : MonoBehaviour
     void Start()
     {
         videoPlayer = GetComponent<VideoPlayer>();
-        audioSource = GetComponent<AudioSource>(); // Get Audio Source
-
+        audioSource = GetComponent<AudioSource>();
 
         if (AudioManager.instance != null)
         {
-            audioSource.volume = AudioManager.instance.musicSource.volume; // Sync with slider
+            audioSource.volume = AudioManager.instance.musicSource.volume;
         }
 
         if (renderTexture != null)
@@ -37,12 +36,12 @@ public class SplashScreenManager : MonoBehaviour
 
         videoPlayer.aspectRatio = VideoAspectRatio.FitInside;
         videoPlayer.audioOutputMode = VideoAudioOutputMode.AudioSource;
-        videoPlayer.SetTargetAudioSource(0, audioSource); // Assign audio to source
+        videoPlayer.SetTargetAudioSource(0, audioSource);
         videoPlayer.Prepare();
 
         videoPlayer.prepareCompleted += (VideoPlayer vp) =>
         {
-            audioSource.Play();  // Ensure audio plays when the video starts
+            audioSource.Play();
             videoPlayer.Play();
         };
 
@@ -68,7 +67,7 @@ public class SplashScreenManager : MonoBehaviour
 
     void OnVideoFinished(VideoPlayer vp)
     {
-        StartCoroutine(FadeOutAndLoadScene("MainMenu"));
+        StartCoroutine(FadeOutAndLoadScene("LoadingScene")); // ✅ Fixed: Now loads LoadingScene correctly
     }
 
     IEnumerator FadeOutAndLoadScene(string sceneName)

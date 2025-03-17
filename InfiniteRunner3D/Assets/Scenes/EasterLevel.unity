@@ -1963,7 +1963,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pathPrefabs:
   - {fileID: 9040768361254387859, guid: bb699fc94d16cdf4b86a25e9a34123f8, type: 3}
-  flatIcePathPrefab: {fileID: 0}
+  - {fileID: 8328977229961737062, guid: e636f0b460db0ab4586f669914d9350b, type: 3}
+  flatIcePathPrefab: {fileID: 9040768361254387859, guid: bb699fc94d16cdf4b86a25e9a34123f8, type: 3}
   leftWallPrefabs: []
   rightWallPrefabs: []
   obstaclePrefabs: []
@@ -2977,6 +2978,8 @@ MonoBehaviour:
   initialsInput: {fileID: 1628300104}
   enterInitialsPanel: {fileID: 1628300103}
   submitButton: {fileID: 1882833903}
+  savingText: {fileID: 0}
+  savingIcon: {fileID: 0}
 --- !u!1 &1708307606
 GameObject:
   m_ObjectHideFlags: 0
@@ -4090,6 +4093,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2139432525}
   m_CullTransparentMesh: 1
+--- !u!1001 &962443049318475398
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3922659438509230162, guid: b9531a8ff428fd34d9c445f301e69022, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.9202298
+      objectReference: {fileID: 0}
+    - target: {fileID: 3922659438509230162, guid: b9531a8ff428fd34d9c445f301e69022, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3922659438509230162, guid: b9531a8ff428fd34d9c445f301e69022, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.419074
+      objectReference: {fileID: 0}
+    - target: {fileID: 3922659438509230162, guid: b9531a8ff428fd34d9c445f301e69022, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3922659438509230162, guid: b9531a8ff428fd34d9c445f301e69022, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3922659438509230162, guid: b9531a8ff428fd34d9c445f301e69022, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3922659438509230162, guid: b9531a8ff428fd34d9c445f301e69022, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3922659438509230162, guid: b9531a8ff428fd34d9c445f301e69022, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3922659438509230162, guid: b9531a8ff428fd34d9c445f301e69022, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3922659438509230162, guid: b9531a8ff428fd34d9c445f301e69022, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4412337230909887208, guid: b9531a8ff428fd34d9c445f301e69022, type: 3}
+      propertyPath: m_Name
+      value: CarrotCake
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b9531a8ff428fd34d9c445f301e69022, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -4101,3 +4161,4 @@ SceneRoots:
   - {fileID: 1378003223}
   - {fileID: 1555208012}
   - {fileID: 1777914186}
+  - {fileID: 962443049318475398}

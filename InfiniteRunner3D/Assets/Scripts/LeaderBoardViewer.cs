@@ -4,12 +4,11 @@ using System.Collections.Generic;
 
 public class LeaderboardViewer : MonoBehaviour
 {
-    [Header("UI Elements")]
-    public GameObject leaderboardPanel; //  The leaderboard panel to show/hide
-    public GameObject mainMenuPanel; //  The main menu panel to return to
-    public TMP_Text leaderboardText; //  Single text box for leaderboard data
+    public GameObject leaderboardPanel;
+    public GameObject mainMenuPanel;
+    public TMP_Text leaderboardText;
 
-    private const int MaxLeaderboardEntries = 15; //  Show top 15 players
+    private const int MaxLeaderboardEntries = 15;
     private List<LeaderboardEntry> leaderboardEntries = new List<LeaderboardEntry>();
 
     public class LeaderboardEntry
@@ -32,7 +31,8 @@ public class LeaderboardViewer : MonoBehaviour
         {
             leaderboardPanel.SetActive(false);
         }
-        EnsureLeaderboardDefaults(); // ✅ Ensure default leaderboard data is set
+
+        EnsureLeaderboardDefaults(); // ✅ Ensure leaderboard initializes properly
         LoadLeaderboardData();
     }
 
@@ -42,6 +42,7 @@ public class LeaderboardViewer : MonoBehaviour
 
         leaderboardPanel.SetActive(true);
         mainMenuPanel.SetActive(false);
+        LoadLeaderboardData();
         DisplayLeaderboard();
     }
 
@@ -58,14 +59,13 @@ public class LeaderboardViewer : MonoBehaviour
         if (!PlayerPrefs.HasKey("Leaderboard_Initialized"))
         {
             Debug.Log("🏆 First-time setup: Creating default leaderboard.");
-
-            PlayerPrefs.SetInt("Leaderboard_Initialized", 1); // Prevents re-initialization
+            PlayerPrefs.SetInt("Leaderboard_Initialized", 1);
 
             for (int i = 0; i < MaxLeaderboardEntries; i++)
             {
-                PlayerPrefs.SetString($"Leaderboard_Name_{i}", i == 0 ? "TJH" : "AAA"); // Default name
-                PlayerPrefs.SetInt($"Leaderboard_Score_{i}", i == 0 ? 500 : Random.Range(200, 480)); // Default score
-                PlayerPrefs.SetFloat($"Leaderboard_Distance_{i}", i == 0 ? 150f : Random.Range(50f, 140f)); // Default distance
+                PlayerPrefs.SetString($"Leaderboard_Name_{i}", i == 0 ? "TJH" : "AAA");
+                PlayerPrefs.SetInt($"Leaderboard_Score_{i}", i == 0 ? 500 : Random.Range(200, 480));
+                PlayerPrefs.SetFloat($"Leaderboard_Distance_{i}", i == 0 ? 150f : Random.Range(50f, 140f));
             }
             PlayerPrefs.Save();
         }
