@@ -13,8 +13,10 @@ public class LeaderboardUI : MonoBehaviour
     public TMP_InputField initialsInput;
     public GameObject enterInitialsPanel;
     public Button submitButton;
+    public Button tryAgainButton;
+    public Button mainMenuButton;
 
-    // ✅ Added Saving UI elements
+    // Added Saving UI elements
     public GameObject savingText;
     public GameObject savingIcon;
 
@@ -38,6 +40,24 @@ public class LeaderboardUI : MonoBehaviour
 
     void Start()
     {
+
+        if (submitButton != null)
+            submitButton.onClick.AddListener(SubmitScore);
+
+        if (tryAgainButton != null)
+            tryAgainButton.onClick.AddListener(TryAgain);
+
+        if (mainMenuButton != null)
+            mainMenuButton.onClick.AddListener(ReturnToMainMenu);
+
+        if (initialsInput != null)
+        {
+            initialsInput.characterLimit = 3; // ✅ Limit input to 3 characters
+            initialsInput.onSubmit.AddListener(delegate { SubmitScore(); });
+            initialsInput.onValueChanged.AddListener(ValidateInput);
+            initialsInput.onSelect.AddListener(delegate { OpenKeyboard(); }); // ✅ Open keyboard when tapped
+        }
+
         if (leaderboardPanel != null)
         {
             leaderboardPanel.SetActive(false);
@@ -50,28 +70,67 @@ public class LeaderboardUI : MonoBehaviour
         EnsureLeaderboardDefaults();
         LoadLeaderboard();
     }
-
-    public void ShowLeaderboard()  // ✅ FIXED: Re-added ShowLeaderboard() function
+    public void OpenKeyboard()
     {
-        Debug.Log("📌 Showing Leaderboard...");
-        LoadLeaderboard();  // Ensure the latest data is loaded
+#if UNITY_ANDROID
+        Debug.Log("📱 Forcing Android Keyboard Open...");
+        TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default);
+#endif
+    }
+
+    public void ValidateInput(string input)
+    {
+        initialsInput.text = input.ToUpper(); // Convert input to uppercase
+        Debug.Log("✍️ Player is typing: " + initialsInput.text); // Debug Log to confirm input
+    }
+
+    public void ShowLeaderboard()
+    {
+        LoadLeaderboard();
+        StartCoroutine(EnableInput());
 
         playerLastScore = PlayerPrefs.GetInt("LastScore", 0);
         playerLastDistance = PlayerPrefs.GetFloat("LastDistance", 0);
 
-        if (playerUI != null)
-        {
-            playerUI.SetActive(false);
-        }
+        playerUI.SetActive(false);
 
         bool qualifies = CheckIfPlayerBeatsLeaderboard(playerLastScore);
-
         enterInitialsPanel.SetActive(qualifies);
         submitButton.gameObject.SetActive(qualifies);
 
         leaderboardPanel.SetActive(true);
-        Time.timeScale = 0; // Pause the game
+
+        PauseGameObjects(); // ✅ Stop movement without freezing UI
         DisplayLeaderboard();
+    }
+    void PauseGameObjects()
+    {
+        PlayerController player = Object.FindFirstObjectByType<PlayerController>();
+        if (player != null)
+        {
+            player.enabled = false;
+        }
+
+        PathManager pathManager = Object.FindFirstObjectByType<PathManager>();
+        if (pathManager != null)
+        {
+            pathManager.enabled = false;
+        }
+
+    }
+    IEnumerator EnableInput()
+    {
+        yield return new WaitForSeconds(0.1f); // Ensure UI updates first
+
+        initialsInput.interactable = false;
+        yield return new WaitForSeconds(0.1f);
+        initialsInput.interactable = true; // ✅ Force reactivation
+        initialsInput.ActivateInputField(); // ✅ Focus on input field
+
+#if UNITY_ANDROID
+        Debug.Log("📱 Opening Android Keyboard...");
+        TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default);
+#endif
     }
 
     public void SubmitScore()
@@ -118,16 +177,15 @@ public class LeaderboardUI : MonoBehaviour
 
         Debug.Log("✅ Score submitted & saved.");
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.1f); // Reduced wait time
 
         HideSavingUI();
 
+        // Hide Input Field & Submit Button after submission
         enterInitialsPanel.SetActive(false);
-        if (playerUI != null)
-        {
-            playerUI.SetActive(false);
-        }
+        submitButton.gameObject.SetActive(false);
 
+        // Refresh the leaderboard instantly
         LoadLeaderboard();
         DisplayLeaderboard();
     }
@@ -211,5 +269,32 @@ public class LeaderboardUI : MonoBehaviour
             }
         }
         return false;
+    }
+    public void TryAgain()
+    {
+        Debug.Log("🔄 Try Again Button Clicked!");
+        ResumeGameObjects(); // ✅ Resume movement before reloading
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void ReturnToMainMenu()
+    {
+        Debug.Log("🏠 Main Menu Button Clicked!");
+        ResumeGameObjects(); // ✅ Resume movement before reloading
+        SceneManager.LoadScene("MainMenu");
+    }
+    void ResumeGameObjects()
+    {
+        PlayerController player = Object.FindFirstObjectByType<PlayerController>();
+        if (player != null)
+        {
+            player.enabled = true;
+        }
+
+        PathManager pathManager = Object.FindFirstObjectByType<PathManager>();
+        if (pathManager != null)
+        {
+            pathManager.enabled = true;
+        }
     }
 }

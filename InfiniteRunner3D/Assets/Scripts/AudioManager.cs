@@ -15,6 +15,9 @@ public class AudioManager : MonoBehaviour
     public AudioClip[] level1MusicTracks;
     public AudioClip buttonClickSFX;
 
+    [Header("EasterLevel")]
+    public AudioClip[] easterMusicTracks;
+
     [Header("UI Elements")]
     public Slider masterVolumeSlider;
     public Toggle musicToggle;
@@ -62,10 +65,7 @@ public class AudioManager : MonoBehaviour
             musicToggle.onValueChanged.AddListener(ToggleMusic);
         }
 
-        if (vibrationToggle != null)
-        {
-            vibrationToggle.onValueChanged.AddListener(ToggleVibration);
-        }
+       
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -90,8 +90,18 @@ public class AudioManager : MonoBehaviour
         {
             musicSource.Play();
         }
-    }
+        else if (sceneName == "EasterLevel")
+        {
+            PlayRandomMusic(easterMusicTracks);
+        }
 
+    }
+    void PlayRandomMusic(AudioClip[] clips)
+    {
+        if (clips.Length == 0) return;
+        int index = Random.Range(0, clips.Length);
+        PlayMusic(clips[index]);
+    }
 
     void PlayRandomLevel1Music()
     {
@@ -134,12 +144,7 @@ public class AudioManager : MonoBehaviour
         PlayerPrefs.SetInt("MusicEnabled", isEnabled ? 1 : 0);
         PlayerPrefs.Save();
     }
-
-    public void ToggleVibration(bool isEnabled)
-    {
-        PlayerPrefs.SetInt("VibrationEnabled", isEnabled ? 1 : 0);
-        PlayerPrefs.Save();
-    }
+   
 
     void ApplyButtonClickSoundToAll()
     {

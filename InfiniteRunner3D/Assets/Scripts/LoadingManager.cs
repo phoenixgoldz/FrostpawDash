@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using System.Collections;
 using TMPro;
 using System.Collections.Generic;
+using System.IO;
 
 public class LoadingManager : MonoBehaviour
 {
@@ -38,37 +39,55 @@ public class LoadingManager : MonoBehaviour
 
         Debug.Log("✅ PlayerPrefs Loaded Successfully!");
     }
+    IEnumerator CheckForPatch()
+    {
+        string patchPath = Path.Combine(Application.persistentDataPath, "patch.unity3d");
+
+        if (File.Exists(patchPath))
+        {
+            loadingText.text = "Applying update...";
+            Debug.Log("🛠️ Patch file found. Applying...");
+
+            // TODO: Load or extract contents of patch.unity3d here
+            yield return new WaitForSeconds(2f); // Simulate time to apply patch
+
+            // Optional: delete or archive patch file
+            File.Delete(patchPath);
+            Debug.Log("✅ Patch applied successfully.");
+        }
+        else
+        {
+            Debug.Log("📦 No patch file found.");
+        }
+
+        yield return null;
+    }
 
     IEnumerator LoadGameAssets()
     {
-        Debug.Log("📌 LoadGameAssets() started! Running first step...");
+        loadingText.text = "Checking for updates...";
+        yield return StartCoroutine(CheckForPatch());
 
-        yield return new WaitForSeconds(1f);
-        Debug.Log("✅ Step 1: LoadGameAssets() is still running... Proceeding to Preload Assets.");
+        yield return new WaitForSeconds(0.5f);
+        loadingText.text = "Initializing...";
 
         yield return StartCoroutine(PreloadAssets());
-        Debug.Log("✅ Step 2: Finished Preloading Assets. Moving to scene loading.");
 
+        loadingText.text = "Loading Main Menu...";
         yield return StartCoroutine(LoadMainMenuScene());
-        Debug.Log("✅ Step 3: Scene loading complete!");
     }
-
     IEnumerator PreloadAssets()
     {
-        Debug.Log("🔹 Preloading Game Assets...");
-        totalAssets = 3;
-
+        loadingText.text = "Preloading textures...";
         yield return StartCoroutine(LoadTextures());
         UpdateProgress();
 
+        loadingText.text = "Loading audio...";
         yield return StartCoroutine(LoadAudioClips());
         UpdateProgress();
 
-        Debug.Log("📌 PreloadAssets() started!");
-        yield return new WaitForSeconds(1f);
-
-        Debug.Log("✅ All Assets Preloaded!");
-        Debug.Log("✅ PreloadAssets() completed.");
+        loadingText.text = "Almost ready...";
+        yield return new WaitForSeconds(0.5f);
     }
 
     IEnumerator LoadTextures()
@@ -84,11 +103,8 @@ public class LoadingManager : MonoBehaviour
         loadedAssets++;
         yield return null;
     }
-
     IEnumerator LoadMainMenuScene()
     {
-        Debug.Log("📌 Loading MainMenu Scene...");
-
         AsyncOperation operation = SceneManager.LoadSceneAsync("MainMenu");
         operation.allowSceneActivation = false;
 
@@ -104,9 +120,8 @@ public class LoadingManager : MonoBehaviour
 
             if (progressValue >= 1f && elapsedTime >= minLoadTime)
             {
-                Debug.Log("✅ Scene fully loaded. Activating...");
+                yield return new WaitForSeconds(1f);
                 operation.allowSceneActivation = true;
-                yield break;
             }
 
             yield return null;

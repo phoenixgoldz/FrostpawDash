@@ -87,7 +87,7 @@ public class PathManager : MonoBehaviour
 
         if (newPath.name.Contains("Crystal Caverns Floor"))
         {
-            newPath.transform.position = new Vector3(0, 0.83f, lastPathEndZ);
+            newPath.transform.position = new Vector3(0, 0, lastPathEndZ);
             newPath.transform.rotation = Quaternion.LookRotation(Vector3.right);
         }
 

@@ -23,11 +23,14 @@ public class CreditsController : MonoBehaviour
     private float startY;
     private float endY;
     private bool isScrolling = false;
-
     void Start()
     {
-        startY = creditsText.anchoredPosition.y;
-        endY = startY + creditsText.rect.height + 400; // Adjusted spacing for smooth scrolling
+        // Set explicit start and end positions based on 1080x1920 resolution
+        startY = -3568;  // Completely below the screen
+        endY = 157;      // Stops near the top of the screen
+
+        // Set initial position of the creditsText
+        creditsText.anchoredPosition = new Vector2(0, startY);
 
         if (returnButton != null)
         {
@@ -60,20 +63,16 @@ public class CreditsController : MonoBehaviour
         isScrolling = true;
         StartCoroutine(ScrollCredits());
     }
-
     IEnumerator ScrollCredits()
     {
-        yield return new WaitForSeconds(0.5f); // Small delay to ensure UI updates
+        yield return new WaitForSeconds(1f); // Small delay for cinematic effect
 
-        // Ensure Credits Text starts from the bottom
-        creditsText.anchoredPosition = new Vector2(creditsText.anchoredPosition.x, startY);
-
-        // Force enable to ensure visibility
+        // Ensure the credits start at the correct position
+        creditsText.anchoredPosition = new Vector2(0, startY);
         creditsText.gameObject.SetActive(true);
-
         isScrolling = true;
 
-        while (creditsText.anchoredPosition.y < endY && isScrolling)
+        while (creditsText.anchoredPosition.y < endY && isScrolling) // Move UP
         {
             creditsText.anchoredPosition += new Vector2(0, scrollSpeed * Time.deltaTime);
             yield return null;

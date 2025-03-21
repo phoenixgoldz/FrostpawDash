@@ -77,6 +77,24 @@ public class MainMenuUI : MonoBehaviour
         }
         menuCanvasGroup.alpha = 1;
     }
+    public void ToggleVibration(bool isEnabled)
+    {
+        PlayerPrefs.SetInt("VibrationEnabled", isEnabled ? 1 : 0);
+        PlayerPrefs.Save();
+
+        if (isEnabled)
+        {
+            VibrationUtility.VibrateShort(); // Now it will work
+        }
+        else
+        {
+            Debug.Log("🔇 Vibration OFF");
+        }
+    }
+    public void PlayEasterLevel()
+    {
+        SceneManager.LoadScene("EasterLevel");
+    }
 
     void DisplayGameVersion()
     {

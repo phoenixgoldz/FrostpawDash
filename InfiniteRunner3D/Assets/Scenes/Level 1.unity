@@ -675,7 +675,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -97, y: -111}
+  m_AnchoredPosition: {x: -97, y: -2274}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &628692880
@@ -1247,9 +1247,9 @@ MonoBehaviour:
   m_colorMode: 3
   m_fontColorGradient:
     topLeft: {r: 0.2509804, g: 1, b: 0.99215686, a: 1}
-    topRight: {r: 0.972549, g: 0.043137256, b: 0.4509804, a: 1}
-    bottomLeft: {r: 0.2509804, g: 1, b: 0.99215686, a: 1}
-    bottomRight: {r: 0.972549, g: 0.043137256, b: 0.4509804, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
@@ -1259,12 +1259,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 90
+  m_fontSize: 65
   m_fontSizeBase: 90
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 90
+  m_fontSizeMax: 65
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -1320,14 +1320,14 @@ RectTransform:
   m_GameObject: {fileID: 1014457873}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.1326, y: 1.1326, z: 1.1326}
+  m_LocalScale: {x: 1.0616199, y: 1.1326, z: 1.1326}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1555208012}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -340, y: 667}
+  m_AnchoredPosition: {x: -315, y: 484}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1019593917
@@ -1959,7 +1959,7 @@ MonoBehaviour:
   blueCrystalsPrefab: {fileID: 4520916464538783754, guid: 77d8d50fb44687741b863dedb026d4ec, type: 3}
   crystalWallCavernPrefab: {fileID: 5227962490560360307, guid: d34012678114cf94caeb987b4cc32c9b, type: 3}
   gemPrefab: {fileID: 6299112844562979282, guid: 736f6023ba0b26a4bb6beafce802fce4, type: 3}
-  gemsPerRow: 2
+  gemsPerRow: 1
 --- !u!4 &1378003223
 Transform:
   m_ObjectHideFlags: 0
@@ -2981,8 +2981,10 @@ MonoBehaviour:
   initialsInput: {fileID: 1628300104}
   enterInitialsPanel: {fileID: 1628300103}
   submitButton: {fileID: 1882833903}
-  savingText: {fileID: 0}
-  savingIcon: {fileID: 0}
+  tryAgainButton: {fileID: 2026213444}
+  mainMenuButton: {fileID: 1897719028}
+  savingText: {fileID: 1962514722}
+  savingIcon: {fileID: 628692878}
 --- !u!82 &1653155104
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3407,7 +3409,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -9.124512, y: -1260}
+  m_AnchoredPosition: {x: -9.124512, y: -41}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1790395341
@@ -3811,7 +3813,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -311, y: -129}
+  m_AnchoredPosition: {x: -311, y: -2292}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1962514724
@@ -4073,7 +4075,7 @@ RectTransform:
   m_GameObject: {fileID: 2082079003}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.3, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1555208012}
