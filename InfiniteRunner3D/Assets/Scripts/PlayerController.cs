@@ -148,6 +148,8 @@ public class PlayerController : MonoBehaviour
             if (PlayerPrefs.GetInt("VibrationEnabled", 1) == 1)
             {
                 VibrationUtility.VibrateShort(); // 0.5s single burst
+                Debug.Log("📳 Vibration triggered!");
+
             }
 
             Die();
@@ -163,27 +165,6 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("IsJumping", false);
             animator.SetBool("IsRunning", true);
         }
-    }
-    public static void VibrateShort()
-    {
-#if UNITY_ANDROID && !UNITY_EDITOR
-    using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
-    {
-        AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-        AndroidJavaObject context = currentActivity.Call<AndroidJavaObject>("getApplicationContext");
-        AndroidJavaObject vibrator = context.Call<AndroidJavaObject>("getSystemService", "vibrator");
-
-        if (vibrator != null)
-        {
-            // VibrationEffect.createOneShot(milliseconds, amplitude)
-            AndroidJavaClass vibrationEffectClass = new AndroidJavaClass("android.os.VibrationEffect");
-            AndroidJavaObject vibrationEffect = vibrationEffectClass.CallStatic<AndroidJavaObject>("createOneShot", 500, 255); // 0.5s, max strength
-            vibrator.Call("vibrate", vibrationEffect);
-        }
-    }
-#else
-        Handheld.Vibrate(); // fallback for editor/testing
-#endif
     }
 
     void OnTriggerEnter(Collider other) { if (other.gameObject.CompareTag("PathTrigger")) stuck = true; }
@@ -269,8 +250,6 @@ public class PlayerController : MonoBehaviour
             ResetTurnAnimations();
         }
     }
-
-
     void MovePlayer()
     {
         shiftVelocity = 0;

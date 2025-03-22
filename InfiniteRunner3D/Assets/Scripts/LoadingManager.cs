@@ -76,15 +76,28 @@ public class LoadingManager : MonoBehaviour
         loadingText.text = "Loading Main Menu...";
         yield return StartCoroutine(LoadMainMenuScene());
     }
+    IEnumerator LoadTexturesAsync()
+    {
+        yield return new WaitForSeconds(0.1f); // Simulate texture loading
+                                               // Use Resources.LoadAsync for actual assets later
+        loadedAssets++;
+        UpdateProgress();
+    }
+
+    IEnumerator LoadAudioAsync()
+    {
+        yield return new WaitForSeconds(0.1f); // Simulate audio loading
+        loadedAssets++;
+        UpdateProgress();
+    }
+
     IEnumerator PreloadAssets()
     {
         loadingText.text = "Preloading textures...";
-        yield return StartCoroutine(LoadTextures());
-        UpdateProgress();
+        yield return LoadTexturesAsync();
 
         loadingText.text = "Loading audio...";
-        yield return StartCoroutine(LoadAudioClips());
-        UpdateProgress();
+        yield return LoadAudioAsync();
 
         loadingText.text = "Almost ready...";
         yield return new WaitForSeconds(0.5f);
@@ -120,7 +133,6 @@ public class LoadingManager : MonoBehaviour
 
             if (progressValue >= 1f && elapsedTime >= minLoadTime)
             {
-                yield return new WaitForSeconds(1f);
                 operation.allowSceneActivation = true;
             }
 

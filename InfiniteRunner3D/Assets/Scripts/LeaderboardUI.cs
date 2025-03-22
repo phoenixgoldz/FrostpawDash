@@ -52,12 +52,12 @@ public class LeaderboardUI : MonoBehaviour
 
         if (initialsInput != null)
         {
-            initialsInput.characterLimit = 3; // ✅ Limit input to 3 characters
+            initialsInput.characterLimit = 3;
             initialsInput.onSubmit.AddListener(delegate { SubmitScore(); });
+            initialsInput.onEndEdit.AddListener(delegate { SubmitScore(); }); // ✅ New
             initialsInput.onValueChanged.AddListener(ValidateInput);
-            initialsInput.onSelect.AddListener(delegate { OpenKeyboard(); }); // ✅ Open keyboard when tapped
+            initialsInput.onSelect.AddListener(delegate { OpenKeyboard(); });
         }
-
         if (leaderboardPanel != null)
         {
             leaderboardPanel.SetActive(false);
@@ -102,6 +102,12 @@ public class LeaderboardUI : MonoBehaviour
 
         PauseGameObjects(); // ✅ Stop movement without freezing UI
         DisplayLeaderboard();
+        LeaderboardViewer viewer = Object.FindFirstObjectByType<LeaderboardViewer>();
+
+        if (viewer != null)
+        {
+            viewer.ShowLeaderboard(); // Refresh main menu view too
+        }
     }
     void PauseGameObjects()
     {
@@ -188,6 +194,13 @@ public class LeaderboardUI : MonoBehaviour
         // Refresh the leaderboard instantly
         LoadLeaderboard();
         DisplayLeaderboard();
+        // ✅ Also refresh main menu leaderboard if it's in the scene
+        LeaderboardViewer viewer = Object.FindFirstObjectByType<LeaderboardViewer>();
+        if (viewer != null)
+        {
+            viewer.ShowLeaderboard(); // Instant update on submit
+        }
+
     }
 
     void ShowSavingUI()

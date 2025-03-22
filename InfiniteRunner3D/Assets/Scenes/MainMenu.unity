@@ -1621,6 +1621,7 @@ GameObject:
   - component: {fileID: 184814078}
   - component: {fileID: 184814077}
   - component: {fileID: 184814081}
+  - component: {fileID: 184814082}
   m_Layer: 5
   m_Name: MainMenuCanvas
   m_TagString: Untagged
@@ -1747,6 +1748,18 @@ MonoBehaviour:
   versionText: {fileID: 1061071434}
   menuCanvasGroup: {fileID: 1622456064}
   fadeDuration: 1.5
+--- !u!114 &184814082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 184814076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c96959ba08279eb42b1a144dd1204ead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &185836380
 GameObject:
   m_ObjectHideFlags: 0
@@ -7674,7 +7687,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 23}
+  m_AnchoredPosition: {x: 0, y: 13}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &503720365
@@ -11534,7 +11547,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1568104359
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11553,7 +11566,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 4.9039307, y: -755.1804}
+  m_AnchoredPosition: {x: -5, y: 494}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1568104360

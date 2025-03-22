@@ -93,7 +93,7 @@ public class MainMenuUI : MonoBehaviour
     }
     public void PlayEasterLevel()
     {
-        SceneManager.LoadScene("EasterLevel");
+        StartCoroutine(LoadSceneAsync("EasterLevel"));
     }
 
     void DisplayGameVersion()
@@ -107,12 +107,29 @@ public class MainMenuUI : MonoBehaviour
             Debug.LogError("❌ VersionText is not assigned in MainMenuUI!");
         }
     }
-
     public void PlayGame()
     {
-        SceneManager.LoadScene("Level 1");
+        StartCoroutine(LoadSceneAsync("Level 1"));
     }
+    IEnumerator LoadSceneAsync(string sceneName)
+    {
+        // Optional: Display a loading screen UI here (fade out, spinner, etc.)
 
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+        asyncLoad.allowSceneActivation = false;
+
+        while (!asyncLoad.isDone)
+        {
+            // Optionally track asyncLoad.progress (0–0.9 while loading)
+            if (asyncLoad.progress >= 0.9f)
+            {
+                // Optional delay, animations, or transitions before allowing activation
+                asyncLoad.allowSceneActivation = true;
+            }
+
+            yield return null;
+        }
+    }
     public void ToggleLeaderboard()
     {
         if (leaderboardUI == null)

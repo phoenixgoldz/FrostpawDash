@@ -65,7 +65,7 @@ public class AudioManager : MonoBehaviour
             musicToggle.onValueChanged.AddListener(ToggleMusic);
         }
 
-       
+
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -74,27 +74,22 @@ public class AudioManager : MonoBehaviour
         PlayMusicForScene(scene.name);
         ApplyButtonClickSoundToAll();
     }
+    public void StopMusic()
+    {
+        if (musicSource.isPlaying)
+            musicSource.Stop();
+    }
 
     public void PlayMusicForScene(string sceneName)
     {
+        StopMusic(); // 🛑 Ensure no overlap
+
         if (sceneName == "MainMenu")
-        {
             PlayMusic(mainMenuMusic);
-        }
         else if (sceneName == "Level 1")
-        {
             PlayRandomLevel1Music();
-        }
-
-        if (!musicSource.isPlaying)
-        {
-            musicSource.Play();
-        }
         else if (sceneName == "EasterLevel")
-        {
             PlayRandomMusic(easterMusicTracks);
-        }
-
     }
     void PlayRandomMusic(AudioClip[] clips)
     {
@@ -144,7 +139,7 @@ public class AudioManager : MonoBehaviour
         PlayerPrefs.SetInt("MusicEnabled", isEnabled ? 1 : 0);
         PlayerPrefs.Save();
     }
-   
+
 
     void ApplyButtonClickSoundToAll()
     {
