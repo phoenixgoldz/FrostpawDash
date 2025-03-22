@@ -20,83 +20,110 @@ With no time to waste, **Frostpaw dashes into the unknown**, dodging enchanted o
 - 🎮 **Infinite Runner Mechanics** – Procedurally generated levels for endless replayability.  
 - 🏃 **Smooth & Responsive Controls** – Swipe or tilt-based movement for intuitive gameplay.  
 - ⚠️ **Dynamic Environmental Interactions** – Moving platforms, falling obstacles, and shifting pathways.  
-- 🌌 **Seasonal & Themed Content Updates** – Environments change based on real-world seasons.  
+- 🌌 **Seasonal & Themed Content Updates** – Environments change based on real-world seasons. (coming soon)
 - 🏆 **High Score & Leaderboards** – Compete with past runs and submit scores!  
 - 🎨 **Stylized Fantasy Aesthetic** – Beautifully crafted environments with an anime-inspired look.  
-- 🐆 **Chibi Snow Leopard Character** – Fully animated and rigged for fluid movement.  
+- 🐆 **Chibi Rainbow Snow Leopard Character** – Fully animated and rigged for fluid movement.  
 
 ---
 
-## **🚀 Latest Updates (v1.3.01) – March 16, 2025**  
-🎉 **New Character, Easter Event Preparations, UI & Leaderboard Updates, and More!**  
+## **🚀 Latest Updates (v1.4.02) – March 22, 2025**  
+🎉 **Finalized Easter Biome Playtest Build! Character Fixes, Prefab Spawning, and Load Speed Optimizations!**
 
-### **🆕 New Features & Improvements**  
+### 🆕 **New Features & Improvements**
 
-✅ **New Playable Character! 🐆🎮**  
-- **Replaced the main character** with a new, fully rigged and animated runner.  
-- Improved **movement physics and smoother animations** for a better experience.  
+✅ **EasterBunny Character Finalized** 🐰  
+- Fixed movement, gravity, and jump logic  
+- Root motion disabled for proper controller-based physics  
+- New animations properly rigged and synced  
 
-✅ **Easter 2025 Event Preparations 🐰❄️**  
-- **Updated title image** for the **Easter Event**.  
-- **New app icon** with a festive **Easter theme**.  
-- **Easter-themed assets added** in preparation for upcoming seasonal content.  
+✅ **Obstacle & Prefab Spawner Logic Overhaul**  
+- Weighted spawn logic for obstacles (elements 0–3 now spawn more frequently)  
+- EasterEggsNest and LogsSpring now spawn correctly on top of the floor  
+- CarrotCake prefab prevents the floor from spawning underneath it  
+- Prefabs now retain their original Y-position and rotation  
 
-✅ **UI & Menu Enhancements 🎨**  
-- **Credits screen ‘Submit’ button repositioned** for better placement.  
-- **Leaderboard resized** for improved readability and user experience.  
-- **New loading screen implemented** for smoother transitions between levels.  
+✅ **Async Scene Loading in Main Menu** ⚡  
+- Play button now loads scenes using `SceneManager.LoadSceneAsync()`  
+- Fast load times on Google Pixel 6a (down from 15–20s to ~3s)  
 
-✅ **Level Design Progress 🌍**  
-- **"EasterLevel" scene** in progress with adjusted object placements.  
-- **Prepping environment tweaks** for enhanced player experience.  
+✅ **New Easter Loading Screen Background**  
+- Fantasy-styled vertical background with glowing eggs, chocolate terrain, and pastel skies  
+- No UI or text—perfect for fullscreen scene transitions  
 
-✅ **General Fixes & Optimization 🔧**  
-- **Fixed player movement issues** and **locked Y-axis rotation** properly.  
-- **Improved jump physics** and adjusted collider interactions.  
-- **Optimized UI scaling for different device resolutions**.  
+✅ **Bug Fixes & Polish**  
+- Fixed overlap issues on collectible and obstacle spawns  
+- Cleaned up destroyed prefab references to avoid NullReferenceExceptions  
+- UI buttons and scene transitions tested for Android  
 
 ---
 
 ## **Environments & Difficulty Progression**  
 Each environment introduces unique **obstacles and mechanics** while maintaining balanced gameplay:  
 
-### **🌟 Level 1: Crystal Caverns (Beginner-Friendly)**  
+### 🌟 **Level 1: Crystal Caverns (Beginner-Friendly)**  
 - 🌌 **Obstacles:** Falling stalactites, crystal bridges, and icy platforms.  
 - 🔹 **Mechanics:** Slow-moving hazards, simple jumps, and minimal speed increase.  
 
-### **🌀 Level 2: Celestial Ruins (Moderate Challenge)** *(Coming Soon)*  
-- 🏛 **Obstacles:** Vanishing platforms, teleporting orbs, and floating guardian statues.  
-- ⚡ **Mechanics:** More complex movement with faster pace and strategic dodging.  
+### 🐣 **Seasonal Biome: EasterLevel (Now Playable)**  
+- 🍫 **Obstacles:** CarrotCake (floor replacement), LogsSpring, EasterEggsNest  
+- 🌈 **Mechanics:** Gaps between floors, floating collectibles, dynamic bridge rate  
+- 🎵 **Theme:** Candy pastel landscape, glowing moon, springtime vibe  
 
 ---
 
 ## **Development Roadmap**  
 
 ### ✅ **Current Progress**  
-- **Android Pre-release available**  
-- **Crystal Caverns level refined**  
-- **New Easter content integrated**  
-- **Procedural level design prefabs optimized**  
-- **Leaderboard & UI layout adjusted**  
-- **EasterLevel in development**  
+- ✅ Easter biome is now fully playable  
+- ✅ EasterBunny character finalized  
+- ✅ All prefab logic fixed and tested  
+- ✅ Optimized loading system for Android  
+- ✅ Async scene loading implemented  
 
 ### 📉 **Next Steps**  
-- [ ] **Create `PathManager` script for EasterLevel**  
-- [ ] **Test and optimize Easter-themed UI elements**  
-- [ ] **Finalize level placements and gameplay mechanics**  
+- [ ] Collect playtest feedback from friends/family  
+- [ ] Refine collectible and gap difficulty balance  
+- [ ] Begin design of **Level 2: Celestial Ruins**  (possible new character or existing one haven't decided yet)
+- [ ] Add more polish to bridge FX and obstacle animations  
 
 ---
 
-## **How to Run the Game**  
-1. Clone the repository:  
-   ```sh
-   git clone https://github.com/phoenixgoldz/FrostpawDash.git
-   ```  
-2. Open the project in Unity Engine 6.  
-3. Click **Play** to test the game.  
+### **How to Run & Install the APK on Android Devices**
 
-## **Download the Pre-Release**  
-The **test build for Android** is available in the [Releases](https://github.com/phoenixgoldz/FrostpawDash/releases) section. Try it out and share feedback!  
+You can test Frostpaw Dash on Android even though it's not on the Google Play Store yet. Here's how to get started:
+
+### ✅ 1. Download the APK
+Visit the [Releases](https://github.com/phoenixgoldz/FrostpawDash/releases) section and download the latest `.apk` file:  
+**`FrostpawDash_V1-4-02.apk`**
+
+---
+
+### ✅ 2. Transfer the APK to Your Device
+Choose one of these options:
+- **USB Cable** – Copy the APK to your Downloads folder on the device.
+- **Cloud Upload** – Use Google Drive or Dropbox to upload and download the APK.
+- **Email or Chat** – Send the file to yourself via email or a messaging app.
+
+---
+
+### ✅ 3. Enable "Install Unknown Apps" on Android
+On your Android phone or tablet:
+- Go to **Settings > Security** (or **Settings > Apps & Notifications > Special App Access** on newer Android versions)
+- Tap **Install unknown apps**
+- Choose the app you'll use to open the APK (e.g., Chrome, Files, Drive)
+- Tap **Allow from this source**
+
+---
+
+### ✅ 4. Install and Run the Game
+- Open the `.apk` file from your file manager or Downloads folder
+- Tap **Install**
+- Once installed, tap **Open** to start playing Frostpaw Dash!
+
+---
+
+*If you run into any issues, make sure your APK was fully downloaded and that you've enabled install permissions for your app source.*
 
 ## **License**  
 MIT License  
