@@ -95,6 +95,9 @@ public class LoadingManager : MonoBehaviour
     {
         loadingText.text = "Preloading textures...";
         yield return LoadTexturesAsync();
+        Resources.LoadAll("Textures");
+        Resources.LoadAll("Audio");
+        Resources.LoadAll("Prefabs");
 
         loadingText.text = "Loading audio...";
         yield return LoadAudioAsync();

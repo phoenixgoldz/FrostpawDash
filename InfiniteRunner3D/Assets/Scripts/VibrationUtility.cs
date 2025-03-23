@@ -7,15 +7,17 @@ public static class VibrationUtility
 #if UNITY_ANDROID && !UNITY_EDITOR
         using (var unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
         {
-            AndroidJavaObject activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-            AndroidJavaObject vibrator = activity.Call<AndroidJavaObject>("getSystemService", "vibrator");
+            var activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+            var context = activity.Call<AndroidJavaObject>("getApplicationContext");
+            var vibrator = activity.Call<AndroidJavaObject>("getSystemService", "vibrator");
+
             if (vibrator != null)
             {
-                vibrator.Call("vibrate", 100); // vibrate for 100ms
+                vibrator.Call("vibrate", 100);
             }
         }
 #else
-        Debug.Log("📱 Android vibration triggered (native method fallback).");
+        Debug.Log("📳 Vibration would trigger here on Android.");
 #endif
     }
 }

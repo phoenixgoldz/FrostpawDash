@@ -85,9 +85,11 @@ public class MainMenuUI : MonoBehaviour
 
         if (isEnabled)
         {
-            VibrationUtility.VibrateShort(); 
+            // ✅ Ensure this utility works properly
+            VibrationUtility.VibrateShort();
         }
     }
+
     public void PlayEasterLevel()
     {
         StartCoroutine(LoadSceneAsync("EasterLevel"));
@@ -97,7 +99,7 @@ public class MainMenuUI : MonoBehaviour
     {
         if (versionText != null)
         {
-            versionText.text = $"Version {Application.version}";
+            versionText.text = $"Ver. {Application.version}";
         }
         else
         {
@@ -138,13 +140,16 @@ public class MainMenuUI : MonoBehaviour
             yield return null;
         }
     }
-
     public void ToggleLeaderboard()
     {
         if (leaderboardUI == null)
         {
-            Debug.LogError("❌ Cannot open leaderboard: LeaderboardUI reference is missing.");
-            return;
+            leaderboardUI = Object.FindFirstObjectByType<LeaderboardUI>();
+            if (leaderboardUI == null)
+            {
+                Debug.LogWarning("⚠️ LeaderboardUI not found in scene. Skipping toggle.");
+                return;
+            }
         }
 
         bool isActive = leaderboardPanel.activeSelf;
@@ -152,7 +157,7 @@ public class MainMenuUI : MonoBehaviour
 
         if (!isActive)
         {
-            leaderboardUI.ShowLeaderboard(); // SAFE: Calls LeaderboardUI if it exists
+            leaderboardUI.ShowLeaderboard();
         }
     }
 

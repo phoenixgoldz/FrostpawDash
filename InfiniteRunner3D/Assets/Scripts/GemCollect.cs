@@ -17,7 +17,7 @@ public class GemCollect : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerUIManager.Instance.UpdateScore(5);
+            PlayerUIManager.Instance.AddGem();
 
             if (AudioManager.instance != null && gemCollectSFX != null)
             {

@@ -63,6 +63,33 @@ public class PathManager : MonoBehaviour
             DeleteOldPath();
         }
     }
+    void SpawnArcCollectiblesOverSpecialPlatform(GameObject platform)
+    {
+        if (platform == null || gemPrefab == null) return;
+
+        float spacing = 1.2f;
+        Vector3 basePos = platform.transform.position;
+        float startZ = basePos.z;
+        float arcHeight = basePos.y + 2.5f;
+        float x = basePos.x;
+
+        for (int i = 0; i < 5; i++)
+        {
+            float z = startZ + i * spacing;
+            float y = arcHeight + Mathf.Sin(i / 4f * Mathf.PI) * 1.5f; // Arc shape
+            Vector3 gemPos = new Vector3(x, y, z);
+
+            GameObject gem = Instantiate(gemPrefab, gemPos, Quaternion.identity);
+            Renderer rend = gem.GetComponent<Renderer>();
+            if (rend != null)
+            {
+                rend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                rend.receiveShadows = false;
+            }
+
+            activePaths.Add(gem);
+        }
+    }
 
     public void SpawnPath()
     {
@@ -78,13 +105,17 @@ public class PathManager : MonoBehaviour
             newPath = Instantiate(pathPrefabs[floorIndex], new Vector3(0, 0, lastPathEndZ), Quaternion.identity);
         }
 
-        newPath.transform.position = new Vector3(0, -1.03f, lastPathEndZ); // Ensure it's above 0
+        newPath.transform.position = new Vector3(0, -1.03f, lastPathEndZ);
         newPath.transform.rotation = Quaternion.identity;
-
         newPath.tag = "PathTrigger";
         activePaths.Add(newPath);
         pathsSpawned++;
 
+        // ✅ Check platform type *after* instantiating and assigning
+        if (newPath.name.Contains("Floating Ice Block") || newPath.name.Contains("SpringBridgeLogs"))
+        {
+            SpawnArcCollectiblesOverSpecialPlatform(newPath);
+        }
         if (newPath.name.Contains("Crystal Caverns Floor"))
         {
             newPath.transform.position = new Vector3(0, 0, lastPathEndZ);

@@ -16,6 +16,7 @@ public class LeaderboardUI : MonoBehaviour
     public Button submitButton;
     public Button tryAgainButton;
     public Button mainMenuButton;
+    private const int MaxLeaderboardEntries = 15;
 
     // Added Saving UI elements
     public GameObject savingText;
@@ -30,13 +31,36 @@ public class LeaderboardUI : MonoBehaviour
         public string name;
         public int score;
         public float distance;
+        public int gems; // ✅ NEW
 
-        public LeaderboardEntry(string name, int score, float distance)
+        public LeaderboardEntry(string name, int score, float distance, int gems)
         {
             this.name = name;
             this.score = score;
             this.distance = distance;
+            this.gems = gems;
         }
+    }
+    void Awake()
+    {
+        if (playerUI == null)
+            playerUI = GameObject.Find("PlayerUI Canvas"); // or whatever its actual name is
+
+        if (initialsInput == null)
+            initialsInput = Object.FindFirstObjectByType<TMP_InputField>();
+
+        if (leaderboardText == null)
+            leaderboardText = Object.FindFirstObjectByType<TMP_Text>();
+
+        if (leaderboardPanel == null)
+            leaderboardPanel = this.gameObject;  // if the script is on the panel
+
+        if (leaderboardPanel != null)
+        {
+            leaderboardPanel.SetActive(false);
+        }
+       // DontDestroyOnLoad(this.gameObject);
+        // Add others as needed
     }
 
     void Start()
@@ -59,10 +83,6 @@ public class LeaderboardUI : MonoBehaviour
             initialsInput.onValueChanged.AddListener(ValidateInput);
             initialsInput.onSelect.AddListener(delegate { OpenKeyboard(); });
         }
-        if (leaderboardPanel != null)
-        {
-            leaderboardPanel.SetActive(false);
-        }
         else
         {
             Debug.LogError("❌ LeaderboardPanel is missing! Assign it in the Inspector.");
@@ -78,7 +98,7 @@ public class LeaderboardUI : MonoBehaviour
         TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default);
 #endif
     }
-   
+
 
     public void ValidateInput(string input)
     {
@@ -88,6 +108,19 @@ public class LeaderboardUI : MonoBehaviour
 
     public void ShowLeaderboard()
     {
+        if (playerUI == null || initialsInput == null)
+        {
+            Debug.LogWarning("🔁 Reassigning lost references...");
+
+            playerUI = GameObject.Find("PlayerUI Canvas"); // or appropriate name
+            initialsInput = Object.FindFirstObjectByType<TMP_InputField>();
+
+            if (playerUI == null || initialsInput == null)
+            {
+                Debug.LogError("❌ Critical references still null! Leaderboard won't show correctly.");
+                return;
+            }
+        }
         LoadLeaderboard();
         StartCoroutine(EnableInput());
         StartCoroutine(DelaySelectInitialsInput());
@@ -190,7 +223,8 @@ public class LeaderboardUI : MonoBehaviour
 
         if (!scoreUpdated)
         {
-            leaderboardEntries.Add(new LeaderboardEntry(playerInitials, playerLastScore, playerLastDistance));
+            int playerGems = PlayerUIManager.Instance.GetGemCount(); // ✅ Make sure PlayerUIManager tracks gem count
+            leaderboardEntries.Add(new LeaderboardEntry(playerInitials, playerLastScore, playerLastDistance, playerGems));
         }
 
         leaderboardEntries.Sort((a, b) => b.score.CompareTo(a.score));
@@ -202,7 +236,9 @@ public class LeaderboardUI : MonoBehaviour
             PlayerPrefs.SetString($"Leaderboard_Name_{i}", leaderboardEntries[i].name);
             PlayerPrefs.SetInt($"Leaderboard_Score_{i}", leaderboardEntries[i].score);
             PlayerPrefs.SetFloat($"Leaderboard_Distance_{i}", leaderboardEntries[i].distance);
+            PlayerPrefs.SetInt($"Leaderboard_Gems_{i}", leaderboardEntries[i].gems); // ✅ NEW
         }
+
         PlayerPrefs.Save();
 
         Debug.Log("✅ Score submitted & saved.");
@@ -226,7 +262,13 @@ public class LeaderboardUI : MonoBehaviour
         }
 
     }
-
+    public IEnumerator ShowLeaderboardRoutine()
+    {
+        // Put your coroutine logic here
+        yield return new WaitForSeconds(0.5f); // example delay
+        Debug.Log("🌀 Coroutine in Leaderboard running!");
+        // Reveal input field or animations
+    }
     void ShowSavingUI()
     {
         if (savingText != null) savingText.SetActive(true);
@@ -262,36 +304,48 @@ public class LeaderboardUI : MonoBehaviour
             for (int i = 0; i < 15; i++)
             {
                 PlayerPrefs.SetString($"Leaderboard_Name_{i}", i == 0 ? "TJH" : "AAA");
-                PlayerPrefs.SetInt($"Leaderboard_Score_{i}", i == 0 ? 500 : Random.Range(200, 480));
-                PlayerPrefs.SetFloat($"Leaderboard_Distance_{i}", i == 0 ? 150f : Random.Range(50f, 140f));
+                float distance = (i == 0) ? 180f : Random.Range(60f, 160f);
+                int gems = (i == 0) ? 25 : Random.Range(8, 20);
+                int score = Mathf.FloorToInt(distance + (gems * 5));
+                PlayerPrefs.SetInt($"Leaderboard_Gems_{i}", gems);
+
+                PlayerPrefs.SetFloat($"Leaderboard_Distance_{i}", distance);
+                PlayerPrefs.SetInt($"Leaderboard_Score_{i}", score);
+
             }
             PlayerPrefs.Save();
         }
     }
-
     void LoadLeaderboard()
     {
         leaderboardEntries.Clear();
         for (int i = 0; i < 15; i++)
         {
-            leaderboardEntries.Add(new LeaderboardEntry(
-                PlayerPrefs.GetString($"Leaderboard_Name_{i}", "---"),
-                PlayerPrefs.GetInt($"Leaderboard_Score_{i}", 0),
-                PlayerPrefs.GetFloat($"Leaderboard_Distance_{i}", 0)
-            ));
+            string name = PlayerPrefs.GetString($"Leaderboard_Name_{i}", "---");
+            int score = PlayerPrefs.GetInt($"Leaderboard_Score_{i}", 0);
+            float distance = PlayerPrefs.GetFloat($"Leaderboard_Distance_{i}", 0);
+            int gems = PlayerPrefs.GetInt($"Leaderboard_Gems_{i}", 0); // ✅ Load gems
+
+            leaderboardEntries.Add(new LeaderboardEntry(name, score, distance, gems));
         }
     }
 
     void DisplayLeaderboard()
     {
-        leaderboardText.text = "LEADERBOARDS\n";
-        leaderboardEntries.Sort((a, b) => b.score.CompareTo(a.score));
+        leaderboardText.text = "TOP 15 PLAYERS\n\n";
+        leaderboardText.text += string.Format("{0,-3} {1,-4} {2,6} {3,6} {4,6}\n", "#", "NAME", "SCORE", "DIST", "GEMS");
 
-        int maxEntries = Mathf.Min(leaderboardEntries.Count, 15);
+        int maxEntries = Mathf.Min(MaxLeaderboardEntries, leaderboardEntries.Count);
         for (int i = 0; i < maxEntries; i++)
         {
-            leaderboardText.text += $"{i + 1}. {leaderboardEntries[i].name} - {leaderboardEntries[i].score} pts - {Mathf.FloorToInt(leaderboardEntries[i].distance)} m\n";
+            leaderboardText.text += string.Format("{0,-3} {1,-4} {2,6} {3,6}m {4,6}\n",
+                i + 1,
+                leaderboardEntries[i].name,
+                leaderboardEntries[i].score,
+                Mathf.FloorToInt(leaderboardEntries[i].distance),
+                leaderboardEntries[i].gems);
         }
+
     }
 
     bool CheckIfPlayerBeatsLeaderboard(int newScore)
@@ -319,12 +373,13 @@ public class LeaderboardUI : MonoBehaviour
         ResumeGameObjects();
         SceneManager.LoadScene("MainMenu");
 
-        // ✅ Force music to play after returning to menu
+        // ✅ Add this:
         if (AudioManager.instance != null)
         {
             AudioManager.instance.PlayMusicForScene("MainMenu");
         }
     }
+
     void ResumeGameObjects()
     {
         PlayerController player = Object.FindFirstObjectByType<PlayerController>();

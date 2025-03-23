@@ -61,16 +61,32 @@ public class PlayerUIManager : MonoBehaviour
             float currentZ = player.transform.position.z;
             distanceTraveled = (currentZ - playerStartZ) / 5;
 
-            // ✅ Ensure distanceText updates correctly
+            //  Ensure distanceText updates correctly
             UpdateDistance(distanceTraveled);
 
-            // ✅ Increase score every 5 meters
-            if (Mathf.FloorToInt(distanceTraveled) % 3 == 0 && Mathf.FloorToInt(distanceTraveled) != lastCheckedDistance)
+            //  Increase score every meter
+            int currentDistance = Mathf.FloorToInt(distanceTraveled);
+            if (currentDistance != lastCheckedDistance)
             {
-                lastCheckedDistance = Mathf.FloorToInt(distanceTraveled);
-                UpdateScore(10); // Reward 10 points every 5 meters
+                int diff = currentDistance - lastCheckedDistance;
+                lastCheckedDistance = currentDistance;
+                UpdateScore(diff); // +1 point per meter
             }
+
         }
+    }
+    private int gemCount = 0;
+
+    public void AddGem()
+    {
+        gemCount++;
+        UpdateScore(5); // Each gem = 5 points
+    }
+    private int totalGems = 0;
+
+    public int GetGemCount()
+    {
+        return gemCount; // this variable should be tracking total gems
     }
 
     public int GetScore()

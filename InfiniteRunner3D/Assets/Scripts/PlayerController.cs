@@ -2,11 +2,13 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using System.Collections;
+using UnityEngine.SocialPlatforms.Impl;
 public class PlayerController : MonoBehaviour
 {
     private Animator animator;
     private Rigidbody rb;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LeaderboardUI leaderboardUI;
 
     private bool isMoving = false;
     private bool isFalling = false;
@@ -41,9 +43,14 @@ public class PlayerController : MonoBehaviour
     // Touch Controls
     private InputAction tiltAction;
     private float currentTilt => tiltAction.ReadValue<float>();
+    private bool deathEnabled = false;
+
+
 
     void Start()
     {
+        StartCoroutine(EnableDeathAfterDelay());
+
         // Ensure the player starts at Y = 0
         Vector3 playerStartPosition = transform.position;
         playerStartPosition.y = 0.5f; // Slightly above the floor to prevent clipping
@@ -69,7 +76,6 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(EnableDeathAfterDelay());
 
     }
-    private bool deathEnabled = false;
 
     IEnumerator EnableDeathAfterDelay()
     {
@@ -138,44 +144,55 @@ public class PlayerController : MonoBehaviour
         }
 
         // Check if Player falls off
-        if (transform.position.y < -5f) Die();
+        if (transform.position.y < -5f && deathEnabled)
+        {
+            Debug.Log("☠️ Player fell off the path!");
+            Die();
+        }
+
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("PathTrigger"))
+        string tag = collision.gameObject.tag;
+
+        if (tag == "PathTrigger")
         {
             isMoving = true;
             Debug.Log("✅ Player touched path! Movement activated.");
-        }
-        else if (collision.gameObject.CompareTag("Obstacle"))
-        {
-            Debug.Log("❌ Hit an Obstacle!");
-            LevelAudioManager.instance.PlaySound(hitObstacleSFX);
 
-            if (PlayerPrefs.GetInt("VibrationEnabled", 1) == 1)
-            {
-                VibrationUtility.VibrateShort(); // 0.5s single burst
-                Debug.Log("📳 Vibration triggered!");
-
-            }
-
-            Die();
-        }
-
-        if (collision.gameObject.CompareTag("PathTrigger"))
-        {
             Debug.Log("🏁 Landed! Resetting Falling & Running.");
-
             isJumping = false;
             isFalling = false;
             animator.SetBool("IsFalling", false);
             animator.SetBool("IsJumping", false);
             animator.SetBool("IsRunning", true);
         }
+        else if (tag == "Obstacle")
+        {
+            Debug.Log("❌ Hit an Obstacle!");
+            LevelAudioManager.instance.PlaySound(hitObstacleSFX);
+
+            if (PlayerPrefs.GetInt("VibrationEnabled", 1) == 1)
+            {
+                VibrationUtility.VibrateShort();
+                Debug.Log("📳 Vibration triggered!");
+            }
+
+            Die(); // ✅ Trigger death here
+        }
     }
 
-    void OnTriggerEnter(Collider other) { if (other.gameObject.CompareTag("PathTrigger")) stuck = true; }
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("PathTrigger")) stuck = true;
+
+        if (other.CompareTag("Obstacle"))
+        {
+            Debug.Log("☠️ Hit a trigger obstacle!");
+            Die();
+        }
+    }
 
     void OnTriggerExit(Collider other) { if (other.gameObject.CompareTag("PathTrigger")) stuck = false; }
 
@@ -370,30 +387,47 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("IsTurningLeft", false);
         animator.SetBool("IsTurningRight", false);
     }
-
+    private LeaderboardUI leaderboard;
     void Die()
     {
+        if (!deathEnabled) return;
+
         Debug.Log("❌ Player died! Saving score & displaying leaderboard...");
 
-        // Save last score and distance
-        PlayerPrefs.SetInt("LastScore", PlayerUIManager.Instance.GetScore());
+        int finalScore = Mathf.FloorToInt(PlayerUIManager.Instance.GetDistance()) + (PlayerUIManager.Instance.GetGemCount() * 5);
+        PlayerPrefs.SetInt("LastScore", finalScore);
         PlayerPrefs.SetFloat("LastDistance", PlayerUIManager.Instance.GetDistance());
+        PlayerPrefs.SetInt("LastGems", PlayerUIManager.Instance.GetGemCount());
         PlayerPrefs.Save();
 
-        // Find Leaderboard UI and enable it
-        LeaderboardUI leaderboard = Object.FindFirstObjectByType<LeaderboardUI>();
+        LeaderboardUI ui = leaderboardUI;
 
-        if (leaderboard != null)
+        if (ui == null)
         {
-            leaderboard.gameObject.SetActive(true); // Ensure it's enabled
-            leaderboard.ShowLeaderboard();
+            Debug.LogWarning("⚠️ LeaderboardUI not assigned, attempting runtime search...");
+            ui = Object.FindFirstObjectByType<LeaderboardUI>(FindObjectsInactive.Include);
+        }
+
+        if (ui != null)
+        {
+            Debug.Log($"📦 Is Active: {ui.isActiveAndEnabled}");
+
+            StartCoroutine(ShowLeaderboardSafely(ui));
         }
         else
         {
-            Debug.LogError("❌ LeaderboardUI not found! Ensure it's in the scene.");
+            Debug.LogError("❌ LeaderboardUI still missing. Check scene setup!");
         }
-        if (!deathEnabled) return;
     }
+    IEnumerator ShowLeaderboardSafely(LeaderboardUI ui)
+    {
+        ui.gameObject.SetActive(true);
+        yield return null; // Wait 1 frame
+        ui.ShowLeaderboard(); // normal method
+        yield return ui.StartCoroutine(ui.ShowLeaderboardRoutine()); // safely start coroutine on now-active MonoBehaviour
+    }
+
+
     bool IsGrounded()
     {
         RaycastHit hit;
