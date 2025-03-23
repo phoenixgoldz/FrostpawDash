@@ -79,16 +79,13 @@ public class MainMenuUI : MonoBehaviour
     }
     public void ToggleVibration(bool isEnabled)
     {
+        Debug.Log($"🛠️ Vibration Toggle Changed: {isEnabled}");
         PlayerPrefs.SetInt("VibrationEnabled", isEnabled ? 1 : 0);
         PlayerPrefs.Save();
 
         if (isEnabled)
         {
-            VibrationUtility.VibrateShort(); // Now it will work
-        }
-        else
-        {
-            Debug.Log("🔇 Vibration OFF");
+            VibrationUtility.VibrateShort(); 
         }
     }
     public void PlayEasterLevel()
@@ -113,23 +110,35 @@ public class MainMenuUI : MonoBehaviour
     }
     IEnumerator LoadSceneAsync(string sceneName)
     {
-        // Optional: Display a loading screen UI here (fade out, spinner, etc.)
+        // 🔄 Optional: Show a loading UI or spinner here if you have one
 
+        // 🧹 Clean up unused memory
+        Resources.UnloadUnusedAssets();
+        System.GC.Collect();
+
+        yield return null; // Wait 1 frame to free RAM
+
+        // 🚀 Begin async loading
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
         asyncLoad.allowSceneActivation = false;
 
+        float timer = 0f;
+        float minLoadTime = 1.0f; // Smooth out load transition
+
         while (!asyncLoad.isDone)
         {
-            // Optionally track asyncLoad.progress (0–0.9 while loading)
-            if (asyncLoad.progress >= 0.9f)
+            timer += Time.unscaledDeltaTime;
+
+            // ✅ Once 90% loaded and minimum time has passed, activate
+            if (asyncLoad.progress >= 0.9f && timer >= minLoadTime)
             {
-                // Optional delay, animations, or transitions before allowing activation
                 asyncLoad.allowSceneActivation = true;
             }
 
             yield return null;
         }
     }
+
     public void ToggleLeaderboard()
     {
         if (leaderboardUI == null)

@@ -66,7 +66,15 @@ public class PlayerController : MonoBehaviour
 
         playerControls.Enable();
         StartCoroutine(EnsureGrounded());
+        StartCoroutine(EnableDeathAfterDelay());
 
+    }
+    private bool deathEnabled = false;
+
+    IEnumerator EnableDeathAfterDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        deathEnabled = true;
     }
     public float GetSpeed()
     {
@@ -384,6 +392,7 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogError("❌ LeaderboardUI not found! Ensure it's in the scene.");
         }
+        if (!deathEnabled) return;
     }
     bool IsGrounded()
     {

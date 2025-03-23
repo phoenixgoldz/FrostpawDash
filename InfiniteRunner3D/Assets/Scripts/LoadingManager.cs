@@ -10,7 +10,7 @@ public class LoadingManager : MonoBehaviour
 {
     public Slider loadingBar;
     public TMP_Text loadingText;
-    public float minLoadTime = 3f;
+    public float minLoadTime = 0.5f;
 
     private float progress = 0f;
     private int totalAssets = 0;

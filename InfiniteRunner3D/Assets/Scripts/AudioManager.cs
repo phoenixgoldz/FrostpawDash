@@ -73,6 +73,12 @@ public class AudioManager : MonoBehaviour
         Debug.Log($"🎵 Scene Loaded: {scene.name}");
         PlayMusicForScene(scene.name);
         ApplyButtonClickSoundToAll();
+
+        if (scene.name == "MainMenu")
+        {
+            PlayMusic(mainMenuMusic);
+        }
+
     }
     public void StopMusic()
     {
@@ -109,10 +115,10 @@ public class AudioManager : MonoBehaviour
         int randomIndex = Random.Range(0, level1MusicTracks.Length);
         PlayMusic(level1MusicTracks[randomIndex]);
     }
-
     public void PlayMusic(AudioClip clip)
     {
-        if (musicSource.clip == clip) return;
+        if (musicSource.clip == clip && musicSource.isPlaying) return;
+
         musicSource.clip = clip;
         musicSource.Play();
     }

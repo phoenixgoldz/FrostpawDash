@@ -139,16 +139,46 @@ public class PathManager : MonoBehaviour
 
         if (gemPrefab != null)
         {
-            for (int i = 0; i < gemsPerRow; i++)
+            float spacing = 2.5f;
+            int trailLength = Mathf.Clamp(gemsPerRow, 4, 10);
+
+            int trailType = Random.Range(0, 3); // 0 = straight, 1 = wave, 2 = zigzag
+
+            for (int i = 0; i < trailLength; i++)
             {
-                float gemX = Random.Range(-3f, 3f);
-                float gemZ = lastPathEndZ + Random.Range(1f, pathLength - 1f);
-                Vector3 gemPosition = new Vector3(gemX, 1.5f, gemZ);
+                float gemZ = lastPathEndZ + 2f + (i * spacing); // starts slightly ahead
+                float gemY = 1.5f;
+                float gemX = 0f;
+
+                switch (trailType)
+                {
+                    case 0: // Straight center
+                        gemX = 0f;
+                        break;
+                    case 1: // Arc wave
+                        gemX = Mathf.Sin(i * 0.5f) * 2.5f;
+                        break;
+                    case 2: // Zigzag
+                        gemX = (i % 2 == 0) ? -2.5f : 2.5f;
+                        break;
+                }
+
+                Vector3 gemPosition = new Vector3(gemX, gemY, gemZ);
 
                 GameObject gem = Instantiate(gemPrefab, gemPosition, Quaternion.identity);
+
+                // Disable shadows for optimization
+                Renderer rend = gem.GetComponent<Renderer>();
+                if (rend != null)
+                {
+                    rend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                    rend.receiveShadows = false;
+                }
+
                 activePaths.Add(gem);
             }
         }
+
         // ✅ Ensure IcyFloorPath maintains exactly 18.59f Z-spacing
         if (newPath.name.Contains("FlatIcePath"))
         {

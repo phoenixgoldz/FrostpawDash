@@ -93,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 20201, guid: 0000000000000000f000000000000000, type: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 66b3c6f4627d98641b5bc032980b68c3, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -1276,7 +1276,35 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: TJH
+  m_text: 'TJH 41341 pts 293m
+
+    a
+
+    a
+
+    a
+
+    a
+
+    a
+
+    a
+
+    a
+
+    a
+
+    a
+
+    a
+
+    a
+
+    a
+
+    a
+
+    a'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 05224d82ac8f0724385d200939493ad8, type: 2}
   m_sharedMaterial: {fileID: -3015448286067529620, guid: 05224d82ac8f0724385d200939493ad8, type: 2}
@@ -1303,12 +1331,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 55
+  m_fontSize: 62
   m_fontSizeBase: 90
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 55
+  m_fontSizeMax: 62
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -1341,7 +1369,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -66.47768, y: -368.61447, z: -657.7378, w: -493.0055}
+  m_margin: {x: 22.81762, y: -350.18472, z: -581.7747, w: -549.5091}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1997,7 +2025,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   floorPrefab: {fileID: 9040768361254387859, guid: bb699fc94d16cdf4b86a25e9a34123f8, type: 3}
-  floorLength: 20
+  floorLength: 10
   initialSegments: 15
   leftWallPrefabs:
   - {fileID: 6446628439300264726, guid: 823422adb0621cb48a0944f1a794ad80, type: 3}
@@ -2006,18 +2034,14 @@ MonoBehaviour:
   - {fileID: 6446628439300264726, guid: 823422adb0621cb48a0944f1a794ad80, type: 3}
   - {fileID: 5394793449066026249, guid: 88e6226ffdddc3149b0b33850582ad83, type: 3}
   obstaclePrefabs:
-  - {fileID: 4412337230909887208, guid: b9531a8ff428fd34d9c445f301e69022, type: 3}
   - {fileID: 3445837544010239470, guid: 7f672caab2c817b48a69e691efb09130, type: 3}
   - {fileID: 6673225704989921617, guid: 34aa539d10f73144083c176f61baa034, type: 3}
-  - {fileID: 3445837544010239470, guid: 7f672caab2c817b48a69e691efb09130, type: 3}
   - {fileID: 417740039537831932, guid: 06954b1945ee61a41b305bc5f780009e, type: 3}
   - {fileID: 4412337230909887208, guid: b9531a8ff428fd34d9c445f301e69022, type: 3}
   - {fileID: 8328977229961737062, guid: e636f0b460db0ab4586f669914d9350b, type: 3}
-  - {fileID: 4412337230909887208, guid: b9531a8ff428fd34d9c445f301e69022, type: 3}
-  - {fileID: 3445837544010239470, guid: 7f672caab2c817b48a69e691efb09130, type: 3}
   - {fileID: 8843598194286913918, guid: 98dc452756d40aa40be04cb6806cfda8, type: 3}
   collectiblePrefab: {fileID: 7267114645300211648, guid: 357fbca42c03f3e418aa99099c45e2ce, type: 3}
-  collectiblesPerRow: 2
+  collectiblesPerRow: 1
   collectibleSpawnChance: 0.6
   gapChance: 0.5
   bridgePrefab: {fileID: 8843598194286913918, guid: 98dc452756d40aa40be04cb6806cfda8, type: 3}
@@ -2323,7 +2347,7 @@ RectTransform:
   m_GameObject: {fileID: 1506488101}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9123999, y: 0.9123999, z: 0.9123999}
+  m_LocalScale: {x: 0.7833135, y: 0.86074924, z: 0.7833135}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1628300105}
@@ -2331,7 +2355,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.8243, y: -9.9591}
+  m_AnchoredPosition: {x: 1.8243, y: -74}
   m_SizeDelta: {x: 1080, y: 2340}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1506488103
@@ -2692,10 +2716,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1080, y: 1980}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -3607,7 +3631,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -9.124512, y: -46}
+  m_AnchoredPosition: {x: -9.124512, y: 5}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1790395341
@@ -4339,7 +4363,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3367040767374751710, guid: 91b043ff7486c6e43bcbb18b5eac4aa7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3367040767374751710, guid: 91b043ff7486c6e43bcbb18b5eac4aa7, type: 3}
       propertyPath: m_LocalPosition.z

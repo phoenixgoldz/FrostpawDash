@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class LeaderboardUI : MonoBehaviour
 {
@@ -77,6 +78,7 @@ public class LeaderboardUI : MonoBehaviour
         TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default);
 #endif
     }
+   
 
     public void ValidateInput(string input)
     {
@@ -88,6 +90,22 @@ public class LeaderboardUI : MonoBehaviour
     {
         LoadLeaderboard();
         StartCoroutine(EnableInput());
+        StartCoroutine(DelaySelectInitialsInput());
+
+        IEnumerator DelaySelectInitialsInput()
+        {
+            yield return new WaitForEndOfFrame(); // Wait one frame to ensure UI is enabled
+
+            if (initialsInput != null)
+            {
+                EventSystem.current.SetSelectedGameObject(initialsInput.gameObject);
+                initialsInput.ActivateInputField(); // Optional: focus keyboard
+            }
+            else
+            {
+                Debug.LogError("❌ initialsInput is still null when trying to select it!");
+            }
+        }
 
         playerLastScore = PlayerPrefs.GetInt("LastScore", 0);
         playerLastDistance = PlayerPrefs.GetFloat("LastDistance", 0);
@@ -99,6 +117,9 @@ public class LeaderboardUI : MonoBehaviour
         submitButton.gameObject.SetActive(qualifies);
 
         leaderboardPanel.SetActive(true);
+        tryAgainButton.interactable = true;
+        mainMenuButton.interactable = true;
+        submitButton.interactable = CheckIfPlayerBeatsLeaderboard(playerLastScore);
 
         PauseGameObjects(); // ✅ Stop movement without freezing UI
         DisplayLeaderboard();
@@ -126,17 +147,20 @@ public class LeaderboardUI : MonoBehaviour
     }
     IEnumerator EnableInput()
     {
-        yield return new WaitForSeconds(0.1f); // Ensure UI updates first
+        yield return new WaitForSeconds(0.1f); // Let UI initialize
 
-        initialsInput.interactable = false;
-        yield return new WaitForSeconds(0.1f);
-        initialsInput.interactable = true; // ✅ Force reactivation
-        initialsInput.ActivateInputField(); // ✅ Focus on input field
-
-#if UNITY_ANDROID
-        Debug.Log("📱 Opening Android Keyboard...");
-        TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default);
-#endif
+        if (initialsInput != null)
+        {
+            initialsInput.interactable = false;
+            yield return new WaitForSeconds(0.1f);
+            initialsInput.interactable = true;
+            initialsInput.ActivateInputField();
+            EventSystem.current.SetSelectedGameObject(initialsInput.gameObject);
+        }
+        else
+        {
+            Debug.LogError("❌ initialsInput is null in EnableInput()");
+        }
     }
 
     public void SubmitScore()
@@ -289,12 +313,17 @@ public class LeaderboardUI : MonoBehaviour
         ResumeGameObjects(); // ✅ Resume movement before reloading
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
-
     public void ReturnToMainMenu()
     {
         Debug.Log("🏠 Main Menu Button Clicked!");
-        ResumeGameObjects(); // ✅ Resume movement before reloading
+        ResumeGameObjects();
         SceneManager.LoadScene("MainMenu");
+
+        // ✅ Force music to play after returning to menu
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlayMusicForScene("MainMenu");
+        }
     }
     void ResumeGameObjects()
     {

@@ -54,28 +54,26 @@ public class EasterPathManager : MonoBehaviour
     }
     private List<FloorSegment> floorSegments = new List<FloorSegment>();
 
-    void Start()
+    void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
+
         if (player == null)
         {
-            Debug.LogError("❌ EasterPathManager: Player not found!");
+            Debug.LogError("❌ EasterPathManager: Player not found in Awake!");
             return;
         }
 
-        // Spawn initial segments
         for (int i = 0; i < initialSegments; i++)
         {
             SpawnPathSegment();
         }
-        if (bridgePrefab == null)
-        {
-            Debug.LogWarning("⚠️ EasterPathManager: No bridgePrefab assigned!");
-        }
-
-        StartCoroutine(EnableObstaclesAfterDelay(10f)); // Delay obstacle spawning for 10 seconds
     }
 
+    void Start()
+    {
+        StartCoroutine(EnableObstaclesAfterDelay(5f)); // Delay obstacle spawning for 5 seconds
+    }
     IEnumerator EnableObstaclesAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -113,8 +111,8 @@ public class EasterPathManager : MonoBehaviour
         float spawnZ = lastPathEndZ;
 
         // If last segment was a gap, force this one to be a floor
-        bool forceFloor = lastWasGap;
-        bool isGap = !forceFloor && (Random.value < gapChance);
+        bool isFirstSegment = lastPathEndZ <= 0f;
+        bool isGap = !isFirstSegment && !lastWasGap && (Random.value < gapChance);
 
         float distanceTraveled = player != null ? player.position.z : 0f;
         float currentBridgeChance = Mathf.Max(minBridgeChance, initialBridgeChance - distanceTraveled * bridgeDecayRate);
@@ -181,29 +179,26 @@ public class EasterPathManager : MonoBehaviour
         lastPathEndZ += floorLength;
         lastWasGap = isGap;
     }
-
     void SpawnObstacles(float zPosition)
     {
         if (obstaclePrefabs.Length == 0 || floorSegments.Count == 0) return;
 
         FloorSegment targetFloor = floorSegments.Find(segment => zPosition >= segment.startZ && zPosition < segment.endZ);
-
         if (targetFloor == null || targetFloor.floorObject == null)
         {
             Debug.LogWarning("🚫 No valid floor found for obstacle spawn at Z = " + zPosition);
             return;
         }
 
-        int attempts = 5; // How many total obstacles to try and spawn per floor
-        int spawned = 2;
+        int attempts = 5;
+        int spawned = 0;
 
         for (int i = 0; i < attempts; i++)
         {
-            // ✅ FIXED: Use different variable name for inner loop
             List<GameObject> weightedObstacles = new List<GameObject>();
             for (int j = 0; j < obstaclePrefabs.Length; j++)
             {
-                int weight = (j <= 8) ? 4 : 1; // Prefabs 0–3 = 4x more likely
+                int weight = (j <= 8) ? 4 : 1;
                 for (int w = 0; w < weight; w++)
                 {
                     weightedObstacles.Add(obstaclePrefabs[j]);
@@ -211,37 +206,99 @@ public class EasterPathManager : MonoBehaviour
             }
 
             GameObject prefab = weightedObstacles[Random.Range(0, weightedObstacles.Count)];
-            Quaternion prefabRotation = prefab.transform.rotation;
-            float prefabY = prefab.transform.position.y;
+            string prefabName = prefab.name.ToLower();
 
-            float obstacleX = Random.Range(-3f, 3f);
+            // 🔧 Determine spawn position
+            float obstacleX = 0f;
+            float obstacleY = prefab.transform.position.y;
             float obstacleZ = Random.Range(targetFloor.startZ + 2f, targetFloor.endZ - 2f);
-            Vector3 obstaclePos = new Vector3(obstacleX, prefabY, obstacleZ);
+
+            // 🎯 Handle exceptions
+            bool isBridgeLog = prefabName.Contains("springbridgelogs");
+            bool isOffsetX = prefabName.Contains("logspring") || prefabName.Contains("eastereggsnest") || isBridgeLog;
+
+            if (isOffsetX)
+            {
+                obstacleX = Random.Range(-3f, 3f);
+            }
+            else
+            {
+                obstacleX = prefab.transform.position.x; // Keep original prefab X
+            }
+
+            // 📏 Enforce 2f distance for bridge logs
+            if (isBridgeLog && IsTooCloseToOtherObstacles(obstacleZ))
+            {
+                continue; // Skip this spawn attempt
+            }
+
+            Vector3 obstaclePos = new Vector3(obstacleX, obstacleY, obstacleZ);
 
             if (!IsOverlapping(obstaclePos))
             {
-                GameObject obstacle = Instantiate(prefab, obstaclePos, prefabRotation);
+                GameObject obstacle = Instantiate(prefab, obstaclePos, prefab.transform.rotation);
                 activePaths.Add(obstacle);
                 spawned++;
             }
-        }
 
-        if (spawned == 0)
-        {
-            Debug.Log("❗ No obstacles spawned due to overlap at Z = " + zPosition);
+            if (spawned >= 2) break; // Limit to 2 per floor
         }
     }
-
-    void SpawnCollectibles(float zPosition)
+    bool IsTooCloseToOtherObstacles(float z)
     {
-        for (int i = 0; i < collectiblesPerRow; i++)
+        foreach (GameObject obj in activePaths)
         {
-            float collectibleX = Random.Range(-3f, 3f);
-            Vector3 collectiblePos = new Vector3(collectibleX, collectiblePrefab.transform.position.y, zPosition + Random.Range(2f, floorLength - 2f));
-
-            if (!IsOverlapping(collectiblePos))
+            if (obj == null) continue;
+            if (Mathf.Abs(obj.transform.position.z - z) < 2f)
             {
-                GameObject collectible = Instantiate(collectiblePrefab, collectiblePos, collectiblePrefab.transform.rotation);
+                return true; // Too close
+            }
+        }
+        return false;
+    }
+    void SpawnCollectibles(float zStart)
+    {
+        if (collectiblePrefab == null) return;
+
+        float spacing = 2.5f; // Z spacing between eggs
+        int trailLength = Mathf.Clamp(collectiblesPerRow, 4, 10); // How many in the trail
+
+        int trailType = Random.Range(0, 3); // 0 = straight, 1 = arc, 2 = zigzag
+
+        for (int i = 0; i < trailLength; i++)
+        {
+            float z = zStart + (i * spacing);
+            float x = 0f;
+
+            switch (trailType)
+            {
+                case 0: // Straight
+                    x = 0f;
+                    break;
+
+                case 1: // Arc wave (smooth sine curve)
+                    x = Mathf.Sin(i * 0.5f) * 2.5f; // Adjust amplitude as needed
+                    break;
+
+                case 2: // Zigzag
+                    x = (i % 2 == 0) ? -2.5f : 2.5f;
+                    break;
+            }
+
+            Vector3 spawnPos = new Vector3(x, collectiblePrefab.transform.position.y, z);
+
+            if (!IsOverlapping(spawnPos))
+            {
+                GameObject collectible = Instantiate(collectiblePrefab, spawnPos, collectiblePrefab.transform.rotation);
+
+                // Optional: Disable shadows for performance
+                Renderer rend = collectible.GetComponent<Renderer>();
+                if (rend != null)
+                {
+                    rend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                    rend.receiveShadows = false;
+                }
+
                 activePaths.Add(collectible);
             }
         }
@@ -272,9 +329,11 @@ public class EasterPathManager : MonoBehaviour
         {
             if (activePaths[i] == null) continue;
 
-            // If the object is far behind the player
+            // Only remove if FAR behind the player
             if (activePaths[i].transform.position.z < player.position.z - floorLength * 2f)
             {
+                Debug.Log("🟩 Keeping active: " + activePaths[i].name + " at " + activePaths[i].transform.position.z);
+
                 Destroy(activePaths[i]);
                 activePaths.RemoveAt(i);
             }
@@ -286,4 +345,5 @@ public class EasterPathManager : MonoBehaviour
             seg.floorObject.transform.position.z < player.position.z - floorLength * 2f
         );
     }
+
 }
