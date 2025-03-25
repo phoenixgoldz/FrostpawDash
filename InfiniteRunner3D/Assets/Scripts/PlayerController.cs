@@ -175,11 +175,11 @@ public class PlayerController : MonoBehaviour
 
             if (PlayerPrefs.GetInt("VibrationEnabled", 1) == 1)
             {
-                VibrationUtility.VibrateShort();
                 Debug.Log("📳 Vibration triggered!");
+                VibrationUtility.VibrateShort();
             }
 
-            Die(); // ✅ Trigger death here
+            Die();
         }
     }
 
@@ -392,31 +392,16 @@ public class PlayerController : MonoBehaviour
     {
         if (!deathEnabled) return;
 
-        Debug.Log("❌ Player died! Saving score & displaying leaderboard...");
-
         int finalScore = Mathf.FloorToInt(PlayerUIManager.Instance.GetDistance()) + (PlayerUIManager.Instance.GetGemCount() * 5);
         PlayerPrefs.SetInt("LastScore", finalScore);
         PlayerPrefs.SetFloat("LastDistance", PlayerUIManager.Instance.GetDistance());
         PlayerPrefs.SetInt("LastGems", PlayerUIManager.Instance.GetGemCount());
         PlayerPrefs.Save();
 
-        LeaderboardUI ui = leaderboardUI;
-
-        if (ui == null)
-        {
-            Debug.LogWarning("⚠️ LeaderboardUI not assigned, attempting runtime search...");
-            ui = Object.FindFirstObjectByType<LeaderboardUI>(FindObjectsInactive.Include);
-        }
-
+        LeaderboardUI ui = leaderboardUI ?? Object.FindFirstObjectByType<LeaderboardUI>(FindObjectsInactive.Include);
         if (ui != null)
         {
-            Debug.Log($"📦 Is Active: {ui.isActiveAndEnabled}");
-
             StartCoroutine(ShowLeaderboardSafely(ui));
-        }
-        else
-        {
-            Debug.LogError("❌ LeaderboardUI still missing. Check scene setup!");
         }
     }
     IEnumerator ShowLeaderboardSafely(LeaderboardUI ui)

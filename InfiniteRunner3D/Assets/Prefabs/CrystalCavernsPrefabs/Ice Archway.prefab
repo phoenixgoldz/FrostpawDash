@@ -64,6 +64,18 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 2f87e28ff7099e440b06faec8b22fc19, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 2f87e28ff7099e440b06faec8b22fc19, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 2f87e28ff7099e440b06faec8b22fc19, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 1292436371d5ca44b93480c94d5eadb0, type: 2}
     - target: {fileID: 919132149155446097, guid: 2f87e28ff7099e440b06faec8b22fc19, type: 3}
       propertyPath: m_Name
       value: Ice Archway

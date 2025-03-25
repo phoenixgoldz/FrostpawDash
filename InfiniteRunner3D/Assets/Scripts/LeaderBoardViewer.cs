@@ -32,9 +32,9 @@ public class LeaderboardViewer : MonoBehaviour
         {
             leaderboardPanel.SetActive(false);
         }
-
-        EnsureLeaderboardDefaults(); //  Ensure leaderboard initializes properly
-        LoadLeaderboardData();
+        leaderboardPanel?.SetActive(false);
+        LoadLeaderboardData(); // ✅ Make sure fresh data is loaded on startup
+        EnsureLeaderboardDefaults(); // Ensure leaderboard initializes properly
     }
 
     public void ShowLeaderboard()

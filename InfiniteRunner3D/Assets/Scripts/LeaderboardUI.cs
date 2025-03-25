@@ -203,13 +203,11 @@ public class LeaderboardUI : MonoBehaviour
 
         StartCoroutine(SaveScore(playerInitials));
     }
-
     IEnumerator SaveScore(string playerInitials)
     {
         ShowSavingUI();
 
         bool scoreUpdated = false;
-
         for (int i = 0; i < leaderboardEntries.Count; i++)
         {
             if (leaderboardEntries[i].name == playerInitials)
@@ -223,45 +221,43 @@ public class LeaderboardUI : MonoBehaviour
 
         if (!scoreUpdated)
         {
-            int playerGems = PlayerUIManager.Instance.GetGemCount(); // ✅ Make sure PlayerUIManager tracks gem count
+            int playerGems = PlayerUIManager.Instance.GetGemCount();
             leaderboardEntries.Add(new LeaderboardEntry(playerInitials, playerLastScore, playerLastDistance, playerGems));
         }
 
         leaderboardEntries.Sort((a, b) => b.score.CompareTo(a.score));
-
         if (leaderboardEntries.Count > 15) leaderboardEntries.RemoveAt(15);
 
+        // Save to PlayerPrefs
         for (int i = 0; i < leaderboardEntries.Count; i++)
         {
             PlayerPrefs.SetString($"Leaderboard_Name_{i}", leaderboardEntries[i].name);
             PlayerPrefs.SetInt($"Leaderboard_Score_{i}", leaderboardEntries[i].score);
             PlayerPrefs.SetFloat($"Leaderboard_Distance_{i}", leaderboardEntries[i].distance);
-            PlayerPrefs.SetInt($"Leaderboard_Gems_{i}", leaderboardEntries[i].gems); // ✅ NEW
+            PlayerPrefs.SetInt($"Leaderboard_Gems_{i}", leaderboardEntries[i].gems);
         }
-
         PlayerPrefs.Save();
 
-        Debug.Log("✅ Score submitted & saved.");
-
-        yield return new WaitForSeconds(0.1f); // Reduced wait time
+        yield return new WaitForSeconds(0.1f); // optional delay
 
         HideSavingUI();
 
-        // Hide Input Field & Submit Button after submission
+        // ✅ Now hide input field + buttons
         enterInitialsPanel.SetActive(false);
         submitButton.gameObject.SetActive(false);
 
-        // Refresh the leaderboard instantly
+        // ✅ Refresh leaderboard
         LoadLeaderboard();
         DisplayLeaderboard();
-        // ✅ Also refresh main menu leaderboard if it's in the scene
+
+        // ✅ Update main menu panel
         LeaderboardViewer viewer = Object.FindFirstObjectByType<LeaderboardViewer>();
         if (viewer != null)
         {
-            viewer.ShowLeaderboard(); // Instant update on submit
+            viewer.ShowLeaderboard();
         }
-
     }
+
     public IEnumerator ShowLeaderboardRoutine()
     {
         // Put your coroutine logic here
@@ -319,12 +315,13 @@ public class LeaderboardUI : MonoBehaviour
     void LoadLeaderboard()
     {
         leaderboardEntries.Clear();
+
         for (int i = 0; i < 15; i++)
         {
             string name = PlayerPrefs.GetString($"Leaderboard_Name_{i}", "---");
             int score = PlayerPrefs.GetInt($"Leaderboard_Score_{i}", 0);
             float distance = PlayerPrefs.GetFloat($"Leaderboard_Distance_{i}", 0);
-            int gems = PlayerPrefs.GetInt($"Leaderboard_Gems_{i}", 0); // ✅ Load gems
+            int gems = PlayerPrefs.GetInt($"Leaderboard_Gems_{i}", 0);
 
             leaderboardEntries.Add(new LeaderboardEntry(name, score, distance, gems));
         }

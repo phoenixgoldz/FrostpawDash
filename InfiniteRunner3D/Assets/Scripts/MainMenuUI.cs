@@ -79,20 +79,18 @@ public class MainMenuUI : MonoBehaviour
     }
     public void ToggleVibration(bool isEnabled)
     {
-        Debug.Log($"🛠️ Vibration Toggle Changed: {isEnabled}");
         PlayerPrefs.SetInt("VibrationEnabled", isEnabled ? 1 : 0);
         PlayerPrefs.Save();
 
         if (isEnabled)
         {
-            // ✅ Ensure this utility works properly
             VibrationUtility.VibrateShort();
+            Debug.Log("✅ Vibration toggled ON");
         }
-    }
-
-    public void PlayEasterLevel()
-    {
-        StartCoroutine(LoadSceneAsync("EasterLevel"));
+        else
+        {
+            Debug.Log("🔇 Vibration toggled OFF");
+        }
     }
 
     void DisplayGameVersion()
@@ -106,40 +104,33 @@ public class MainMenuUI : MonoBehaviour
             Debug.LogError("❌ VersionText is not assigned in MainMenuUI!");
         }
     }
-    public void PlayGame()
-    {
-        StartCoroutine(LoadSceneAsync("Level 1"));
-    }
+    public void PlayGame() => StartCoroutine(LoadSceneAsync("Level 1"));
+    public void PlayEasterLevel() => StartCoroutine(LoadSceneAsync("EasterLevel"));
+
     IEnumerator LoadSceneAsync(string sceneName)
     {
-        // 🔄 Optional: Show a loading UI or spinner here if you have one
-
-        // 🧹 Clean up unused memory
         Resources.UnloadUnusedAssets();
         System.GC.Collect();
+        yield return null;
 
-        yield return null; // Wait 1 frame to free RAM
-
-        // 🚀 Begin async loading
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
         asyncLoad.allowSceneActivation = false;
 
         float timer = 0f;
-        float minLoadTime = 1.0f; // Smooth out load transition
+        float minLoadTime = 1.0f;
 
         while (!asyncLoad.isDone)
         {
             timer += Time.unscaledDeltaTime;
 
-            // ✅ Once 90% loaded and minimum time has passed, activate
             if (asyncLoad.progress >= 0.9f && timer >= minLoadTime)
             {
                 asyncLoad.allowSceneActivation = true;
             }
-
             yield return null;
         }
     }
+
     public void ToggleLeaderboard()
     {
         if (leaderboardUI == null)

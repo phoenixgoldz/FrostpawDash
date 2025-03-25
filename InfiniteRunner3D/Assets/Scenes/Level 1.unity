@@ -1554,7 +1554,7 @@ MonoBehaviour:
   obstaclePrefabs:
   - {fileID: 4520916464538783754, guid: 77d8d50fb44687741b863dedb026d4ec, type: 3}
   - {fileID: 1780526071896707613, guid: 8da91923edc56af4390ed8e797fb30f1, type: 3}
-  initialSegments: 100
+  initialSegments: 15
   pathLength: 20
   wallXOffset: 12.2
   blueCrystalsPrefab: {fileID: 4520916464538783754, guid: 77d8d50fb44687741b863dedb026d4ec, type: 3}
@@ -2342,7 +2342,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8218274673303593103, guid: 6eb9b529bed7c0d46958d693d0767a9c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8548938276629271562, guid: 6eb9b529bed7c0d46958d693d0767a9c, type: 3}
       propertyPath: m_Pivot.x

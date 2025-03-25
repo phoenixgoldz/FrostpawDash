@@ -64,6 +64,14 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: d1bdfcb2abbec9d409aabcd9c1540c3d, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: d1bdfcb2abbec9d409aabcd9c1540c3d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 46beee77a6ec6e149a16a591bb0637e6, type: 2}
     - target: {fileID: 919132149155446097, guid: d1bdfcb2abbec9d409aabcd9c1540c3d, type: 3}
       propertyPath: m_Name
       value: BlueCrystals

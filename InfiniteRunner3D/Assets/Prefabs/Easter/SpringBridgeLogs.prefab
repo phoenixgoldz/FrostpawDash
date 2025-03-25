@@ -64,9 +64,13 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: b2f5bc00c0a0d68419627582a7f9293b, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b2f5bc00c0a0d68419627582a7f9293b, type: 3}
       propertyPath: m_Name
-      value: Spring_Log_Easter_t_0317043253_texture
+      value: SpringBridgeLogs
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b2f5bc00c0a0d68419627582a7f9293b, type: 3}
       propertyPath: m_Layer
