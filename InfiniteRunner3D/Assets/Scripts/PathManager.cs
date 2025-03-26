@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class PathManager : MonoBehaviour
 {
@@ -30,6 +31,7 @@ public class PathManager : MonoBehaviour
 
     void Start()
     {
+        PlayerPrefs.SetString("LastPlayedLevel", SceneManager.GetActiveScene().name);
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         if (player == null)
         {
@@ -50,7 +52,7 @@ public class PathManager : MonoBehaviour
         yield return new WaitForSeconds(15f);
         canSpawnBlueCrystals = true;
     }
-
+  
     void Update()
     {
         if (player == null) return;

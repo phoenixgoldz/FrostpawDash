@@ -9,8 +9,6 @@ public class MainMenuUI : MonoBehaviour
     [Header("Panels")]
     public GameObject menuPanel;
     public GameObject optionsPanel;
-    public GameObject leaderboardPanel;
-    private LeaderboardUI leaderboardUI;
 
     public GameObject creditsPanel;
 
@@ -54,7 +52,6 @@ public class MainMenuUI : MonoBehaviour
         }
 
         // Ensure LeaderboardUI is found safely
-        leaderboardUI = Object.FindFirstObjectByType<LeaderboardUI>();
         LoadSettings();
 
         // Assign button listeners
@@ -63,7 +60,6 @@ public class MainMenuUI : MonoBehaviour
         quitButton?.onClick.AddListener(QuitGame);
         creditsButton?.onClick.AddListener(ShowCredits);
 
-        if (leaderboardPanel != null) leaderboardPanel.SetActive(false);
         if (creditsPanel != null) creditsPanel.SetActive(false);
 
         // Start the fade-in effect when the scene loads
@@ -139,23 +135,8 @@ public class MainMenuUI : MonoBehaviour
 
     public void ToggleLeaderboard()
     {
-        if (leaderboardUI == null)
-        {
-            leaderboardUI = Object.FindFirstObjectByType<LeaderboardUI>();
-            if (leaderboardUI == null)
-            {
-                Debug.LogWarning("⚠️ LeaderboardUI not found in scene. Skipping toggle.");
-                return;
-            }
-        }
-
-        bool isActive = leaderboardPanel.activeSelf;
-        leaderboardPanel.SetActive(!isActive);
-
-        if (!isActive)
-        {
-            leaderboardUI.ShowLeaderboard();
-        }
+        Debug.Log("📊 Loading LeaderboardScreen...");
+        SceneManager.LoadScene("LeaderboardScreen");
     }
 
     public void ShowCredits()

@@ -8,7 +8,6 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private Rigidbody rb;
     [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private LeaderboardUI leaderboardUI;
 
     private bool isMoving = false;
     private bool isFalling = false;
@@ -50,6 +49,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         StartCoroutine(EnableDeathAfterDelay());
+        PlayerPrefs.SetString("LastPlayedLevel", SceneManager.GetActiveScene().name);
 
         // Ensure the player starts at Y = 0
         Vector3 playerStartPosition = transform.position;
@@ -392,26 +392,26 @@ public class PlayerController : MonoBehaviour
     {
         if (!deathEnabled) return;
 
+        // Calculate final score
         int finalScore = Mathf.FloorToInt(PlayerUIManager.Instance.GetDistance()) + (PlayerUIManager.Instance.GetGemCount() * 5);
+
+        // Save values using PlayerPrefs
         PlayerPrefs.SetInt("LastScore", finalScore);
         PlayerPrefs.SetFloat("LastDistance", PlayerUIManager.Instance.GetDistance());
         PlayerPrefs.SetInt("LastGems", PlayerUIManager.Instance.GetGemCount());
         PlayerPrefs.Save();
 
-        LeaderboardUI ui = leaderboardUI ?? Object.FindFirstObjectByType<LeaderboardUI>(FindObjectsInactive.Include);
-        if (ui != null)
-        {
-            StartCoroutine(ShowLeaderboardSafely(ui));
-        }
+        // Load Leaderboard Screen
+        SceneManager.LoadScene("LeaderboardScreen");
     }
-    IEnumerator ShowLeaderboardSafely(LeaderboardUI ui)
+
+   /* IEnumerator ShowLeaderboardSafely(LeaderboardUI ui)
     {
         ui.gameObject.SetActive(true);
         yield return null; // Wait 1 frame
         ui.ShowLeaderboard(); // normal method
         yield return ui.StartCoroutine(ui.ShowLeaderboardRoutine()); // safely start coroutine on now-active MonoBehaviour
-    }
-
+    }*/
 
     bool IsGrounded()
     {

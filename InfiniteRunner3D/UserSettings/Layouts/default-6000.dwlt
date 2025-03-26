@@ -43,8 +43,8 @@ MonoBehaviour:
     y: 0
     width: 240
     height: 653
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 226}
+  m_MaxSize: {x: 4002, y: 4026}
   m_ActualView: {fileID: 22}
   m_Panes:
   - {fileID: 22}
@@ -145,7 +145,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 100}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 39
+  controlID: 52
   draggingID: 0
 --- !u!114 &7
 MonoBehaviour:
@@ -171,7 +171,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 1
-  controlID: 40
+  controlID: 53
   draggingID: 0
 --- !u!114 &8
 MonoBehaviour:
@@ -198,7 +198,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 50}
   m_MaxSize: {x: 24288, y: 8096}
   vertical: 0
-  controlID: 41
+  controlID: 54
   draggingID: 0
 --- !u!114 &9
 MonoBehaviour:
@@ -245,8 +245,8 @@ MonoBehaviour:
     y: 0
     width: 832
     height: 653
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 226}
+  m_MaxSize: {x: 4002, y: 4026}
   m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
@@ -331,7 +331,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 732
+    y: 677
     width: 1432
     height: 254
   m_SerializedDataModeController:
@@ -372,10 +372,10 @@ MonoBehaviour:
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 86}
-    m_SelectedIDs: 3c810000
-    m_LastClickedID: 33084
-    m_ExpandedIDs: 0000000016810000188100001c8100001e810000208100002c8100002e81000030810000328100003481000036810000388100003a8100004081000042810000488100004486000046860000488600004e8600005086000084a200000aa300000ca300000ea3000000ca9a3b
+    scrollPos: {x: 0, y: 120}
+    m_SelectedIDs: 168a0000
+    m_LastClickedID: 35350
+    m_ExpandedIDs: 000000006485000066850000688500006a8500006c8500006e85000070850000728500007485000076850000788500007a8500007c8500007e85000080850000828500008485000086850000888500008a8500008c8500008e850000908500009285000094850000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -404,7 +404,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000016810000188100001a8100001c8100001e81000020810000228100002481000026810000288100002a8100002c8100002e81000030810000328100003481000036810000388100003a8100003c8100003e8100004081000042810000448100004681000048810000
+    m_ExpandedIDs: 000000006485000066850000688500006a8500006c8500006e85000070850000728500007485000076850000788500007a8500007c8500007e85000080850000828500008485000086850000888500008a8500008c8500008e850000908500009285000094850000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -609,7 +609,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 79
+    y: 24
     width: 360
     height: 627
   m_SerializedDataModeController:
@@ -628,21 +628,21 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 4ad9feff2045ffffbe46ffffbe62ffff5873fffffaa7ffff00aaffff52c8ffffa6c8ffffaac8ffffaec8ffffdac8fffff6c8ffff78c9ffff36d7ffff00daffff76e7ffffc0ecfffff8f6ffff1efbfffff4ffffff128700006287000084870000f2870000c4c90000e8d0000048d100001ed30000fed300007ad40000
+      m_ExpandedIDs: 3aa5ffff80aeffff0eafffff20b4ffff5cd2ffff74d4ffff08d5ffff48dbffff54dbffffc4e4ffffe8ebffff88ecffff58edffffbeefffff4cf3fffff6f4ffff9cf6ffff1efbfffffa8b0000388d0000289200001697000030970000409700007c97000096970000c0970000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: 'VibrationText (TMP) '
-        m_OriginalName: 'VibrationText (TMP) '
+        m_Name: 
+        m_OriginalName: 
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 34692
+        m_UserData: 0
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 0
+        m_OriginalEventType: 11
         m_IsRenamingFilename: 0
         m_TrimLeadingAndTrailingWhitespace: 0
         m_ClientGUIView: {fileID: 9}
@@ -674,8 +674,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Scene\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 361
-    y: 79
+    x: 362
+    y: 24
     width: 830
     height: 627
   m_SerializedDataModeController:
@@ -1274,9 +1274,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: 540, y: 1185.8438, z: 0}
+    m_Target: {x: 540, y: 1170, z: 0}
     speed: 2
-    m_Value: {x: 540, y: 1185.8438, z: 0}
+    m_Value: {x: 540, y: 1170, z: 0}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1324,11 +1324,11 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: 0, y: 0, z: 0, w: 1}
     speed: 2
-    m_Value: {x: 0, y: 0, z: 0, w: 1}
+    m_Value: {x: -0, y: 0, z: -0, w: -1}
   m_Size:
-    m_Target: 1675.185
+    m_Target: 1122.3531
     speed: 2
-    m_Value: 1675.185
+    m_Value: 1122.3531
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1397,7 +1397,7 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 54394
+  m_LastSelectedObjectID: 38754
 --- !u!114 &19
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1640,8 +1640,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Inspector\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1433
-    y: 79
+    x: 1434
+    y: 24
     width: 486
     height: 907
   m_SerializedDataModeController:
@@ -1689,8 +1689,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Simulator\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1193
-    y: 79
+    x: 1194
+    y: 24
     width: 238
     height: 627
   m_SerializedDataModeController:
@@ -1720,7 +1720,7 @@ MonoBehaviour:
   m_UseMipMap: 0
   m_SimulatorState:
     controlPanelVisible: 0
-    controlPanelWidth: 0
+    controlPanelWidth: NaN
     controlPanelFoldoutKeys:
     - UnityEditor.DeviceSimulation.ApplicationSettingsPlugin
     controlPanelFoldoutValues: 00
@@ -1730,7 +1730,7 @@ MonoBehaviour:
     pluginStates:
     - '{}'
     - '{}'
-    scale: 19
+    scale: 10
     fitToScreenEnabled: 1
     rotationDegree: 0
     highlightSafeAreaEnabled: 0

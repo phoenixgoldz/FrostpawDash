@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class EasterPathManager : MonoBehaviour
 {
@@ -56,6 +57,7 @@ public class EasterPathManager : MonoBehaviour
 
     void Awake()
     {
+        
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
         if (player == null)
@@ -72,7 +74,8 @@ public class EasterPathManager : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(EnableObstaclesAfterDelay(5f)); // Delay obstacle spawning for 5 seconds
+        PlayerPrefs.SetString("LastPlayedLevel", SceneManager.GetActiveScene().name);
+        StartCoroutine(EnableObstaclesAfterDelay(10f)); // Delay obstacle spawning for 5 seconds
     }
     IEnumerator EnableObstaclesAfterDelay(float delay)
     {
