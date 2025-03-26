@@ -59,12 +59,14 @@ public class LeaderboardUI : MonoBehaviour
         {
             leaderboardPanel.SetActive(false);
         }
-       // DontDestroyOnLoad(this.gameObject);
+        // DontDestroyOnLoad(this.gameObject);
         // Add others as needed
     }
 
     void Start()
     {
+        if (leaderboardPanel != null)
+            leaderboardPanel.SetActive(false); // 🔒 Hide leaderboard UI on scene load
 
         if (submitButton != null)
             submitButton.onClick.AddListener(SubmitScore);
@@ -79,10 +81,10 @@ public class LeaderboardUI : MonoBehaviour
         {
             initialsInput.characterLimit = 3;
             initialsInput.onSubmit.AddListener(delegate { SubmitScore(); });
-            initialsInput.onEndEdit.AddListener(delegate { SubmitScore(); }); // ✅ New
             initialsInput.onValueChanged.AddListener(ValidateInput);
             initialsInput.onSelect.AddListener(delegate { OpenKeyboard(); });
         }
+
         else
         {
             Debug.LogError("❌ LeaderboardPanel is missing! Assign it in the Inspector.");
@@ -91,6 +93,20 @@ public class LeaderboardUI : MonoBehaviour
         EnsureLeaderboardDefaults();
         LoadLeaderboard();
     }
+    void OnEnable()
+    {
+        Debug.Log("📊 [LeaderboardUI] OnEnable called!");
+        LoadLeaderboard();       
+        DisplayLeaderboard();    
+    }
+
+    public void TryAgain()
+    {
+        Debug.Log("🔄 Try Again Button Clicked!");
+        ResumeGameObjects();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
     public void OpenKeyboard()
     {
 #if UNITY_ANDROID
@@ -105,14 +121,13 @@ public class LeaderboardUI : MonoBehaviour
         initialsInput.text = input.ToUpper(); // Convert input to uppercase
         Debug.Log("✍️ Player is typing: " + initialsInput.text); // Debug Log to confirm input
     }
-
     public void ShowLeaderboard()
     {
         if (playerUI == null || initialsInput == null)
         {
             Debug.LogWarning("🔁 Reassigning lost references...");
 
-            playerUI = GameObject.Find("PlayerUI Canvas"); // or appropriate name
+            playerUI = GameObject.Find("PlayerUI Canvas");
             initialsInput = Object.FindFirstObjectByType<TMP_InputField>();
 
             if (playerUI == null || initialsInput == null)
@@ -121,48 +136,47 @@ public class LeaderboardUI : MonoBehaviour
                 return;
             }
         }
-        LoadLeaderboard();
-        StartCoroutine(EnableInput());
-        StartCoroutine(DelaySelectInitialsInput());
-
-        IEnumerator DelaySelectInitialsInput()
-        {
-            yield return new WaitForEndOfFrame(); // Wait one frame to ensure UI is enabled
-
-            if (initialsInput != null)
-            {
-                EventSystem.current.SetSelectedGameObject(initialsInput.gameObject);
-                initialsInput.ActivateInputField(); // Optional: focus keyboard
-            }
-            else
-            {
-                Debug.LogError("❌ initialsInput is still null when trying to select it!");
-            }
-        }
 
         playerLastScore = PlayerPrefs.GetInt("LastScore", 0);
         playerLastDistance = PlayerPrefs.GetFloat("LastDistance", 0);
 
         playerUI.SetActive(false);
+        leaderboardPanel.SetActive(true);
+
+        StartCoroutine(DelayedEnableInput());
 
         bool qualifies = CheckIfPlayerBeatsLeaderboard(playerLastScore);
         enterInitialsPanel.SetActive(qualifies);
         submitButton.gameObject.SetActive(qualifies);
 
-        leaderboardPanel.SetActive(true);
         tryAgainButton.interactable = true;
         mainMenuButton.interactable = true;
-        submitButton.interactable = CheckIfPlayerBeatsLeaderboard(playerLastScore);
+        submitButton.interactable = qualifies;
 
-        PauseGameObjects(); // ✅ Stop movement without freezing UI
+        PauseGameObjects();
+        LoadLeaderboard();
         DisplayLeaderboard();
-        LeaderboardViewer viewer = Object.FindFirstObjectByType<LeaderboardViewer>();
 
+        LeaderboardViewer viewer = Object.FindFirstObjectByType<LeaderboardViewer>();
         if (viewer != null)
         {
-            viewer.ShowLeaderboard(); // Refresh main menu view too
+            viewer.ForceRefreshLeaderboard();
         }
     }
+    private IEnumerator DelayedEnableInput()
+    {
+        yield return new WaitForEndOfFrame(); // Ensures the panel is fully active
+        StartCoroutine(EnableInput());
+
+        // Move DelaySelectInitialsInput here too
+        yield return new WaitForSeconds(0.05f);
+        if (initialsInput != null)
+        {
+            EventSystem.current.SetSelectedGameObject(initialsInput.gameObject);
+            initialsInput.ActivateInputField();
+        }
+    }
+
     void PauseGameObjects()
     {
         PlayerController player = Object.FindFirstObjectByType<PlayerController>();
@@ -254,7 +268,7 @@ public class LeaderboardUI : MonoBehaviour
         LeaderboardViewer viewer = Object.FindFirstObjectByType<LeaderboardViewer>();
         if (viewer != null)
         {
-            viewer.ShowLeaderboard();
+            viewer.ForceRefreshLeaderboard();
         }
     }
 
@@ -358,23 +372,47 @@ public class LeaderboardUI : MonoBehaviour
         }
         return false;
     }
-    public void TryAgain()
-    {
-        Debug.Log("🔄 Try Again Button Clicked!");
-        ResumeGameObjects(); // ✅ Resume movement before reloading
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
     public void ReturnToMainMenu()
     {
         Debug.Log("🏠 Main Menu Button Clicked!");
         ResumeGameObjects();
-        SceneManager.LoadScene("MainMenu");
+        StartCoroutine(DelayedLoad());
 
-        // ✅ Add this:
+        IEnumerator DelayedLoad()
+        {
+            yield return new WaitForSeconds(0.5f);
+            SceneManager.LoadScene("MainMenu");
+        }
+
+        // Play music if AudioManager exists
         if (AudioManager.instance != null)
         {
             AudioManager.instance.PlayMusicForScene("MainMenu");
         }
+
+        // Save leaderboard values explicitly again before switch
+        PlayerPrefs.Save();
+
+        // Refresh leaderboard manually after returning
+        StartCoroutine(RefreshLeaderboardOnMainMenuLoad());
+    }
+    IEnumerator RefreshLeaderboardOnMainMenuLoad()
+    {
+        yield return new WaitForSeconds(1.0f); // allow MainMenu to initialize
+
+        LeaderboardViewer viewer = Object.FindFirstObjectByType<LeaderboardViewer>();
+        if (viewer != null)
+        {
+            viewer.ForceRefreshLeaderboard(); // ✅ use new method
+            Debug.Log("📊 Leaderboard forcibly refreshed after returning to MainMenu.");
+        }
+        else
+        {
+            Debug.LogWarning("⚠️ Couldn't find LeaderboardViewer after loading MainMenu.");
+        }
+        PlayerPrefs.Save();
+        SceneManager.LoadScene("MainMenu");
+
     }
 
     void ResumeGameObjects()

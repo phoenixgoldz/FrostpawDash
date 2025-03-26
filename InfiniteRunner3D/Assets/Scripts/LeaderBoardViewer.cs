@@ -29,21 +29,34 @@ public class LeaderboardViewer : MonoBehaviour
     void Start()
     {
         if (leaderboardPanel != null)
-        {
             leaderboardPanel.SetActive(false);
-        }
-        leaderboardPanel?.SetActive(false);
-        LoadLeaderboardData(); // ✅ Make sure fresh data is loaded on startup
-        EnsureLeaderboardDefaults(); // Ensure leaderboard initializes properly
-    }
 
+        EnsureLeaderboardDefaults(); 
+    }
+    void OnEnable()
+    {
+        Debug.Log("📊 [LeaderboardViewer] OnEnable called. Reloading leaderboard...");
+        LoadLeaderboardData();  // Force fresh data from PlayerPrefs
+        DisplayLeaderboard();
+    }
     public void ShowLeaderboard()
     {
         Debug.Log("📊 Showing leaderboard...");
-        if (leaderboardPanel == null || mainMenuPanel == null) return;
+        if (leaderboardPanel == null || mainMenuPanel == null)
+        {
+            Debug.LogWarning("⚠️ leaderboardPanel or mainMenuPanel is null.");
+            return;
+        }
 
         leaderboardPanel.SetActive(true);
         mainMenuPanel.SetActive(false);
+
+        LoadLeaderboardData(); // 👈 Ensure it's always fresh!
+        DisplayLeaderboard();  // 👈 Force update text!
+    }
+    public void ForceRefreshLeaderboard()
+    {
+        Debug.Log("🔄 Force Refreshing leaderboard from PlayerPrefs...");
         LoadLeaderboardData();
         DisplayLeaderboard();
     }

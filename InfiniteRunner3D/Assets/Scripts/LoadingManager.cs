@@ -86,21 +86,80 @@ public class LoadingManager : MonoBehaviour
 
     IEnumerator LoadAudioAsync()
     {
-        yield return new WaitForSeconds(0.1f); // Simulate audio loading
-        loadedAssets++;
-        UpdateProgress();
+        loadingText.text = "Loading audio...";
+
+        string[] musicPaths = new string[]
+        {
+        "Music/EasterMusic/easter-bunny-290978",
+        "Music/EasterMusic/easter-is-coming-146181",
+        "Music/EasterMusic/spring-adventure-198193",
+        "Music/EasterMusic/the-first-days-of-spring-188392",
+        "Music/Crystal Caves/cold-crystal-caverns-252784",
+        "Music/Crystal Caves/fantasy-267185",
+        "Music/Crystal Caves/magical-fantasy-world-version-1-199339",
+        "Music/Aequinoctium-JuliusH",
+        "Music/Epic - SigmaMusicArt",
+        "Music/Fantasy Arcadium MonumentMusic",
+        "Music/party-game-bgm-vol2-242467"
+        };
+
+        foreach (string path in musicPaths)
+        {
+            ResourceRequest request = Resources.LoadAsync<AudioClip>(path);
+            yield return request;
+
+            if (request.asset != null)
+            {
+                Debug.Log($"🎵 Loaded audio: {path}");
+            }
+            else
+            {
+                Debug.LogWarning($"❌ Failed to load audio at: {path}");
+            }
+
+            loadedAssets++;
+            UpdateProgress();
+        }
+
+        loadingText.text = "Audio ready!";
     }
 
     IEnumerator PreloadAssets()
     {
-        loadingText.text = "Preloading textures...";
-        yield return LoadTexturesAsync();
-        Resources.LoadAll("Textures");
-        Resources.LoadAll("Audio");
-        Resources.LoadAll("Prefabs");
+        loadingText.text = "Preloading models and prefabs...";
 
-        loadingText.text = "Loading audio...";
-        yield return LoadAudioAsync();
+        string[] foldersToPreload = new string[]
+        {
+        "Models/Collectibles/Gem",
+        "Models/Crystal Caverns/BlueCrystals",
+        "Models/Crystal Caverns/BlueIceFloor",
+        "Models/Crystal Caverns/CavernWall",
+        "Models/Crystal Caverns/CavernWallModel",
+        "Models/Crystal Caverns/Crystal Caverns Floor",
+        "Models/Crystal Caverns/Crystal Wall",
+        "Models/Crystal Caverns/FlatIcePath",
+        "Models/Crystal Caverns/Floating Ice Block",
+        "Models/Crystal Caverns/Ice Archway Model",
+        "Models/Crystal Caverns/Ice Bridge",
+        "Models/Crystal Caverns/IceCrystalWall",
+        "Models/Crystal Caverns/StartingLocationCrystals",
+        "Models/EasterMap/Environment",
+        "Models/EasterMap/EasterArchway",
+        "Models/EasterMap/EasterGems",
+        "Models/EasterMap/stylized-floor-seamless-texture-freeeee",
+        "Models/EasterMap/Walls",
+        "Models/Interactables",
+        "Models/RainbowTiger"
+        };
+
+        foreach (string folder in foldersToPreload)
+        {
+            Object[] loaded = Resources.LoadAll(folder);
+            Debug.Log($"📦 Preloaded {loaded.Length} assets from {folder}");
+            loadedAssets++;
+            UpdateProgress();
+            yield return null; // Let the frame catch up
+        }
 
         loadingText.text = "Almost ready...";
         yield return new WaitForSeconds(0.5f);

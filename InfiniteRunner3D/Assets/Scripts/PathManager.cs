@@ -160,12 +160,30 @@ public class PathManager : MonoBehaviour
 
             activePaths.Add(obstacle);
         }
-
         if (canSpawnBlueCrystals && blueCrystalsPrefab != null)
         {
             Vector3 crystalPosition = new Vector3(Random.Range(-5f, 5f), 3.0f, lastPathEndZ + Random.Range(1f, pathLength - 1f));
-            GameObject crystal = Instantiate(blueCrystalsPrefab, crystalPosition, Quaternion.identity);
-            activePaths.Add(crystal);
+
+            // ✅ Prevent overlap with Floating Ice Block
+            bool overlaps = false;
+            foreach (GameObject obj in activePaths)
+            {
+                if (obj != null && obj.name.Contains("Floating Ice Block"))
+                {
+                    float distanceZ = Mathf.Abs(obj.transform.position.z - crystalPosition.z);
+                    if (distanceZ < 3f) // too close?
+                    {
+                        overlaps = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!overlaps)
+            {
+                GameObject crystal = Instantiate(blueCrystalsPrefab, crystalPosition, Quaternion.identity);
+                activePaths.Add(crystal);
+            }
         }
 
         if (gemPrefab != null)
@@ -174,20 +192,28 @@ public class PathManager : MonoBehaviour
             int trailLength = Mathf.Clamp(gemsPerRow, 4, 10);
 
             int trailType = Random.Range(0, 3); // 0 = straight, 1 = wave, 2 = zigzag
+            bool applyYArc = Random.value > 0.3f; // 70% chance to apply Y-arc
+            float arcHeight = Random.Range(0.5f, 1.5f); // arc intensity range
 
             for (int i = 0; i < trailLength; i++)
             {
                 float gemZ = lastPathEndZ + 2f + (i * spacing); // starts slightly ahead
                 float gemY = 1.5f;
+
+                if (applyYArc)
+                {
+                    gemY += Mathf.Sin((i / (float)(trailLength - 1)) * Mathf.PI) * arcHeight;
+                }
+
                 float gemX = 0f;
 
                 switch (trailType)
                 {
                     case 0: // Straight center
-                        gemX = 0f;
+                        gemX = 1f;
                         break;
                     case 1: // Arc wave
-                        gemX = Mathf.Sin(i * 0.5f) * 2.5f;
+                        gemX = Mathf.Sin(i * 1f) * 2f;
                         break;
                     case 2: // Zigzag
                         gemX = (i % 2 == 0) ? -2.5f : 2.5f;
@@ -195,10 +221,8 @@ public class PathManager : MonoBehaviour
                 }
 
                 Vector3 gemPosition = new Vector3(gemX, gemY, gemZ);
-
                 GameObject gem = Instantiate(gemPrefab, gemPosition, Quaternion.identity);
 
-                // Disable shadows for optimization
                 Renderer rend = gem.GetComponent<Renderer>();
                 if (rend != null)
                 {
@@ -210,10 +234,10 @@ public class PathManager : MonoBehaviour
             }
         }
 
-        // ✅ Ensure IcyFloorPath maintains exactly 18.59f Z-spacing
+        //  Ensure IcyFloorPath maintains exactly 18.59f Z-spacing
         if (newPath.name.Contains("FlatIcePath"))
         {
-            lastPathEndZ += 20f; // Set fixed spacing for ice paths
+            lastPathEndZ += 18.59f; // Set fixed spacing for ice paths
         }
         else
         {

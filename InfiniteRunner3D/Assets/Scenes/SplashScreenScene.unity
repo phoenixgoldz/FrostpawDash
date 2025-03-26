@@ -640,8 +640,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61be44ff01871ad4a894499aeff18671, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  videoDisplay: {fileID: 0}
-  renderTexture: {fileID: 0}
+  videoDisplay: {fileID: 386498209}
+  renderTexture: {fileID: 8400000, guid: 888ee7129d3349d40833f4da5d918271, type: 2}
   fadeCanvasGroup: {fileID: 914861538}
   fadeDuration: 0.5
 --- !u!82 &1233079096

@@ -47,6 +47,11 @@ public class MainMenuUI : MonoBehaviour
         {
             SetupGraphicsDropdown();
         }
+        LeaderboardViewer viewer = Object.FindFirstObjectByType<LeaderboardViewer>();
+        if (viewer != null)
+        {
+            viewer.ForceRefreshLeaderboard(); // ✅ Just refresh data without showing
+        }
 
         // Ensure LeaderboardUI is found safely
         leaderboardUI = Object.FindFirstObjectByType<LeaderboardUI>();
@@ -79,6 +84,7 @@ public class MainMenuUI : MonoBehaviour
     }
     public void ToggleVibration(bool isEnabled)
     {
+        Debug.Log($"🛠️ Vibration Toggle Changed: {isEnabled}");
         PlayerPrefs.SetInt("VibrationEnabled", isEnabled ? 1 : 0);
         PlayerPrefs.Save();
 
@@ -200,7 +206,15 @@ public class MainMenuUI : MonoBehaviour
         graphicsDropdown.value = PlayerPrefs.GetInt("GraphicsQuality", DetectBestQualityLevel());
         sensitivitySlider.value = PlayerPrefs.GetFloat("ControlSensitivity", 1.0f);
         musicToggle.isOn = PlayerPrefs.GetInt("MusicEnabled", 1) == 1;
-        vibrationToggle.isOn = PlayerPrefs.GetInt("VibrationEnabled", 1) == 1;
+        // Before assigning value, remove listeners temporarily
+        vibrationToggle.onValueChanged.RemoveAllListeners();
+
+        bool vibrationEnabled = PlayerPrefs.GetInt("VibrationEnabled", 1) == 1;
+        vibrationToggle.isOn = vibrationEnabled; // Will no longer trigger ToggleVibration prematurely
+
+        // Re-add the listener AFTER setting value
+        vibrationToggle.onValueChanged.AddListener(ToggleVibration);
+
 
         ApplyLoadedSettings();
     }

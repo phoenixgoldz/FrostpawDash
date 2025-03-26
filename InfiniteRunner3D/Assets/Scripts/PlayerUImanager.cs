@@ -55,6 +55,7 @@ public class PlayerUIManager : MonoBehaviour
 
     void Update()
     {
+
         if (!isPaused && player != null)
         {
             // Calculate distance from start position
@@ -82,7 +83,8 @@ public class PlayerUIManager : MonoBehaviour
         gemCount++;
         UpdateScore(5); // Each gem = 5 points
     }
-    private int totalGems = 0;
+   /* [SerializeField, HideInInspector]
+    private int totalGems; // Reserved for future use (score/unlocks/achievements)*/
 
     public int GetGemCount()
     {
@@ -105,13 +107,10 @@ public class PlayerUIManager : MonoBehaviour
         scoreText.text = " " + score; //  Update UI
     }
 
-
-
     public void UpdateDistance(float distance)
     {
         distanceText.text = Mathf.FloorToInt(distance) + "m"; // Ensure it displays whole numbers
     }
-
 
     public void TogglePauseMenu()
     {
