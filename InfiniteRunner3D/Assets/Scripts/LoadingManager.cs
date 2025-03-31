@@ -16,13 +16,28 @@ public class LoadingManager : MonoBehaviour
     private int totalAssets = 0;
     private int loadedAssets = 0;
 
+    void Awake()
+    {
+        Application.targetFrameRate = 60;
+        QualitySettings.vSyncCount = 0;
+    }
+
     void Start()
     {
         Debug.Log("✅ [LoadingManager] Start() called.");
         LoadPlayerPrefs();
 
-        Debug.Log("📌 Manually calling LoadGameAssets()...");
-        StartCoroutine(LoadGameAssets());
+        bool alreadyCached = PlayerPrefs.GetInt("AssetsPreloaded", 0) == 1;
+        if (alreadyCached)
+        {
+            Debug.Log("⚡ Skipping Preload (Cached).");
+            StartCoroutine(LoadMainMenuScene());
+        }
+        else
+        {
+            Debug.Log("📌 First load - Preloading assets...");
+            StartCoroutine(LoadGameAssets());
+        }
     }
 
     void LoadPlayerPrefs()
@@ -123,7 +138,6 @@ public class LoadingManager : MonoBehaviour
 
         loadingText.text = "Audio ready!";
     }
-
     IEnumerator PreloadAssets()
     {
         loadingText.text = "Preloading models and prefabs...";
@@ -152,13 +166,15 @@ public class LoadingManager : MonoBehaviour
         "Models/RainbowTiger"
         };
 
+        totalAssets = foldersToPreload.Length;
+
         foreach (string folder in foldersToPreload)
         {
             Object[] loaded = Resources.LoadAll(folder);
             Debug.Log($"📦 Preloaded {loaded.Length} assets from {folder}");
             loadedAssets++;
             UpdateProgress();
-            yield return null; // Let the frame catch up
+            yield return null;
         }
 
         loadingText.text = "Almost ready...";
@@ -180,6 +196,10 @@ public class LoadingManager : MonoBehaviour
     }
     IEnumerator LoadMainMenuScene()
     {
+        Resources.UnloadUnusedAssets();
+        System.GC.Collect();
+        yield return null;
+
         AsyncOperation operation = SceneManager.LoadSceneAsync("MainMenu");
         operation.allowSceneActivation = false;
 
