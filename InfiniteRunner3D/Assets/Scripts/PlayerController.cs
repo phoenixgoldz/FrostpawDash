@@ -400,18 +400,16 @@ public class PlayerController : MonoBehaviour
         PlayerPrefs.SetFloat("LastDistance", PlayerUIManager.Instance.GetDistance());
         PlayerPrefs.SetInt("LastGems", PlayerUIManager.Instance.GetGemCount());
         PlayerPrefs.Save();
-
-        // Load Leaderboard Screen
-        SceneManager.LoadScene("LeaderboardScreen");
+        
+        // 🕒 Delay leaderboard load to allow save to finish on fast devices
+        StartCoroutine(LoadLeaderboardAfterDelay());
     }
 
-   /* IEnumerator ShowLeaderboardSafely(LeaderboardUI ui)
+    IEnumerator LoadLeaderboardAfterDelay()
     {
-        ui.gameObject.SetActive(true);
-        yield return null; // Wait 1 frame
-        ui.ShowLeaderboard(); // normal method
-        yield return ui.StartCoroutine(ui.ShowLeaderboardRoutine()); // safely start coroutine on now-active MonoBehaviour
-    }*/
+        yield return new WaitForSeconds(0.25f); // Gives time for PlayerPrefs.Save() to complete
+        SceneManager.LoadScene("LeaderboardScreen");
+    }
 
     bool IsGrounded()
     {

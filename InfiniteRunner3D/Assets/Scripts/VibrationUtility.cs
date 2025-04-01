@@ -7,20 +7,40 @@ public static class VibrationUtility
 #if UNITY_ANDROID && !UNITY_EDITOR
         try
         {
-            using (var unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+            // Only vibrate if user has allowed it AND we have permission
+            if (PlayerPrefs.GetInt("VibrationEnabled", 1) == 1)
             {
-                var activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-                var vibrator = activity.Call<AndroidJavaObject>("getSystemService", "vibrator");
+                using (var unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+                {
+                    var activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
 
-                if (vibrator != null)
-                {
-                    vibrator.Call("vibrate", 100);
-                    Debug.Log("📳 Native Android vibration triggered");
+                    // Request vibrator service
+                    var vibrator = activity.Call<AndroidJavaObject>("getSystemService", "vibrator");
+
+                    if (vibrator != null)
+                    {
+                        // Check hasVibrator() API to avoid crash on unsupported devices
+                        bool hasVibrator = vibrator.Call<bool>("hasVibrator");
+
+                        if (hasVibrator)
+                        {
+                            vibrator.Call("vibrate", 100);
+                            Debug.Log("📳 Native Android vibration triggered");
+                        }
+                        else
+                        {
+                            Debug.LogWarning("⚠️ Device does not support vibration");
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogWarning("⚠️ Vibration service not found.");
+                    }
                 }
-                else
-                {
-                    Debug.LogWarning("⚠️ Vibration service not found.");
-                }
+            }
+            else
+            {
+                Debug.Log("🔇 Vibration disabled by PlayerPrefs.");
             }
         }
         catch (System.Exception ex)
@@ -28,8 +48,11 @@ public static class VibrationUtility
             Debug.LogError("❌ Vibration exception: " + ex.Message);
         }
 #else
-        Handheld.Vibrate();
-        Debug.Log("📳 Editor fallback: Handheld.Vibrate()");
+        if (PlayerPrefs.GetInt("VibrationEnabled", 1) == 1)
+        {
+            Handheld.Vibrate();
+            Debug.Log("📳 Editor fallback: Handheld.Vibrate()");
+        }
 #endif
     }
 }

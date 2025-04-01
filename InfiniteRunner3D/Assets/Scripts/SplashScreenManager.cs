@@ -13,31 +13,37 @@ public class SplashScreenManager : MonoBehaviour
     public CanvasGroup fadeCanvasGroup;
     public float fadeDuration = 1.5f;
 
-    void Start()
+    void Awake()
     {
         videoPlayer = GetComponent<VideoPlayer>();
         audioSource = GetComponent<AudioSource>();
 
-        if (AudioManager.instance != null)
-        {
-            audioSource.volume = AudioManager.instance.musicSource.volume;
-        }
+        videoPlayer.loopPointReached += OnVideoFinished;
+        Camera.main.clearFlags = CameraClearFlags.SolidColor;
+        Camera.main.backgroundColor = Color.black;
+    }
+
+    void Start()
+    {
+        StartCoroutine(InitializeAudioAfterDelay(0.1f));
+        StartCoroutine(PrepareVideoAfterDelay(0.2f));
 
         if (renderTexture != null)
         {
-            renderTexture.Release();
+            renderTexture.Release(); // Clear previous frame data
             videoPlayer.targetTexture = renderTexture;
-        }
-
-        if (videoDisplay != null)
-        {
             videoDisplay.texture = renderTexture;
+        }
+        else
+        {
+            videoPlayer.targetTexture = null;
+            videoPlayer.renderMode = VideoRenderMode.APIOnly;
+            videoDisplay.texture = videoPlayer.texture;
         }
 
         videoPlayer.aspectRatio = VideoAspectRatio.FitInside;
         videoPlayer.audioOutputMode = VideoAudioOutputMode.AudioSource;
         videoPlayer.SetTargetAudioSource(0, audioSource);
-        videoPlayer.Prepare();
 
         videoPlayer.prepareCompleted += (VideoPlayer vp) =>
         {
@@ -45,12 +51,20 @@ public class SplashScreenManager : MonoBehaviour
             videoPlayer.Play();
         };
 
-        videoPlayer.loopPointReached += OnVideoFinished;
-
-        Camera.main.clearFlags = CameraClearFlags.SolidColor;
-        Camera.main.backgroundColor = Color.black;
-
         StartCoroutine(FadeIn());
+    }
+
+    IEnumerator PrepareVideoAfterDelay(float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+        videoPlayer.Prepare();
+    }
+
+    IEnumerator InitializeAudioAfterDelay(float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+        if (AudioManager.instance != null)
+            audioSource.volume = AudioManager.instance.musicSource.volume;
     }
 
     IEnumerator FadeIn()
@@ -67,7 +81,7 @@ public class SplashScreenManager : MonoBehaviour
 
     void OnVideoFinished(VideoPlayer vp)
     {
-        StartCoroutine(FadeOutAndLoadScene("LoadingScene")); // ✅ Fixed: Now loads LoadingScene correctly
+        StartCoroutine(FadeOutAndLoadScene("LoadingScene")); // ✅ Transitions to loading screen
     }
 
     IEnumerator FadeOutAndLoadScene(string sceneName)

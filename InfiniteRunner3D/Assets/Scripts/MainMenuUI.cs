@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MainMenuUI : MonoBehaviour
 {
@@ -22,7 +23,7 @@ public class MainMenuUI : MonoBehaviour
     public TMP_Dropdown graphicsDropdown;
     public Slider sensitivitySlider;
     public Toggle musicToggle;
-    public Toggle vibrationToggle;
+    [SerializeField] private Toggle vibrationToggle;
 
     [Header("Saving UI")]
     public GameObject savingText;
@@ -80,11 +81,24 @@ public class MainMenuUI : MonoBehaviour
     }
     public void ToggleVibration(bool isEnabled)
     {
-        Debug.Log($"🛠️ Vibration Toggle Changed: {isEnabled}");
-        PlayerPrefs.SetInt("VibrationEnabled", isEnabled ? 1 : 0);
+        Debug.Log($"🛠️ Vibration Toggle Changed: {isEnabled} (PRE-check)");
+
+        // Delay 1 frame to get accurate toggle state
+        StartCoroutine(DelayedToggleWrite());
+    }
+
+    private IEnumerator DelayedToggleWrite()
+    {
+        yield return null; // Wait 1 frame
+
+        bool actualToggleState = vibrationToggle.isOn; // Get the true current state
+
+        Debug.Log($"📍 Accurate isOn value AFTER frame delay: {actualToggleState}");
+
+        PlayerPrefs.SetInt("VibrationEnabled", actualToggleState ? 1 : 0);
         PlayerPrefs.Save();
 
-        if (isEnabled)
+        if (actualToggleState)
         {
             VibrationUtility.VibrateShort();
             Debug.Log("✅ Vibration toggled ON");
@@ -208,17 +222,21 @@ public class MainMenuUI : MonoBehaviour
 
     void SetupGraphicsDropdown()
     {
-        graphicsDropdown.ClearOptions();
+        graphicsDropdown.ClearOptions(); // ✅ wipe previous items
+        graphicsDropdown.options = new List<TMP_Dropdown.OptionData>();
+
         string[] qualityLevels = QualitySettings.names;
-        int bestQualityLevel = DetectBestQualityLevel();
 
         foreach (string level in qualityLevels)
         {
             graphicsDropdown.options.Add(new TMP_Dropdown.OptionData(level));
         }
 
-        graphicsDropdown.value = bestQualityLevel;
+        int savedIndex = PlayerPrefs.GetInt("GraphicsQuality", DetectBestQualityLevel());
+        graphicsDropdown.value = savedIndex;
         graphicsDropdown.RefreshShownValue();
+
+        graphicsDropdown.onValueChanged.RemoveAllListeners(); // clean up
         graphicsDropdown.onValueChanged.AddListener(ChangeGraphicsQuality);
     }
 
@@ -233,8 +251,13 @@ public class MainMenuUI : MonoBehaviour
     {
         int memory = SystemInfo.systemMemorySize;
         int processorCores = SystemInfo.processorCount;
-        return (memory > 6000 && processorCores >= 6) ? 2 : (memory > 3000 && processorCores >= 4) ? 1 : 0;
+
+        // Tiered detection for Android
+        return (memory > 6000 && processorCores >= 6) ? 2 :
+               (memory > 3000 && processorCores >= 4) ? 1 :
+               0;
     }
+
 
     IEnumerator RotateSavingIcon()
     {
