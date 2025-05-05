@@ -16,29 +16,75 @@ public class LoadingManager : MonoBehaviour
     private int totalAssets = 0;
     private int loadedAssets = 0;
 
+    public TMP_Text levelNameText;
+    public Image backgroundImage;
+
+    [Header("Loading Backgrounds")]
+    public Sprite crystalCavernsBG;
+    public Sprite frozenTundraBG;
+    public Sprite easterLevelBG;
+
     void Awake()
     {
         Application.targetFrameRate = 60;
         QualitySettings.vSyncCount = 0;
     }
-
     void Start()
     {
         Debug.Log("✅ [LoadingManager] Start() called.");
         LoadPlayerPrefs();
 
-        bool alreadyCached = PlayerPrefs.GetInt("AssetsPreloaded", 0) == 1;
-        if (alreadyCached)
+        if (!string.IsNullOrEmpty(sceneToLoad) && sceneToLoad != "MainMenu")
         {
-            Debug.Log("⚡ Skipping Preload (Cached).");
-            StartCoroutine(LoadMainMenuScene());
+            Debug.Log($"🎮 Loading gameplay scene: {sceneToLoad}");
+            SetLevelVisuals(sceneToLoad); 
+            StartCoroutine(LoadTargetScene());
         }
+
         else
         {
-            Debug.Log("📌 First load - Preloading assets...");
-            StartCoroutine(LoadGameAssets());
+            bool alreadyCached = PlayerPrefs.GetInt("AssetsPreloaded", 0) == 1;
+            if (alreadyCached)
+            {
+                Debug.Log("⚡ Skipping Preload (Cached).");
+                StartCoroutine(LoadMainMenuScene());
+            }
+            else
+            {
+                Debug.Log("📌 First load - Preloading assets...");
+                StartCoroutine(LoadGameAssets());
+            }
+        }
+
+    }
+    IEnumerator LoadTargetScene()
+    {
+        Resources.UnloadUnusedAssets();
+        System.GC.Collect();
+        yield return null;
+
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneToLoad);
+        operation.allowSceneActivation = false;
+
+        float elapsedTime = 0f;
+
+        while (!operation.isDone)
+        {
+            float progressValue = Mathf.Clamp01(operation.progress / 0.9f);
+            loadingBar.value = progressValue;
+            loadingText.text = $"Loading {sceneToLoad}... {Mathf.FloorToInt(progressValue * 100)}%";
+
+            elapsedTime += Time.deltaTime;
+
+            if (progressValue >= 1f && elapsedTime >= minLoadTime)
+            {
+                operation.allowSceneActivation = true;
+            }
+
+            yield return null;
         }
     }
+
 
     void LoadPlayerPrefs()
     {
@@ -76,6 +122,33 @@ public class LoadingManager : MonoBehaviour
         }
 
         yield return null;
+    }
+    void SetLevelVisuals(string levelName)
+    {
+        if (levelNameText != null)
+        {
+            switch (levelName)
+            {
+                case "Level 1":
+                    levelNameText.text = "❄️ Entering Crystal Caverns...";
+                    backgroundImage.sprite = crystalCavernsBG;
+                    break;
+
+                case "Level 3":
+                    levelNameText.text = "🌌 Entering Frozen Twilight Tundra...";
+                    backgroundImage.sprite = frozenTundraBG;
+                    break;
+
+                case "EasterLevel":
+                    levelNameText.text = "🐣 Entering Easter Grove...";
+                    backgroundImage.sprite = easterLevelBG;
+                    break;
+
+                default:
+                    levelNameText.text = $"Loading {levelName}...";
+                    break;
+            }
+        }
     }
 
     IEnumerator LoadGameAssets()
@@ -221,7 +294,14 @@ public class LoadingManager : MonoBehaviour
             yield return null;
         }
     }
+    public static string sceneToLoad;
 
+
+    public static void LoadScene(string sceneName)
+    {
+        sceneToLoad = sceneName;
+        SceneManager.LoadScene("LoadingScene"); // this scene shows loading UI
+    }
     void UpdateProgress()
     {
         progress = (float)loadedAssets / totalAssets;

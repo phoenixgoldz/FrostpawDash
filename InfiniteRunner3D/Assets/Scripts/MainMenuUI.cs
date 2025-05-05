@@ -120,8 +120,20 @@ public class MainMenuUI : MonoBehaviour
             Debug.LogError("❌ VersionText is not assigned in MainMenuUI!");
         }
     }
-    public void PlayGame() => StartCoroutine(LoadSceneAsync("Level 1"));
-    public void PlayEasterLevel() => StartCoroutine(LoadSceneAsync("EasterLevel"));
+   public void PlayGame()
+{
+    string[] availableLevels = { "Level 1", "Level 3", "EasterLevel" };
+
+    // Select one at random
+    int index = Random.Range(0, availableLevels.Length);
+    string chosenLevel = availableLevels[index];
+
+    Debug.Log("🧊 Loading through LoadingManager: " + chosenLevel);
+
+    // Trigger async loading through LoadingManager
+    LoadingManager.LoadScene(chosenLevel);
+}
+
 
     IEnumerator LoadSceneAsync(string sceneName)
     {

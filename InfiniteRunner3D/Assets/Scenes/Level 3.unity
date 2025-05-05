@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
-  m_Fog: 1
+  m_Fog: 0
   m_FogColor: {r: 0.5473478, g: 0.9433962, b: 0.70441324, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.01
@@ -23,27 +23,27 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 1.5
+  m_AmbientIntensity: 0
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 1, g: 1, b: 1, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 55e64e617a8bfff4ba846574e2651eb9, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 198d8caf5561f8a4d88e1d1e2ef20315, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
-  m_HaloTexture: {fileID: 0}
+  m_HaloTexture: {fileID: 2800000, guid: bc852473d5de8dd4593d25413b56aba1, type: 3}
   m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
-  m_DefaultReflectionMode: 0
+  m_DefaultReflectionMode: 1
   m_DefaultReflectionResolution: 128
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
-  m_CustomReflection: {fileID: 0}
+  m_CustomReflection: {fileID: 2800000, guid: b385cf6749d4733458a230c96a48a5de, type: 3}
   m_Sun: {fileID: 991053584}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 13
-  m_BakeOnSceneLoad: 0
+  m_BakeOnSceneLoad: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -93,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 7041c929ff4c9ad4ca4abccca6cb01ba, type: 2}
+  m_LightingDataAsset: {fileID: 112000000, guid: 2cfc7e5df93581c42aeba28fb8e916aa, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -1553,17 +1553,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55717759c3d5d394abf74f10be169a71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floorPrefab: {fileID: 0}
+  floorPrefab: {fileID: 5470852559233627167, guid: 2fdbea56cb4ae4a4da4f6a2f478afa2d, type: 3}
   floorLength: 18
   initialSegments: 20
-  leftWallPrefabs: []
-  rightWallPrefabs: []
-  obstaclePrefabs: []
-  collectiblePrefab: {fileID: 0}
+  leftWallPrefabs:
+  - {fileID: 359173260751719536, guid: b148b20e90bbf0b4384697847ebd0897, type: 3}
+  - {fileID: 3949060100895588014, guid: 64d551cce1416364c8f59e5347c3e0ac, type: 3}
+  rightWallPrefabs:
+  - {fileID: 4608897504306278635, guid: 34184cf0d32a1a24580844600d44d0b5, type: 3}
+  - {fileID: 999935698926076642, guid: e517d3364d5724343b6ddb00772eb5ae, type: 3}
+  obstaclePrefabs:
+  - {fileID: 5006432343403014184, guid: a5b6ce69473cb33488f838d3046cb191, type: 3}
+  - {fileID: 5006432343403014184, guid: a5b6ce69473cb33488f838d3046cb191, type: 3}
+  collectiblePrefab: {fileID: 5130725975673335530, guid: f34ca3ed8d9e7a14cb785b01a2c54c93, type: 3}
   collectiblesPerRow: 5
   collectibleSpawnChance: 0.6
-  gapChance: 0.2
-  bridgePrefab: {fileID: 0}
+  gapChance: 0.5
+  bridgePrefab: {fileID: 6582588796078466707, guid: 98790c294c4f6d94e967ce125285092d, type: 3}
   initialBridgeChance: 0.3
   minBridgeChance: 0.05
   bridgeDecayRate: 0.0005
@@ -2203,68 +2209,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dwarf Idle
       objectReference: {fileID: 0}
+    - target: {fileID: 3281640368814642055, guid: 6954d17763caf464ebccb61e30e09afd, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8390590375294311307, guid: 6954d17763caf464ebccb61e30e09afd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6954d17763caf464ebccb61e30e09afd, type: 3}
---- !u!1001 &4924483030724312007
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5470852559233627167, guid: 2fdbea56cb4ae4a4da4f6a2f478afa2d, type: 3}
-      propertyPath: m_Name
-      value: SnowTileFloorPath
-      objectReference: {fileID: 0}
-    - target: {fileID: 5564412693278299519, guid: 2fdbea56cb4ae4a4da4f6a2f478afa2d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5564412693278299519, guid: 2fdbea56cb4ae4a4da4f6a2f478afa2d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5564412693278299519, guid: 2fdbea56cb4ae4a4da4f6a2f478afa2d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 4.33
-      objectReference: {fileID: 0}
-    - target: {fileID: 5564412693278299519, guid: 2fdbea56cb4ae4a4da4f6a2f478afa2d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5564412693278299519, guid: 2fdbea56cb4ae4a4da4f6a2f478afa2d, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5564412693278299519, guid: 2fdbea56cb4ae4a4da4f6a2f478afa2d, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5564412693278299519, guid: 2fdbea56cb4ae4a4da4f6a2f478afa2d, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5564412693278299519, guid: 2fdbea56cb4ae4a4da4f6a2f478afa2d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5564412693278299519, guid: 2fdbea56cb4ae4a4da4f6a2f478afa2d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5564412693278299519, guid: 2fdbea56cb4ae4a4da4f6a2f478afa2d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 2fdbea56cb4ae4a4da4f6a2f478afa2d, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -2275,4 +2232,3 @@ SceneRoots:
   - {fileID: 818233988}
   - {fileID: 1378003223}
   - {fileID: 4356731199432572721}
-  - {fileID: 4924483030724312007}
